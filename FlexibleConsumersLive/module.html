@@ -1,1 +1,1181 @@
+<!DOCTYPE html>
+<html lang="de">
 
+<head>
+
+<meta charset="UTF-8">
+
+<style>
+
+    :root {
+
+        color-scheme: light dark;
+
+        --accent: #18c7c0;
+        --green: #20d17a;
+        --blue: #39a8ff;
+        --orange: #f5a623;
+        --red: #ff5e6c;
+
+        --text: #f2f4f6;
+        --muted: rgba(242,244,246,.68);
+
+        --line: rgba(210,216,222,.15);
+
+        --card:
+            rgba(
+                255,
+                255,
+                255,
+                .025
+            );
+
+        --card-border:
+            rgba(
+                210,
+                216,
+                222,
+                .14
+            );
+    }
+
+
+    @media (prefers-color-scheme: light) {
+
+        :root {
+
+            --text: #202124;
+            --muted: rgba(32,33,36,.68);
+
+            --line: rgba(40,45,50,.14);
+
+            --card:
+                rgba(
+                    0,
+                    0,
+                    0,
+                    .018
+                );
+
+            --card-border:
+                rgba(
+                    50,
+                    55,
+                    60,
+                    .15
+                );
+        }
+    }
+
+
+    * {
+        box-sizing: border-box;
+    }
+
+
+    html,
+    body {
+
+        margin: 0;
+        padding: 0;
+
+        width: 100%;
+        height: 100%;
+
+        overflow: hidden;
+
+        background: transparent;
+
+        font-family:
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Arial,
+            sans-serif;
+
+        color: var(--text);
+    }
+
+
+    body {
+
+        padding:
+            18px;
+    }
+
+
+    .wrap {
+
+        width: 100%;
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 14px;
+    }
+
+
+    .header {
+
+        display: flex;
+
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 18px;
+
+        flex:
+            0 0 auto;
+    }
+
+
+    .headline {
+
+        display: flex;
+        flex-direction: column;
+
+        gap: 3px;
+    }
+
+
+    .headline-title {
+
+        font-size: 29px;
+
+        font-weight: 700;
+
+        color: var(--text);
+    }
+
+
+    .headline-sub {
+
+        font-size: 16px;
+
+        color: var(--muted);
+    }
+
+
+    .summary {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 12px;
+
+        font-size: 14px;
+
+        color: var(--muted);
+    }
+
+
+    .summary-value {
+
+        font-size: 24px;
+
+        font-weight: 700;
+
+        color: var(--green);
+    }
+
+
+    .list {
+
+        flex: 1 1 auto;
+
+        min-height: 0;
+
+        display: grid;
+
+        grid-template-columns:
+            1fr;
+
+        gap: 9px;
+    }
+
+
+    .consumer {
+
+        display: grid;
+
+        grid-template-columns:
+            62px
+            minmax(130px, 1.6fr)
+            minmax(115px, 1.2fr)
+            minmax(85px, .7fr)
+            minmax(120px, 1.15fr)
+            72px;
+
+        align-items: center;
+
+        gap: 14px;
+
+        min-height: 92px;
+
+        padding:
+            12px
+            14px;
+
+        border:
+            1px solid
+            var(--card-border);
+
+        border-radius:
+            13px;
+
+        background:
+            var(--card);
+    }
+
+
+    .icon-box {
+
+        width: 54px;
+        height: 54px;
+
+        border-radius: 13px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        border:
+            1px solid
+            var(--card-border);
+
+        color: var(--blue);
+
+        font-size: 30px;
+
+        font-weight: 700;
+    }
+
+
+    .main {
+
+        min-width: 0;
+    }
+
+
+    .name {
+
+        color: var(--text);
+
+        font-size: 18px;
+
+        font-weight: 680;
+
+        white-space: nowrap;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+    }
+
+
+    .sub {
+
+        margin-top:
+            4px;
+
+        font-size:
+            14px;
+
+        color:
+            var(--muted);
+
+        white-space:
+            nowrap;
+
+        overflow:
+            hidden;
+
+        text-overflow:
+            ellipsis;
+    }
+
+
+    .state {
+
+        min-width: 0;
+    }
+
+
+    .state-main {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        font-size: 16px;
+
+        font-weight: 650;
+    }
+
+
+    .state-dot {
+
+        width: 13px;
+        height: 13px;
+
+        border-radius: 50%;
+
+        background:
+            var(--muted);
+    }
+
+
+    .state-dot.on {
+
+        background:
+            var(--green);
+
+        box-shadow:
+            0 0 10px
+            rgba(
+                32,
+                209,
+                122,
+                .42
+            );
+    }
+
+
+    .state-detail {
+
+        margin-top:
+            5px;
+
+        color:
+            var(--muted);
+
+        font-size:
+            13px;
+
+        white-space:
+            nowrap;
+
+        overflow:
+            hidden;
+
+        text-overflow:
+            ellipsis;
+    }
+
+
+    .power {
+
+        font-size:
+            20px;
+
+        font-weight:
+            700;
+
+        color:
+            var(--text);
+
+        white-space:
+            nowrap;
+    }
+
+
+    .reason {
+
+        min-width:
+            0;
+
+        font-size:
+            14px;
+
+        color:
+            var(--muted);
+
+        overflow:
+            hidden;
+
+        text-overflow:
+            ellipsis;
+
+        display:
+            -webkit-box;
+
+        -webkit-line-clamp:
+            2;
+
+        -webkit-box-orient:
+            vertical;
+    }
+
+
+    .settings {
+
+        width:
+            48px;
+
+        height:
+            48px;
+
+        border-radius:
+            10px;
+
+        border:
+            1px solid
+            var(--card-border);
+
+        background:
+            rgba(
+                128,
+                128,
+                128,
+                .05
+            );
+
+        color:
+            var(--text);
+
+        font-size:
+            24px;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        cursor:
+            pointer;
+
+        transition:
+            transform .12s ease,
+            background .12s ease;
+    }
+
+
+    .settings:active {
+
+        transform:
+            scale(.94);
+    }
+
+
+    .priority {
+
+        margin-top:
+            5px;
+
+        font-size:
+            12px;
+
+        color:
+            var(--blue);
+    }
+
+
+    /* ================================================================ */
+    /* Mobile                                                           */
+    /* ================================================================ */
+
+    @media (max-width: 760px) {
+
+        body {
+
+            padding:
+                12px;
+        }
+
+
+        .headline-title {
+
+            font-size:
+                24px;
+        }
+
+
+        .headline-sub {
+
+            display:
+                none;
+        }
+
+
+        .summary {
+
+            display:
+                none;
+        }
+
+
+        .list {
+
+            gap:
+                8px;
+        }
+
+
+        .consumer {
+
+            grid-template-columns:
+                48px
+                minmax(0, 1fr)
+                52px;
+
+            grid-template-areas:
+
+                "icon main settings"
+                "icon state settings"
+                "icon power settings";
+
+            gap:
+                4px
+                10px;
+
+            min-height:
+                108px;
+
+            padding:
+                11px;
+        }
+
+
+        .icon-box {
+
+            grid-area:
+                icon;
+
+            width:
+                44px;
+
+            height:
+                44px;
+
+            font-size:
+                25px;
+        }
+
+
+        .main {
+
+            grid-area:
+                main;
+        }
+
+
+        .state {
+
+            grid-area:
+                state;
+        }
+
+
+        .power {
+
+            grid-area:
+                power;
+
+            font-size:
+                17px;
+        }
+
+
+        .reason {
+
+            display:
+                none;
+        }
+
+
+        .settings {
+
+            grid-area:
+                settings;
+
+            align-self:
+                center;
+
+            width:
+                44px;
+
+            height:
+                44px;
+
+            font-size:
+                22px;
+        }
+
+
+        .name {
+
+            font-size:
+                16px;
+        }
+
+
+        .sub {
+
+            font-size:
+                12px;
+        }
+
+
+        .state-main {
+
+            font-size:
+                14px;
+        }
+
+
+        .state-detail {
+
+            font-size:
+                12px;
+        }
+
+
+        .priority {
+
+            display:
+                none;
+        }
+    }
+
+
+    @media (max-width: 430px) {
+
+        .headline-title {
+
+            font-size:
+                22px;
+        }
+
+
+        .consumer {
+
+            min-height:
+                104px;
+        }
+    }
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="wrap">
+
+
+    <div class="header">
+
+        <div class="headline">
+
+            <div class="headline-title">
+                Flexible Verbraucher
+            </div>
+
+            <div class="headline-sub">
+                Automatisch nach PV-Überschuss, Priorität und deinen Regeln
+            </div>
+
+        </div>
+
+
+        <div class="summary">
+
+            <span>
+                Aktuell aktiv
+            </span>
+
+            <span
+                id="activeCount"
+                class="summary-value"
+            >
+                0 / 5
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="consumerList"
+        class="list"
+    ></div>
+
+</div>
+
+
+
+<script>
+
+'use strict';
+
+
+// ============================================================================
+// Start
+// ============================================================================
+
+function init()
+{
+    try {
+
+        requestAction(
+            'Refresh',
+            true
+        );
+
+    } catch (e) {
+
+    }
+}
+
+
+// ============================================================================
+// Live Nachricht
+// ============================================================================
+
+function handleMessage(message)
+{
+    let data =
+        message;
+
+
+    if (
+        typeof message
+        ===
+        'string'
+    ) {
+
+        try {
+
+            data =
+                JSON.parse(
+                    message
+                );
+
+        } catch (e) {
+
+            return;
+        }
+    }
+
+
+    if (
+        !data
+        ||
+        data.type
+        !==
+        'consumers'
+    ) {
+
+        return;
+    }
+
+
+    renderConsumers(
+        data.items
+        ||
+        []
+    );
+}
+
+
+// ============================================================================
+// Darstellung
+// ============================================================================
+
+function renderConsumers(
+    items
+)
+{
+    const list =
+        document.getElementById(
+            'consumerList'
+        );
+
+
+    if (
+        !list
+    ) {
+
+        return;
+    }
+
+
+    list.innerHTML =
+        '';
+
+
+    let active =
+        0;
+
+
+    for (
+        const item
+        of
+        items
+    ) {
+
+        if (
+            item.isOn
+        ) {
+
+            active++;
+        }
+
+
+        const row =
+            document.createElement(
+                'div'
+            );
+
+
+        row.className =
+            'consumer';
+
+
+        row.innerHTML =
+            `
+            <div class="icon-box">
+                ${getIcon(item.icon)}
+            </div>
+
+            <div class="main">
+                <div class="name">
+                    ${escapeHTML(item.name)}
+                </div>
+
+                <div class="sub">
+                    ${escapeHTML(item.sub)}
+                </div>
+            </div>
+
+            <div class="state">
+
+                <div class="state-main">
+
+                    <span
+                        class="state-dot ${item.isOn ? 'on' : ''}"
+                    ></span>
+
+                    <span>
+                        ${item.isOn ? 'Ein' : 'Aus'}
+                    </span>
+
+                </div>
+
+                <div class="state-detail">
+                    ${escapeHTML(
+                        getModeText(
+                            item
+                        )
+                    )}
+                </div>
+
+                <div class="priority">
+                    ${
+                        item.priority
+                            ?
+                            'Priorität '
+                            +
+                            escapeHTML(
+                                item.priority
+                            )
+                            :
+                            ''
+                    }
+                </div>
+
+            </div>
+
+            <div class="power">
+                ${
+                    item.power
+                        ?
+                        escapeHTML(
+                            item.power
+                        )
+                        :
+                        '—'
+                }
+            </div>
+
+            <div class="reason">
+                ${escapeHTML(
+                    getReasonText(
+                        item
+                    )
+                )}
+            </div>
+
+            <button
+                class="settings"
+                type="button"
+                title="Einstellungen öffnen"
+                aria-label="Einstellungen öffnen"
+            >
+                ⚙
+            </button>
+            `;
+
+
+        const settingsButton =
+            row.querySelector(
+                '.settings'
+            );
+
+
+        settingsButton.addEventListener(
+            'click',
+            function()
+            {
+                try {
+
+                    openObject(
+                        Number(
+                            item.id
+                        )
+                    );
+
+                } catch (e) {
+
+                    console.log(
+                        'openObject nicht verfügbar',
+                        e
+                    );
+                }
+            }
+        );
+
+
+        list.appendChild(
+            row
+        );
+    }
+
+
+    const activeCount =
+        document.getElementById(
+            'activeCount'
+        );
+
+
+    if (
+        activeCount
+    ) {
+
+        activeCount.textContent =
+            active
+            +
+            ' / '
+            +
+            items.length;
+    }
+}
+
+
+// ============================================================================
+// Texte
+// ============================================================================
+
+function getModeText(
+    item
+)
+{
+    const parts =
+        [];
+
+
+    if (
+        item.mode
+    ) {
+
+        parts.push(
+            item.mode
+        );
+    }
+
+
+    if (
+        item.emsEnabled
+    ) {
+
+        parts.push(
+            'EMS: '
+            +
+            item.emsEnabled
+        );
+    }
+
+
+    return parts.length
+        ?
+        parts.join(
+            ' · '
+        )
+        :
+        'Automatik';
+}
+
+
+function getReasonText(
+    item
+)
+{
+    const parts =
+        [];
+
+
+    if (
+        item.reason
+    ) {
+
+        parts.push(
+            item.reason
+        );
+    }
+
+
+    if (
+        item.minimumRun
+    ) {
+
+        parts.push(
+            'Mindestlauf: '
+            +
+            item.minimumRun
+        );
+    }
+
+
+    if (
+        item.hysteresis
+    ) {
+
+        parts.push(
+            'Hysterese: '
+            +
+            item.hysteresis
+        );
+    }
+
+
+    if (
+        parts.length
+        ===
+        0
+    ) {
+
+        return
+            item.isOn
+                ?
+                'Verbraucher aktiv'
+                :
+                'Aktuell nicht aktiv';
+    }
+
+
+    return parts.join(
+        ' · '
+    );
+}
+
+
+// ============================================================================
+// Icons
+// ============================================================================
+
+function getIcon(
+    icon
+)
+{
+    switch (
+        icon
+    ) {
+
+        case 'boiler':
+
+            return '◉';
+
+
+        case 'drop':
+
+            return '◊';
+
+
+        case 'pool':
+
+            return '≋';
+
+
+        case 'heater':
+
+            return '▤';
+
+
+        default:
+
+            return '●';
+    }
+}
+
+
+// ============================================================================
+// Sicherheit
+// ============================================================================
+
+function escapeHTML(
+    value
+)
+{
+    return String(
+        value
+        ??
+        ''
+    )
+    .replaceAll(
+        '&',
+        '&amp;'
+    )
+    .replaceAll(
+        '<',
+        '&lt;'
+    )
+    .replaceAll(
+        '>',
+        '&gt;'
+    )
+    .replaceAll(
+        '"',
+        '&quot;'
+    )
+    .replaceAll(
+        "'",
+        '&#039;'
+    );
+}
+
+
+// ============================================================================
+// Start
+// ============================================================================
+
+document.addEventListener(
+    'DOMContentLoaded',
+    init
+);
+
+</script>
+
+</body>
+
+</html>

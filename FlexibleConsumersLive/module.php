@@ -5,47 +5,86 @@ declare(strict_types=1);
 class FlexibleConsumersLive extends IPSModule
 {
     // ========================================================================
-    // Angelegte flexible Verbraucher
+    // Verbraucher - feste Zuordnung
     // ========================================================================
 
     private const CONSUMERS = [
+
         [
-            'id'    => 33007,
-            'key'   => 'boiler',
-            'name'  => 'Boiler',
-            'sub'   => 'Warmwasser',
-            'icon'  => 'boiler'
+            'id'       => 33007,
+            'key'      => 'boiler',
+            'name'     => 'Boiler',
+            'sub'      => 'Warmwasser',
+
+            'mode'     => 17552,
+            'status'   => 10737,
+            'power'    => 19394,
+            'reason'   => 23015,
+
+            'icon'     => 'boiler'
         ],
+
         [
-            'id'    => 52793,
-            'key'   => 'dehum_ug',
-            'name'  => 'Entfeuchter UG',
-            'sub'   => 'Untergeschoss',
-            'icon'  => 'drop'
+            'id'       => 52793,
+            'key'      => 'dehum_ug',
+            'name'     => 'Entfeuchter UG',
+            'sub'      => 'Untergeschoss',
+
+            'mode'     => 48725,
+            'status'   => 21846,
+            'power'    => 47479,
+            'reason'   => 57923,
+
+            'icon'     => 'drop'
         ],
+
         [
-            'id'    => 55387,
-            'key'   => 'dehum_og',
-            'name'  => 'Entfeuchter OG',
-            'sub'   => 'Obergeschoss',
-            'icon'  => 'drop'
+            'id'       => 55387,
+            'key'      => 'dehum_og',
+            'name'     => 'Entfeuchter OG',
+            'sub'      => 'Obergeschoss',
+
+            'mode'     => 37326,
+            'status'   => 20351,
+            'power'    => 48347,
+            'reason'   => 55280,
+
+            'icon'     => 'drop'
         ],
+
         [
-            'id'    => 31862,
-            'key'   => 'pool',
-            'name'  => 'Poolpumpe + Salzelektrolyse',
-            'sub'   => 'Pooltechnik',
-            'icon'  => 'pool'
+            'id'       => 31862,
+            'key'      => 'pool',
+            'name'     => 'Poolpumpe + Salzelektrolyse',
+            'sub'      => 'Pooltechnik',
+
+            'mode'     => 29959,
+            'status'   => 21048,
+            'power'    => 56815,
+            'reason'   => 26781,
+
+            'icon'     => 'pool'
         ],
+
         [
-            'id'    => 16478,
-            'key'   => 'buffer',
-            'name'  => 'Heizstab / Puffer',
-            'sub'   => 'Heizung',
-            'icon'  => 'heater'
+            'id'       => 16478,
+            'key'      => 'buffer',
+            'name'     => 'Heizstab / Puffer',
+            'sub'      => 'Heizung',
+
+            'mode'     => 24813,
+            'status'   => 53546,
+            'power'    => 37285,
+            'reason'   => 50074,
+
+            'icon'     => 'heater'
         ]
     ];
 
+
+    // ========================================================================
+    // Create
+    // ========================================================================
 
     public function Create(): void
     {
@@ -54,6 +93,10 @@ class FlexibleConsumersLive extends IPSModule
         $this->SetVisualizationType(1);
     }
 
+
+    // ========================================================================
+    // ApplyChanges
+    // ========================================================================
 
     public function ApplyChanges(): void
     {
@@ -64,38 +107,67 @@ class FlexibleConsumersLive extends IPSModule
 
 
     // ========================================================================
-    // HTML
+    // HTML SDK
     // ========================================================================
 
     public function GetVisualizationTile(): string
     {
-        $file = __DIR__ . '/module.html';
+        $file =
+            __DIR__ .
+            '/module.html';
 
-        if (!file_exists($file)) {
-            return '<div>module.html nicht gefunden</div>';
+
+        if (
+            !file_exists(
+                $file
+            )
+        ) {
+
+            return
+                '<div>module.html nicht gefunden</div>';
         }
 
-        $html = file_get_contents($file);
 
-        if ($html === false) {
-            return '<div>module.html konnte nicht gelesen werden</div>';
+        $html =
+            file_get_contents(
+                $file
+            );
+
+
+        if (
+            $html === false
+        ) {
+
+            return
+                '<div>module.html konnte nicht gelesen werden</div>';
         }
+
 
         return $html;
     }
 
 
-    public function RequestAction($Ident, $Value): void
-    {
-        if ($Ident === 'Refresh') {
+    // ========================================================================
+    // Aktionen
+    // ========================================================================
+
+    public function RequestAction(
+        $Ident,
+        $Value
+    ): void {
+        if (
+            $Ident === 'Refresh'
+        ) {
 
             $this->SendLiveValues();
 
             return;
         }
 
+
         throw new Exception(
-            'Ungültige Aktion: ' . $Ident
+            'Ungültige Aktion: ' .
+            $Ident
         );
     }
 
@@ -117,96 +189,104 @@ class FlexibleConsumersLive extends IPSModule
             $Data
         );
 
-        if ($Message === VM_UPDATE) {
+
+        if (
+            $Message === VM_UPDATE
+        ) {
 
             $this->SendLiveValues();
         }
     }
 
 
+    // ========================================================================
+    // Variablen registrieren
+    // ========================================================================
+
     private function RegisterConsumerMessages(): void
     {
-        foreach (self::CONSUMERS as $consumer) {
-
-            $id = intval(
-                $consumer['id']
-            );
-
-            if (!IPS_ObjectExists($id)) {
-                continue;
-            }
-
-            $this->RegisterVariablesRecursive(
-                $id
-            );
-        }
-    }
-
-
-    private function RegisterVariablesRecursive(
-        int $parentID,
-        int $level = 0
-    ): void {
-        if ($level > 3) {
-            return;
-        }
-
         foreach (
-            IPS_GetChildrenIDs($parentID)
+            self::CONSUMERS
             as
-            $childID
+            $consumer
         ) {
 
-            if (IPS_VariableExists($childID)) {
+            $ids = [
 
-                $this->RegisterMessage(
-                    $childID,
-                    VM_UPDATE
-                );
-            }
+                intval(
+                    $consumer['mode']
+                ),
 
-            $object =
-                IPS_GetObject($childID);
+                intval(
+                    $consumer['status']
+                ),
 
-            if (
-                $object['ObjectType'] === 0
-                ||
-                $object['ObjectType'] === 1
+                intval(
+                    $consumer['power']
+                ),
+
+                intval(
+                    $consumer['reason']
+                )
+            ];
+
+
+            foreach (
+                $ids
+                as
+                $id
             ) {
 
-                $this->RegisterVariablesRecursive(
-                    $childID,
-                    $level + 1
-                );
+                if (
+                    IPS_VariableExists(
+                        $id
+                    )
+                ) {
+
+                    $this->RegisterMessage(
+                        $id,
+                        VM_UPDATE
+                    );
+                }
             }
         }
     }
 
 
     // ========================================================================
-    // Livewerte
+    // Live-Werte senden
     // ========================================================================
 
     private function SendLiveValues(): void
     {
-        $payload = [
-            'type'      => 'consumers',
-            'timestamp' => time(),
-            'items'     => []
-        ];
+        $items =
+            [];
 
 
         foreach (
             self::CONSUMERS
             as
-            $definition
+            $consumer
         ) {
 
-            $payload['items'][] =
+            $items[] =
                 $this->BuildConsumerData(
-                    $definition
+                    $consumer
                 );
         }
+
+
+        $payload = [
+
+            'type' =>
+                'consumers',
+
+            'timestamp' =>
+                time(),
+
+            'items' =>
+                $items
+        ];
 
 
         $this->UpdateVisualizationValue(
@@ -219,612 +299,302 @@ class FlexibleConsumersLive extends IPSModule
     }
 
 
+    // ========================================================================
+    // Einzelnen Verbraucher aufbauen
+    // ========================================================================
+
     private function BuildConsumerData(
-        array $definition
+        array $consumer
     ): array {
-        $parentID =
+        $modeID =
             intval(
-                $definition['id']
+                $consumer['mode']
+            );
+
+        $statusID =
+            intval(
+                $consumer['status']
+            );
+
+        $powerID =
+            intval(
+                $consumer['power']
+            );
+
+        $reasonID =
+            intval(
+                $consumer['reason']
             );
 
 
-        $variables =
-            $this->CollectVariables(
-                $parentID
-            );
-
-
-        $mode =
-            $this->FindVariable(
-                $variables,
-                [
-                    'betriebsart',
-                    'modus',
-                    'mode'
-                ]
-            );
-
-
-        $status =
-            $this->FindVariable(
-                $variables,
-                [
-                    'status',
-                    'schaltzustand',
-                    'zustand'
-                ]
-            );
-
-
-        $switch =
-            $this->FindVariable(
-                $variables,
-                [
-                    'schalten',
-                    'switch',
-                    'value',
-                    'ein aus'
-                ]
-            );
-
-
-        $priority =
-            $this->FindVariable(
-                $variables,
-                [
-                    'priorität',
-                    'priority'
-                ]
-            );
-
-
-        $power =
-            $this->FindVariable(
-                $variables,
-                [
-                    'leistung',
-                    'power',
-                    'verbrauch',
-                    'kw'
-                ]
-            );
-
-
-        $reason =
-            $this->FindVariable(
-                $variables,
-                [
-                    'grund',
-                    'reason',
-                    'status text',
-                    'status-text',
-                    'ems grund'
-                ]
-            );
-
-
-        $minimumRun =
-            $this->FindVariable(
-                $variables,
-                [
-                    'mindestlauf',
-                    'minrun',
-                    'mindest lauf'
-                ]
-            );
-
-
-        $hysteresis =
-            $this->FindVariable(
-                $variables,
-                [
-                    'hysterese',
-                    'hyst'
-                ]
-            );
-
-
-        $emsEnabled =
-            $this->FindVariable(
-                $variables,
-                [
-                    'verbraucher im ems verwenden',
-                    'ems verwenden',
-                    'ems aktiv',
-                    'ems enabled'
-                ]
-            );
-
-
-        $displayMode =
-            $this->VariableDisplay(
-                $mode
-            );
-
-
-        $displayStatus =
-            $this->VariableDisplay(
-                $status
-            );
-
-
-        $displaySwitch =
-            $this->VariableDisplay(
-                $switch
+        $modeRaw =
+            $this->ReadInt(
+                $modeID
             );
 
 
         $isOn =
-            $this->DetermineOnState(
-                $status,
-                $switch
+            $this->ReadBool(
+                $statusID
+            );
+
+
+        $configuredPowerKW =
+            $this->ReadFloat(
+                $powerID
+            );
+
+
+        $reason =
+            $this->ReadString(
+                $reasonID
             );
 
 
         return [
+
             'id' =>
-                $parentID,
+                intval(
+                    $consumer['id']
+                ),
 
             'key' =>
                 strval(
-                    $definition['key']
+                    $consumer['key']
                 ),
 
             'name' =>
                 strval(
-                    $definition['name']
+                    $consumer['name']
                 ),
 
             'sub' =>
                 strval(
-                    $definition['sub']
+                    $consumer['sub']
                 ),
 
             'icon' =>
                 strval(
-                    $definition['icon']
+                    $consumer['icon']
                 ),
 
-            'exists' =>
-                IPS_ObjectExists(
-                    $parentID
+            // Betriebsart
+            'modeRaw' =>
+                $modeRaw,
+
+            'modeText' =>
+                $this->ModeText(
+                    $modeRaw
                 ),
 
+            // Tatsächlicher Zustand
             'isOn' =>
                 $isOn,
 
-            'mode' =>
-                $displayMode,
+            'statusText' =>
+                $isOn
+                    ?
+                    'Ein'
+                    :
+                    'Aus',
 
-            'status' =>
-                $displayStatus,
+            // Konfigurierte EMS-Leistung
+            'powerKW' =>
+                $configuredPowerKW,
 
-            'switch' =>
-                $displaySwitch,
-
-            'priority' =>
-                $this->VariableDisplay(
-                    $priority
+            'powerText' =>
+                $this->FormatPowerKW(
+                    $configuredPowerKW
                 ),
 
-            'power' =>
-                $this->PowerDisplay(
-                    $power
-                ),
-
+            // Status / Grund
             'reason' =>
-                $this->VariableDisplay(
-                    $reason
-                ),
-
-            'minimumRun' =>
-                $this->VariableDisplay(
-                    $minimumRun
-                ),
-
-            'hysteresis' =>
-                $this->VariableDisplay(
-                    $hysteresis
-                ),
-
-            'emsEnabled' =>
-                $this->VariableDisplay(
-                    $emsEnabled
-                )
+                $reason
         ];
     }
 
 
     // ========================================================================
-    // Variablen sammeln
+    // Betriebsart
+    //
+    // 0 = Aus
+    // 1 = Automatik
+    // 2 = Erzwungen Ein
     // ========================================================================
 
-    private function CollectVariables(
-        int $parentID,
-        int $level = 0
-    ): array {
-        $result = [];
-
-
-        if (
-            !IPS_ObjectExists(
-                $parentID
-            )
-        ) {
-
-            return $result;
-        }
-
-
-        if ($level > 3) {
-
-            return $result;
-        }
-
-
-        foreach (
-            IPS_GetChildrenIDs(
-                $parentID
-            )
-            as
-            $childID
-        ) {
-
-            if (
-                IPS_VariableExists(
-                    $childID
-                )
-            ) {
-
-                $object =
-                    IPS_GetObject(
-                        $childID
-                    );
-
-
-                $result[] = [
-
-                    'id' =>
-                        $childID,
-
-                    'name' =>
-                        IPS_GetName(
-                            $childID
-                        ),
-
-                    'ident' =>
-                        strval(
-                            $object['ObjectIdent']
-                            ??
-                            ''
-                        ),
-
-                    'value' =>
-                        GetValue(
-                            $childID
-                        )
-                ];
-            }
-
-
-            $object =
-                IPS_GetObject(
-                    $childID
-                );
-
-
-            if (
-                $object['ObjectType'] === 0
-                ||
-                $object['ObjectType'] === 1
-            ) {
-
-                $result =
-                    array_merge(
-                        $result,
-                        $this->CollectVariables(
-                            $childID,
-                            $level + 1
-                        )
-                    );
-            }
-        }
-
-
-        return $result;
-    }
-
-
-    // ========================================================================
-    // Variable anhand Name / Ident suchen
-    // ========================================================================
-
-    private function FindVariable(
-        array $variables,
-        array $terms
-    ): ?array {
-        foreach (
-            $variables
-            as
-            $variable
-        ) {
-
-            $search =
-                mb_strtolower(
-                    strval(
-                        $variable['name']
-                    )
-                    .
-                    ' '
-                    .
-                    strval(
-                        $variable['ident']
-                    )
-                );
-
-
-            foreach (
-                $terms
-                as
-                $term
-            ) {
-
-                if (
-                    mb_strpos(
-                        $search,
-                        mb_strtolower(
-                            $term
-                        )
-                    )
-                    !==
-                    false
-                ) {
-
-                    return $variable;
-                }
-            }
-        }
-
-
-        return null;
-    }
-
-
-    // ========================================================================
-    // Darstellung
-    // ========================================================================
-
-    private function VariableDisplay(
-        ?array $variable
+    private function ModeText(
+        int $mode
     ): string {
-        if ($variable === null) {
-
-            return '';
-        }
-
-
-        $id =
-            intval(
-                $variable['id']
-            );
-
-
-        if (
-            IPS_VariableExists(
-                $id
-            )
+        switch (
+            $mode
         ) {
 
-            try {
+            case 0:
 
                 return
-                    GetValueFormatted(
-                        $id
-                    );
-
-            } catch (
-                Throwable $e
-            ) {
-
-            }
-        }
-
-
-        $value =
-            $variable['value']
-            ??
-            '';
-
-
-        if (is_bool($value)) {
-
-            return
-                $value
-                    ?
-                    'Ein'
-                    :
                     'Aus';
+
+
+            case 1:
+
+                return
+                    'Automatik';
+
+
+            case 2:
+
+                return
+                    'Erzwungen Ein';
+
+
+            default:
+
+                return
+                    'Unbekannt';
         }
-
-
-        if (is_float($value)) {
-
-            return
-                number_format(
-                    $value,
-                    2,
-                    '.',
-                    ''
-                );
-        }
-
-
-        return
-            strval(
-                $value
-            );
     }
 
 
-    private function PowerDisplay(
-        ?array $variable
+    // ========================================================================
+    // Leistung
+    // ========================================================================
+
+    private function FormatPowerKW(
+        float $kw
     ): string {
-        if ($variable === null) {
-
-            return '';
-        }
-
-
-        $value =
-            floatval(
-                $variable['value']
-                ??
-                0
-            );
-
-
-        /*
-         * Falls Profil bereits W/kW enthält:
-         * formatierte Darstellung übernehmen.
-         */
-
-        $id =
-            intval(
-                $variable['id']
-            );
-
-
-        try {
-
-            $formatted =
-                GetValueFormatted(
-                    $id
-                );
-
-
-            if (
-                stripos(
-                    $formatted,
-                    'W'
-                )
-                !==
-                false
-            ) {
-
-                return $formatted;
-            }
-
-        } catch (
-            Throwable $e
+        if (
+            abs(
+                $kw
+            )
+            <
+            0.05
         ) {
 
+            return
+                '0 W';
         }
 
 
         if (
             abs(
-                $value
+                $kw
             )
-            >=
-            1000
+            <
+            1.0
         ) {
 
             return
                 number_format(
-                    $value / 1000,
-                    2,
+                    $kw * 1000,
+                    0,
                     '.',
                     ''
                 )
                 .
-                ' kW';
+                ' W';
         }
 
 
         return
             number_format(
-                $value,
-                0,
+                $kw,
+                1,
                 '.',
                 ''
             )
             .
-            ' W';
+            ' kW';
     }
 
 
-    private function DetermineOnState(
-        ?array $status,
-        ?array $switch
-    ): bool {
-        foreach (
-            [
-                $status,
-                $switch
-            ]
-            as
-            $candidate
+    // ========================================================================
+    // Sichere Leser
+    // ========================================================================
+
+    private function ReadInt(
+        int $id
+    ): int {
+        if (
+            !IPS_VariableExists(
+                $id
+            )
         ) {
 
-            if ($candidate === null) {
-
-                continue;
-            }
-
-
-            $value =
-                $candidate['value']
-                ??
-                false;
-
-
-            if (is_bool($value)) {
-
-                return $value;
-            }
-
-
-            if (is_int($value)) {
-
-                return
-                    $value !== 0;
-            }
-
-
-            if (is_float($value)) {
-
-                return
-                    abs($value) > 0.01;
-            }
-
-
-            $text =
-                mb_strtolower(
-                    strval(
-                        $value
-                    )
-                );
-
-
-            if (
-                in_array(
-                    $text,
-                    [
-                        'ein',
-                        'on',
-                        'true',
-                        'aktiv',
-                        'active'
-                    ],
-                    true
-                )
-            ) {
-
-                return true;
-            }
+            return 0;
         }
 
 
-        return false;
+        return
+            intval(
+                GetValue(
+                    $id
+                )
+            );
+    }
+
+
+    private function ReadBool(
+        int $id
+    ): bool {
+        if (
+            !IPS_VariableExists(
+                $id
+            )
+        ) {
+
+            return false;
+        }
+
+
+        return
+            boolval(
+                GetValue(
+                    $id
+                )
+            );
+    }
+
+
+    private function ReadFloat(
+        int $id
+    ): float {
+        if (
+            !IPS_VariableExists(
+                $id
+            )
+        ) {
+
+            return 0.0;
+        }
+
+
+        return
+            floatval(
+                GetValue(
+                    $id
+                )
+            );
+    }
+
+
+    private function ReadString(
+        int $id
+    ): string {
+        if (
+            !IPS_VariableExists(
+                $id
+            )
+        ) {
+
+            return '';
+        }
+
+
+        return
+            strval(
+                GetValue(
+                    $id
+                )
+            );
     }
 }

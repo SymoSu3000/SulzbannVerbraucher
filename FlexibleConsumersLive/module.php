@@ -20,6 +20,7 @@ class FlexibleConsumersLive extends IPSModule
             'status'   => 10737,
             'power'    => 19394,
             'reason'   => 23015,
+            'priority' => 55502,
 
             'icon'     => 'boiler'
         ],
@@ -34,6 +35,7 @@ class FlexibleConsumersLive extends IPSModule
             'status'   => 21846,
             'power'    => 47479,
             'reason'   => 57923,
+            'priority' => 53271,
 
             'icon'     => 'drop'
         ],
@@ -48,6 +50,7 @@ class FlexibleConsumersLive extends IPSModule
             'status'   => 20351,
             'power'    => 48347,
             'reason'   => 55280,
+            'priority' => 10472,
 
             'icon'     => 'drop'
         ],
@@ -62,6 +65,7 @@ class FlexibleConsumersLive extends IPSModule
             'status'   => 21048,
             'power'    => 56815,
             'reason'   => 26781,
+            'priority' => 17428,
 
             'icon'     => 'pool'
         ],
@@ -76,6 +80,7 @@ class FlexibleConsumersLive extends IPSModule
             'status'   => 53546,
             'power'    => 37285,
             'reason'   => 50074,
+            'priority' => 19333,
 
             'icon'     => 'heater'
         ]
@@ -227,6 +232,10 @@ class FlexibleConsumersLive extends IPSModule
 
                 intval(
                     $consumer['reason']
+                ),
+
+                intval(
+                    $consumer['priority']
                 )
             ];
 
@@ -274,6 +283,65 @@ class FlexibleConsumersLive extends IPSModule
                     $consumer
                 );
         }
+
+
+        // ====================================================================
+        // Automatisch nach Priorität sortieren
+        //
+        // Kleine Zahl = höhere Priorität = weiter oben
+        // ====================================================================
+
+        usort(
+            $items,
+            function (
+                array $a,
+                array $b
+            ): int {
+
+                $priorityA =
+                    intval(
+                        $a['priority']
+                        ??
+                        PHP_INT_MAX
+                    );
+
+                $priorityB =
+                    intval(
+                        $b['priority']
+                        ??
+                        PHP_INT_MAX
+                    );
+
+
+                // Bei gleicher Priorität stabil nach Name sortieren
+                if (
+                    $priorityA
+                    ===
+                    $priorityB
+                ) {
+
+                    return
+                        strcasecmp(
+                            strval(
+                                $a['name']
+                                ??
+                                ''
+                            ),
+                            strval(
+                                $b['name']
+                                ??
+                                ''
+                            )
+                        );
+                }
+
+
+                return
+                    $priorityA
+                    <=>
+                    $priorityB;
+            }
+        );
 
 
         $payload = [
@@ -326,6 +394,11 @@ class FlexibleConsumersLive extends IPSModule
                 $consumer['reason']
             );
 
+        $priorityID =
+            intval(
+                $consumer['priority']
+            );
+
 
         $modeRaw =
             $this->ReadInt(
@@ -348,6 +421,12 @@ class FlexibleConsumersLive extends IPSModule
         $reason =
             $this->ReadString(
                 $reasonID
+            );
+
+
+        $priority =
+            $this->ReadInt(
+                $priorityID
             );
 
 
@@ -407,9 +486,13 @@ class FlexibleConsumersLive extends IPSModule
                     $configuredPowerKW
                 ),
 
-            // Status / Grund
+            // EMS Status / Grund
             'reason' =>
-                $reason
+                $reason,
+
+            // Priorität
+            'priority' =>
+                $priority
         ];
     }
 

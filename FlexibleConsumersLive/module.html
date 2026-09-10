@@ -274,7 +274,7 @@
             var(--muted);
 
         font-size:
-            10px;
+            12px;
 
         line-height:
             1.05;
@@ -362,7 +362,7 @@
             var(--text);
 
         font-size:
-            11px;
+            12px;
 
         line-height:
             1;
@@ -425,9 +425,7 @@
     /* ================================================================ */
 
     .reason {
-
-        display:
-            none;
+        display: none;
     }
 
 
@@ -561,37 +559,27 @@
 
 
         .name {
-
-            font-size:
-                15px;
+            font-size: 15px;
         }
 
 
         .sub {
-
-            font-size:
-                11px;
+            font-size: 13px;
         }
 
 
         .mode {
-
-            font-size:
-                13px;
+            font-size: 13px;
         }
 
 
         .real-state {
-
-            font-size:
-                12px;
+            font-size: 13px;
         }
 
 
         .power {
-
-            font-size:
-                15px;
+            font-size: 15px;
         }
 
 
@@ -619,14 +607,20 @@
                 var(--muted);
 
             font-size:
-                11px;
+                12px;
         }
     }
 
 
     /* ================================================================ */
     /* Mobile                                                           */
-    /* ================================================================ */
+    /*
+     * Gleiche logische Anordnung wie Desktop:
+     *
+     * Icon | Name | Betriebsart / Zustand | Leistung | Zahnrad
+     *
+     * Keine zusätzliche Zeile.
+     * ================================================================ */
 
     @media (max-width: 520px) {
 
@@ -651,19 +645,16 @@
 
             grid-template-columns:
                 37px
-                minmax(0, 1fr)
-                68px
+                minmax(0, 1.25fr)
+                minmax(86px, .9fr)
+                62px
                 36px;
 
             grid-template-areas:
-                "icon info power gear"
-                "icon state power gear";
-
-            row-gap:
-                2px;
+                "icon info state power gear";
 
             column-gap:
-                7px;
+                6px;
 
             padding:
                 5px
@@ -691,24 +682,27 @@
         .sub {
 
             font-size:
-                9px;
+                11px;
+
+            margin-top:
+                3px;
         }
 
 
         .mode {
 
             font-size:
-                11px;
+                12px;
         }
 
 
         .real-state {
 
             margin-top:
-                2px;
+                4px;
 
             font-size:
-                10px;
+                11px;
         }
 
 
@@ -747,6 +741,91 @@
 
 
     /* ================================================================ */
+    /* Sehr schmales Mobile                                             */
+    /* ================================================================ */
+
+    @media (max-width: 390px) {
+
+        .consumer {
+
+            grid-template-columns:
+                34px
+                minmax(0, 1.2fr)
+                minmax(78px, .85fr)
+                58px
+                33px;
+
+            column-gap:
+                5px;
+
+            padding-left:
+                5px;
+
+            padding-right:
+                5px;
+        }
+
+
+        .icon {
+
+            width:
+                31px;
+
+            height:
+                31px;
+        }
+
+
+        .name {
+
+            font-size:
+                12px;
+        }
+
+
+        .sub {
+
+            font-size:
+                10px;
+        }
+
+
+        .mode {
+
+            font-size:
+                11px;
+        }
+
+
+        .real-state {
+
+            font-size:
+                10px;
+        }
+
+
+        .power {
+
+            font-size:
+                12px;
+        }
+
+
+        .gear {
+
+            width:
+                31px;
+
+            height:
+                31px;
+
+            font-size:
+                16px;
+        }
+    }
+
+
+    /* ================================================================ */
     /* Sehr flache Kachel                                               */
     /* ================================================================ */
 
@@ -776,13 +855,6 @@
 
             padding-bottom:
                 3px;
-        }
-
-
-        .sub {
-
-            display:
-                none;
         }
 
 
@@ -816,6 +888,13 @@
         }
 
 
+        .sub {
+
+            font-size:
+                10px;
+        }
+
+
         .mode {
 
             font-size:
@@ -826,7 +905,7 @@
         .real-state {
 
             font-size:
-                9px;
+                10px;
         }
 
 
@@ -1208,26 +1287,22 @@ function getModeClass(
 
         case 0:
 
-            return
-                'off';
+            return 'off';
 
 
         case 1:
 
-            return
-                'auto';
+            return 'auto';
 
 
         case 2:
 
-            return
-                'force';
+            return 'force';
 
 
         default:
 
-            return
-                '';
+            return '';
     }
 }
 
@@ -1358,8 +1433,7 @@ function getIcon(
 
         default:
 
-            return
-                '●';
+            return '●';
     }
 }
 

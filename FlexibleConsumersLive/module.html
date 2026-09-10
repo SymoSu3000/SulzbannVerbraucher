@@ -265,6 +265,9 @@
     }
 
 
+    /*
+     * Untertitel jetzt etwas grösser.
+     */
     .sub {
 
         margin-top:
@@ -274,7 +277,7 @@
             var(--muted);
 
         font-size:
-            12px;
+            14px;
 
         line-height:
             1.05;
@@ -318,7 +321,7 @@
             nowrap;
 
         font-size:
-            12px;
+            13px;
 
         line-height:
             1.05;
@@ -343,6 +346,9 @@
     }
 
 
+    /*
+     * Tatsächlicher Gerätezustand jetzt ebenfalls grösser.
+     */
     .real-state {
 
         margin-top:
@@ -362,7 +368,7 @@
             var(--text);
 
         font-size:
-            12px;
+            14px;
 
         line-height:
             1;
@@ -563,8 +569,12 @@
         }
 
 
+        /*
+         * Vorher kleiner.
+         * Jetzt besser lesbar.
+         */
         .sub {
-            font-size: 13px;
+            font-size: 14px;
         }
 
 
@@ -574,7 +584,7 @@
 
 
         .real-state {
-            font-size: 13px;
+            font-size: 14px;
         }
 
 
@@ -615,11 +625,9 @@
     /* ================================================================ */
     /* Mobile                                                           */
     /*
-     * Gleiche logische Anordnung wie Desktop:
+     * Gleiche Anordnung wie Desktop:
      *
-     * Icon | Name | Betriebsart / Zustand | Leistung | Zahnrad
-     *
-     * Keine zusätzliche Zeile.
+     * Icon | Name | Betriebsart/Zustand | Leistung | Zahnrad
      * ================================================================ */
 
     @media (max-width: 520px) {
@@ -679,30 +687,40 @@
         }
 
 
+        /*
+         * Mobile Untertitel etwas grösser.
+         */
         .sub {
 
             font-size:
-                11px;
+                12px;
 
             margin-top:
                 3px;
         }
 
 
+        /*
+         * Automatik / Aus / Erzwungen Ein
+         * leicht grösser.
+         */
         .mode {
 
             font-size:
-                12px;
+                13px;
         }
 
 
+        /*
+         * Gerät Ein/Aus etwas grösser.
+         */
         .real-state {
 
             margin-top:
                 4px;
 
             font-size:
-                11px;
+                12px;
         }
 
 
@@ -783,24 +801,28 @@
         }
 
 
+        /*
+         * Bei sehr schmalem Mobile minimal kleiner,
+         * damit nichts überläuft.
+         */
         .sub {
-
-            font-size:
-                10px;
-        }
-
-
-        .mode {
 
             font-size:
                 11px;
         }
 
 
+        .mode {
+
+            font-size:
+                12px;
+        }
+
+
         .real-state {
 
             font-size:
-                10px;
+                11px;
         }
 
 
@@ -888,24 +910,27 @@
         }
 
 
+        /*
+         * Auch bei flachen Kacheln nicht mehr ganz so klein.
+         */
         .sub {
 
             font-size:
-                10px;
+                11px;
         }
 
 
         .mode {
 
             font-size:
-                10px;
+                11px;
         }
 
 
         .real-state {
 
             font-size:
-                10px;
+                11px;
         }
 
 

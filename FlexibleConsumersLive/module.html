@@ -4,442 +4,252 @@
 <head>
 
 <meta charset="UTF-8">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+>
 
 <style>
+
+    /* ================================================================ */
+    /* SYMCON THEME                                                     */
+    /* ================================================================ */
 
     :root {
 
         color-scheme: light dark;
 
-        --accent: #18c7c0;
+        --accent:
+            var(
+                --accent-color,
+                #18c7c0
+            );
+
+        --text:
+            var(
+                --content-color,
+                #f2f4f6
+            );
+
+        --background:
+            var(
+                --card-color,
+                transparent
+            );
+
         --green: #20d17a;
         --blue: #39a8ff;
         --orange: #f5a623;
-        --red: #ff5e6c;
 
-        --text: #f2f4f6;
-        --muted: rgba(242,244,246,.68);
+        /*
+         * Dezente neutrale Farben.
+         *
+         * Keine Abhängigkeit von color-mix(),
+         * da wir damit in der Energiefluss-Kachel bereits
+         * unterschiedliche Darstellungen gesehen haben.
+         */
 
-        --line: rgba(210,216,222,.15);
-
-        --card:
+        --muted:
             rgba(
-                255,
-                255,
-                255,
-                .025
+                170,
+                176,
+                183,
+                .90
             );
 
-        --card-border:
+        --border:
             rgba(
-                210,
-                216,
-                222,
-                .14
+                160,
+                168,
+                176,
+                .24
             );
-    }
 
-
-    @media (prefers-color-scheme: light) {
-
-        :root {
-
-            --text: #202124;
-            --muted: rgba(32,33,36,.68);
-
-            --line: rgba(40,45,50,.14);
-
-            --card:
-                rgba(
-                    0,
-                    0,
-                    0,
-                    .018
-                );
-
-            --card-border:
-                rgba(
-                    50,
-                    55,
-                    60,
-                    .15
-                );
-        }
+        --row-background:
+            rgba(
+                127,
+                127,
+                127,
+                .035
+            );
     }
 
 
     * {
-        box-sizing: border-box;
+
+        box-sizing:
+            border-box;
     }
 
 
     html,
     body {
 
-        margin: 0;
-        padding: 0;
+        width:
+            100%;
 
-        width: 100%;
-        height: 100%;
+        height:
+            100%;
 
-        overflow: hidden;
+        margin:
+            0;
 
-        background: transparent;
+        padding:
+            0;
+
+        overflow:
+            hidden;
+
+        background:
+            transparent;
+
+        color:
+            var(--text);
 
         font-family:
             -apple-system,
             BlinkMacSystemFont,
             "Segoe UI",
+            Roboto,
             Arial,
             sans-serif;
-
-        color: var(--text);
     }
 
 
-    body {
+    button {
+
+        font:
+            inherit;
+    }
+
+
+    /* ================================================================ */
+    /* GESAMTBEREICH                                                    */
+    /*
+     * Symcon zeichnet seinen eigenen Kacheltitel darüber.
+     *
+     * Deshalb reservieren wir oben bewusst Platz und zeichnen
+     * KEINEN zweiten Titel.
+     * ================================================================ */
+
+    #app {
+
+        width:
+            100%;
+
+        height:
+            100%;
 
         padding:
-            18px;
+            52px
+            12px
+            12px
+            12px;
+
+        overflow:
+            hidden;
     }
 
 
-    .wrap {
+    #consumerList {
 
-        width: 100%;
-        height: 100%;
+        width:
+            100%;
 
-        display: flex;
-        flex-direction: column;
+        height:
+            100%;
 
-        gap: 14px;
+        display:
+            grid;
+
+        /*
+         * Exakt fünf Verbraucher.
+         * Jeder erhält denselben Anteil der verfügbaren Höhe.
+         */
+
+        grid-template-rows:
+            repeat(
+                5,
+                minmax(
+                    0,
+                    1fr
+                )
+            );
+
+        gap:
+            7px;
     }
 
 
-    .header {
-
-        display: flex;
-
-        align-items: center;
-        justify-content: space-between;
-
-        gap: 18px;
-
-        flex:
-            0 0 auto;
-    }
-
-
-    .headline {
-
-        display: flex;
-        flex-direction: column;
-
-        gap: 3px;
-    }
-
-
-    .headline-title {
-
-        font-size: 29px;
-
-        font-weight: 700;
-
-        color: var(--text);
-    }
-
-
-    .headline-sub {
-
-        font-size: 16px;
-
-        color: var(--muted);
-    }
-
-
-    .summary {
-
-        display: flex;
-
-        align-items: center;
-
-        gap: 12px;
-
-        font-size: 14px;
-
-        color: var(--muted);
-    }
-
-
-    .summary-value {
-
-        font-size: 24px;
-
-        font-weight: 700;
-
-        color: var(--green);
-    }
-
-
-    .list {
-
-        flex: 1 1 auto;
-
-        min-height: 0;
-
-        display: grid;
-
-        grid-template-columns:
-            1fr;
-
-        gap: 9px;
-    }
-
+    /* ================================================================ */
+    /* VERBRAUCHERZEILE                                                 */
+    /* ================================================================ */
 
     .consumer {
 
-        display: grid;
-
-        grid-template-columns:
-            62px
-            minmax(130px, 1.6fr)
-            minmax(115px, 1.2fr)
-            minmax(85px, .7fr)
-            minmax(120px, 1.15fr)
-            72px;
-
-        align-items: center;
-
-        gap: 14px;
-
-        min-height: 92px;
-
-        padding:
-            12px
-            14px;
-
-        border:
-            1px solid
-            var(--card-border);
-
-        border-radius:
-            13px;
-
-        background:
-            var(--card);
-    }
-
-
-    .icon-box {
-
-        width: 54px;
-        height: 54px;
-
-        border-radius: 13px;
-
-        display: flex;
-
-        align-items: center;
-        justify-content: center;
-
-        border:
-            1px solid
-            var(--card-border);
-
-        color: var(--blue);
-
-        font-size: 30px;
-
-        font-weight: 700;
-    }
-
-
-    .main {
-
-        min-width: 0;
-    }
-
-
-    .name {
-
-        color: var(--text);
-
-        font-size: 18px;
-
-        font-weight: 680;
-
-        white-space: nowrap;
-
-        overflow: hidden;
-
-        text-overflow: ellipsis;
-    }
-
-
-    .sub {
-
-        margin-top:
-            4px;
-
-        font-size:
-            14px;
-
-        color:
-            var(--muted);
-
-        white-space:
-            nowrap;
-
-        overflow:
-            hidden;
-
-        text-overflow:
-            ellipsis;
-    }
-
-
-    .state {
-
-        min-width: 0;
-    }
-
-
-    .state-main {
-
-        display: flex;
-
-        align-items: center;
-
-        gap: 8px;
-
-        font-size: 16px;
-
-        font-weight: 650;
-    }
-
-
-    .state-dot {
-
-        width: 13px;
-        height: 13px;
-
-        border-radius: 50%;
-
-        background:
-            var(--muted);
-    }
-
-
-    .state-dot.on {
-
-        background:
-            var(--green);
-
-        box-shadow:
-            0 0 10px
-            rgba(
-                32,
-                209,
-                122,
-                .42
-            );
-    }
-
-
-    .state-detail {
-
-        margin-top:
-            5px;
-
-        color:
-            var(--muted);
-
-        font-size:
-            13px;
-
-        white-space:
-            nowrap;
-
-        overflow:
-            hidden;
-
-        text-overflow:
-            ellipsis;
-    }
-
-
-    .power {
-
-        font-size:
-            20px;
-
-        font-weight:
-            700;
-
-        color:
-            var(--text);
-
-        white-space:
-            nowrap;
-    }
-
-
-    .reason {
+        width:
+            100%;
 
         min-width:
             0;
 
-        font-size:
-            14px;
-
-        color:
-            var(--muted);
+        min-height:
+            0;
 
         overflow:
             hidden;
 
-        text-overflow:
-            ellipsis;
-
         display:
-            -webkit-box;
+            grid;
 
-        -webkit-line-clamp:
-            2;
+        grid-template-columns:
 
-        -webkit-box-orient:
-            vertical;
-    }
+            46px
+            minmax(130px, 1.55fr)
+            minmax(105px, .95fr)
+            minmax(72px, .58fr)
+            46px;
 
+        grid-template-areas:
 
-    .settings {
+            "icon info state power gear";
 
-        width:
-            48px;
+        align-items:
+            center;
 
-        height:
-            48px;
+        column-gap:
+            11px;
 
-        border-radius:
+        padding:
+            7px
             10px;
 
         border:
             1px solid
-            var(--card-border);
+            var(--border);
+
+        border-radius:
+            11px;
 
         background:
-            rgba(
-                128,
-                128,
-                128,
-                .05
-            );
+            var(--row-background);
+    }
 
-        color:
-            var(--text);
 
-        font-size:
-            24px;
+    /* ================================================================ */
+    /* ICON                                                             */
+    /* ================================================================ */
+
+    .icon {
+
+        grid-area:
+            icon;
+
+        width:
+            40px;
+
+        height:
+            40px;
 
         display:
             flex;
@@ -450,216 +260,707 @@
         justify-content:
             center;
 
-        cursor:
-            pointer;
+        flex:
+            0 0 auto;
 
-        transition:
-            transform .12s ease,
-            background .12s ease;
-    }
+        border:
+            1px solid
+            var(--border);
 
+        border-radius:
+            9px;
 
-    .settings:active {
-
-        transform:
-            scale(.94);
-    }
-
-
-    .priority {
-
-        margin-top:
-            5px;
+        color:
+            var(--blue);
 
         font-size:
-            12px;
+            23px;
+
+        line-height:
+            1;
+    }
+
+
+    .consumer[data-key="boiler"] .icon {
+
+        color:
+            var(--orange);
+    }
+
+
+    .consumer[data-key="pool"] .icon {
 
         color:
             var(--blue);
     }
 
 
+    .consumer[data-key="buffer"] .icon {
+
+        color:
+            var(--orange);
+    }
+
+
     /* ================================================================ */
-    /* Mobile                                                           */
+    /* NAME                                                             */
     /* ================================================================ */
 
-    @media (max-width: 760px) {
+    .info {
 
-        body {
+        grid-area:
+            info;
 
-            padding:
-                12px;
-        }
+        min-width:
+            0;
 
-
-        .headline-title {
-
-            font-size:
-                24px;
-        }
+        overflow:
+            hidden;
+    }
 
 
-        .headline-sub {
+    .name {
 
-            display:
-                none;
-        }
+        max-width:
+            100%;
+
+        overflow:
+            hidden;
+
+        white-space:
+            nowrap;
+
+        text-overflow:
+            ellipsis;
+
+        color:
+            var(--text);
+
+        font-size:
+            15px;
+
+        line-height:
+            1.15;
+
+        font-weight:
+            700;
+    }
 
 
-        .summary {
+    .sub {
 
-            display:
-                none;
-        }
+        max-width:
+            100%;
+
+        margin-top:
+            3px;
+
+        overflow:
+            hidden;
+
+        white-space:
+            nowrap;
+
+        text-overflow:
+            ellipsis;
+
+        color:
+            var(--muted);
+
+        font-size:
+            11px;
+
+        line-height:
+            1.15;
+    }
 
 
-        .list {
+    /* ================================================================ */
+    /* STATUS                                                           */
+    /* ================================================================ */
 
-            gap:
-                8px;
+    .state {
+
+        grid-area:
+            state;
+
+        min-width:
+            0;
+
+        overflow:
+            hidden;
+    }
+
+
+    .state-line {
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        gap:
+            6px;
+
+        min-width:
+            0;
+
+        overflow:
+            hidden;
+
+        color:
+            var(--text);
+
+        font-size:
+            13px;
+
+        line-height:
+            1.15;
+
+        font-weight:
+            650;
+    }
+
+
+    .state-dot {
+
+        width:
+            10px;
+
+        height:
+            10px;
+
+        flex:
+            0 0 10px;
+
+        border-radius:
+            50%;
+
+        background:
+            #7d8790;
+    }
+
+
+    .state-dot.on {
+
+        background:
+            var(--green);
+    }
+
+
+    .state-text {
+
+        min-width:
+            0;
+
+        overflow:
+            hidden;
+
+        white-space:
+            nowrap;
+
+        text-overflow:
+            ellipsis;
+    }
+
+
+    .mode {
+
+        margin-top:
+            3px;
+
+        min-width:
+            0;
+
+        overflow:
+            hidden;
+
+        white-space:
+            nowrap;
+
+        text-overflow:
+            ellipsis;
+
+        color:
+            var(--muted);
+
+        font-size:
+            11px;
+
+        line-height:
+            1.15;
+    }
+
+
+    /* ================================================================ */
+    /* LEISTUNG                                                         */
+    /* ================================================================ */
+
+    .power {
+
+        grid-area:
+            power;
+
+        min-width:
+            0;
+
+        overflow:
+            hidden;
+
+        white-space:
+            nowrap;
+
+        text-overflow:
+            ellipsis;
+
+        text-align:
+            right;
+
+        color:
+            var(--text);
+
+        font-size:
+            15px;
+
+        line-height:
+            1;
+
+        font-weight:
+            750;
+    }
+
+
+    /* ================================================================ */
+    /* ZAHNRAD                                                          */
+    /* ================================================================ */
+
+    .gear {
+
+        grid-area:
+            gear;
+
+        justify-self:
+            end;
+
+        width:
+            40px;
+
+        height:
+            40px;
+
+        margin:
+            0;
+
+        padding:
+            0;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        border:
+            1px solid
+            var(--border);
+
+        border-radius:
+            9px;
+
+        outline:
+            none;
+
+        background:
+            rgba(
+                127,
+                127,
+                127,
+                .045
+            );
+
+        color:
+            var(--text);
+
+        font-size:
+            20px;
+
+        line-height:
+            1;
+
+        cursor:
+            pointer;
+    }
+
+
+    .gear:hover {
+
+        border-color:
+            var(--accent);
+
+        color:
+            var(--accent);
+    }
+
+
+    .gear:active {
+
+        transform:
+            scale(.94);
+    }
+
+
+    /* ================================================================ */
+    /* MITTLERE / SCHMALE KACHEL                                       */
+    /*
+     * Wir verstecken nichts Wichtiges.
+     *
+     * Die Darstellung wird lediglich kompakter.
+     * ================================================================ */
+
+    @media
+    (
+        max-width:
+        720px
+    ) {
+
+        #app {
+
+            padding-left:
+                9px;
+
+            padding-right:
+                9px;
+
+            padding-bottom:
+                9px;
         }
 
 
         .consumer {
 
             grid-template-columns:
-                48px
+
+                42px
                 minmax(0, 1fr)
-                52px;
+                minmax(82px, .7fr)
+                42px;
 
             grid-template-areas:
 
-                "icon main settings"
-                "icon state settings"
-                "icon power settings";
+                "icon info power gear"
+                "icon state power gear";
 
-            gap:
-                4px
-                10px;
+            row-gap:
+                2px;
 
-            min-height:
-                108px;
+            column-gap:
+                8px;
 
             padding:
-                11px;
+                6px
+                8px;
         }
 
 
-        .icon-box {
-
-            grid-area:
-                icon;
+        .icon {
 
             width:
-                44px;
+                36px;
 
             height:
-                44px;
+                36px;
 
             font-size:
-                25px;
-        }
-
-
-        .main {
-
-            grid-area:
-                main;
-        }
-
-
-        .state {
-
-            grid-area:
-                state;
-        }
-
-
-        .power {
-
-            grid-area:
-                power;
-
-            font-size:
-                17px;
-        }
-
-
-        .reason {
-
-            display:
-                none;
-        }
-
-
-        .settings {
-
-            grid-area:
-                settings;
-
-            align-self:
-                center;
-
-            width:
-                44px;
-
-            height:
-                44px;
-
-            font-size:
-                22px;
+                21px;
         }
 
 
         .name {
 
             font-size:
-                16px;
+                14px;
         }
 
 
         .sub {
 
             font-size:
+                10px;
+        }
+
+
+        .state-line {
+
+            font-size:
                 12px;
         }
 
 
-        .state-main {
+        .mode {
+
+            display:
+                none;
+        }
+
+
+        .power {
 
             font-size:
                 14px;
         }
 
 
-        .state-detail {
+        .gear {
+
+            width:
+                36px;
+
+            height:
+                36px;
 
             font-size:
-                12px;
-        }
-
-
-        .priority {
-
-            display:
-                none;
+                18px;
         }
     }
 
 
-    @media (max-width: 430px) {
+    /* ================================================================ */
+    /* MOBILE / SEHR SCHMAL                                             */
+    /* ================================================================ */
 
-        .headline-title {
+    @media
+    (
+        max-width:
+        460px
+    ) {
 
-            font-size:
-                22px;
+        #app {
+
+            /*
+             * Etwas weniger Kopfraum,
+             * da der mobile Symcon-Titel kompakter ist.
+             */
+
+            padding-top:
+                49px;
+
+            padding-left:
+                8px;
+
+            padding-right:
+                8px;
+
+            padding-bottom:
+                8px;
+        }
+
+
+        #consumerList {
+
+            gap:
+                6px;
         }
 
 
         .consumer {
 
-            min-height:
-                104px;
+            grid-template-columns:
+
+                38px
+                minmax(0, 1fr)
+                64px
+                38px;
+
+            grid-template-areas:
+
+                "icon info power gear"
+                "icon state power gear";
+
+            column-gap:
+                7px;
+
+            padding:
+                6px
+                7px;
+        }
+
+
+        .icon {
+
+            width:
+                34px;
+
+            height:
+                34px;
+
+            border-radius:
+                8px;
+
+            font-size:
+                19px;
+        }
+
+
+        .name {
+
+            font-size:
+                13px;
+        }
+
+
+        .sub {
+
+            font-size:
+                10px;
+        }
+
+
+        .state-line {
+
+            font-size:
+                11px;
+        }
+
+
+        .state-dot {
+
+            width:
+                9px;
+
+            height:
+                9px;
+
+            flex-basis:
+                9px;
+        }
+
+
+        .power {
+
+            font-size:
+                13px;
+        }
+
+
+        .gear {
+
+            width:
+                34px;
+
+            height:
+                34px;
+
+            border-radius:
+                8px;
+
+            font-size:
+                17px;
+        }
+    }
+
+
+    /* ================================================================ */
+    /* GERINGE HÖHE                                                     */
+    /*
+     * Für sehr flache Desktop-Kacheln reduzieren wir vertikal
+     * automatisch einige sekundäre Informationen.
+     * ================================================================ */
+
+    @media
+    (
+        max-height:
+        390px
+    ) {
+
+        #app {
+
+            padding-top:
+                45px;
+
+            padding-bottom:
+                7px;
+        }
+
+
+        #consumerList {
+
+            gap:
+                5px;
+        }
+
+
+        .consumer {
+
+            padding-top:
+                4px;
+
+            padding-bottom:
+                4px;
+        }
+
+
+        .sub {
+
+            display:
+                none;
+        }
+
+
+        .mode {
+
+            display:
+                none;
+        }
+
+
+        .icon {
+
+            width:
+                32px;
+
+            height:
+                32px;
+
+            font-size:
+                18px;
+        }
+
+
+        .gear {
+
+            width:
+                32px;
+
+            height:
+                32px;
+
+            font-size:
+                17px;
+        }
+
+
+        .name {
+
+            font-size:
+                13px;
+        }
+
+
+        .state-line {
+
+            font-size:
+                11px;
+        }
+
+
+        .power {
+
+            font-size:
+                13px;
         }
     }
 
@@ -670,45 +971,11 @@
 
 <body>
 
-<div class="wrap">
 
-
-    <div class="header">
-
-        <div class="headline">
-
-            <div class="headline-title">
-                Flexible Verbraucher
-            </div>
-
-            <div class="headline-sub">
-                Automatisch nach PV-Überschuss, Priorität und deinen Regeln
-            </div>
-
-        </div>
-
-
-        <div class="summary">
-
-            <span>
-                Aktuell aktiv
-            </span>
-
-            <span
-                id="activeCount"
-                class="summary-value"
-            >
-                0 / 5
-            </span>
-
-        </div>
-
-    </div>
-
+<div id="app">
 
     <div
         id="consumerList"
-        class="list"
     ></div>
 
 </div>
@@ -721,7 +988,7 @@
 
 
 // ============================================================================
-// Start
+// START
 // ============================================================================
 
 function init()
@@ -735,22 +1002,27 @@ function init()
 
     } catch (e) {
 
+        /*
+         * Nur relevant ausserhalb der Symcon Visualisierung.
+         */
     }
 }
 
 
 // ============================================================================
-// Live Nachricht
+// SYMCON LIVE-DATEN
 // ============================================================================
 
-function handleMessage(message)
+function handleMessage(
+    message
+)
 {
     let data =
         message;
 
 
     if (
-        typeof message
+        typeof data
         ===
         'string'
     ) {
@@ -759,7 +1031,7 @@ function handleMessage(message)
 
             data =
                 JSON.parse(
-                    message
+                    data
                 );
 
         } catch (e) {
@@ -782,15 +1054,19 @@ function handleMessage(message)
 
 
     renderConsumers(
-        data.items
-        ||
-        []
+        Array.isArray(
+            data.items
+        )
+            ?
+            data.items
+            :
+            []
     );
 }
 
 
 // ============================================================================
-// Darstellung
+// RENDERING
 // ============================================================================
 
 function renderConsumers(
@@ -811,12 +1087,15 @@ function renderConsumers(
     }
 
 
-    list.innerHTML =
-        '';
+    /*
+     * Es existieren exakt fünf Verbraucher.
+     *
+     * Wir bauen die Liste nur beim Symcon-Update neu auf.
+     * Keine Timer, keine laufenden Animationen.
+     */
 
-
-    let active =
-        0;
+    const html =
+        [];
 
 
     for (
@@ -825,273 +1104,278 @@ function renderConsumers(
         items
     ) {
 
-        if (
-            item.isOn
-        ) {
-
-            active++;
-        }
-
-
-        const row =
-            document.createElement(
-                'div'
-            );
+        html.push(
+            createConsumerHTML(
+                item
+            )
+        );
+    }
 
 
-        row.className =
-            'consumer';
+    list.innerHTML =
+        html.join(
+            ''
+        );
 
 
-        row.innerHTML =
-            `
-            <div class="icon-box">
-                ${getIcon(item.icon)}
-            </div>
+    /*
+     * Zahnrad-Ereignisse danach sauber registrieren.
+     */
 
-            <div class="main">
-                <div class="name">
-                    ${escapeHTML(item.name)}
-                </div>
-
-                <div class="sub">
-                    ${escapeHTML(item.sub)}
-                </div>
-            </div>
-
-            <div class="state">
-
-                <div class="state-main">
-
-                    <span
-                        class="state-dot ${item.isOn ? 'on' : ''}"
-                    ></span>
-
-                    <span>
-                        ${item.isOn ? 'Ein' : 'Aus'}
-                    </span>
-
-                </div>
-
-                <div class="state-detail">
-                    ${escapeHTML(
-                        getModeText(
-                            item
-                        )
-                    )}
-                </div>
-
-                <div class="priority">
-                    ${
-                        item.priority
-                            ?
-                            'Priorität '
-                            +
-                            escapeHTML(
-                                item.priority
-                            )
-                            :
-                            ''
-                    }
-                </div>
-
-            </div>
-
-            <div class="power">
-                ${
-                    item.power
-                        ?
-                        escapeHTML(
-                            item.power
-                        )
-                        :
-                        '—'
-                }
-            </div>
-
-            <div class="reason">
-                ${escapeHTML(
-                    getReasonText(
-                        item
-                    )
-                )}
-            </div>
-
-            <button
-                class="settings"
-                type="button"
-                title="Einstellungen öffnen"
-                aria-label="Einstellungen öffnen"
-            >
-                ⚙
-            </button>
-            `;
+    const buttons =
+        list.querySelectorAll(
+            '.gear'
+        );
 
 
-        const settingsButton =
-            row.querySelector(
-                '.settings'
-            );
+    buttons.forEach(
+        button =>
+        {
+            button.addEventListener(
+                'click',
+                event =>
+                {
+                    event.stopPropagation();
 
 
-        settingsButton.addEventListener(
-            'click',
-            function()
-            {
-                try {
-
-                    openObject(
+                    const id =
                         Number(
-                            item.id
+                            button.dataset.objectId
+                        );
+
+
+                    if (
+                        !Number.isFinite(
+                            id
                         )
-                    );
+                        ||
+                        id <= 0
+                    ) {
 
-                } catch (e) {
+                        return;
+                    }
 
-                    console.log(
-                        'openObject nicht verfügbar',
-                        e
-                    );
+
+                    try {
+
+                        openObject(
+                            id
+                        );
+
+                    } catch (e) {
+
+                        console.log(
+                            'openObject konnte nicht ausgeführt werden',
+                            e
+                        );
+                    }
                 }
-            }
-        );
-
-
-        list.appendChild(
-            row
-        );
-    }
-
-
-    const activeCount =
-        document.getElementById(
-            'activeCount'
-        );
-
-
-    if (
-        activeCount
-    ) {
-
-        activeCount.textContent =
-            active
-            +
-            ' / '
-            +
-            items.length;
-    }
-}
-
-
-// ============================================================================
-// Texte
-// ============================================================================
-
-function getModeText(
-    item
-)
-{
-    const parts =
-        [];
-
-
-    if (
-        item.mode
-    ) {
-
-        parts.push(
-            item.mode
-        );
-    }
-
-
-    if (
-        item.emsEnabled
-    ) {
-
-        parts.push(
-            'EMS: '
-            +
-            item.emsEnabled
-        );
-    }
-
-
-    return parts.length
-        ?
-        parts.join(
-            ' · '
-        )
-        :
-        'Automatik';
-}
-
-
-function getReasonText(
-    item
-)
-{
-    const parts =
-        [];
-
-
-    if (
-        item.reason
-    ) {
-
-        parts.push(
-            item.reason
-        );
-    }
-
-
-    if (
-        item.minimumRun
-    ) {
-
-        parts.push(
-            'Mindestlauf: '
-            +
-            item.minimumRun
-        );
-    }
-
-
-    if (
-        item.hysteresis
-    ) {
-
-        parts.push(
-            'Hysterese: '
-            +
-            item.hysteresis
-        );
-    }
-
-
-    if (
-        parts.length
-        ===
-        0
-    ) {
-
-        return
-            item.isOn
-                ?
-                'Verbraucher aktiv'
-                :
-                'Aktuell nicht aktiv';
-    }
-
-
-    return parts.join(
-        ' · '
+            );
+        }
     );
 }
 
 
 // ============================================================================
-// Icons
+// EINE ZEILE
+// ============================================================================
+
+function createConsumerHTML(
+    item
+)
+{
+    const key =
+        escapeHTML(
+            item.key
+            ||
+            ''
+        );
+
+
+    const name =
+        escapeHTML(
+            item.name
+            ||
+            ''
+        );
+
+
+    const sub =
+        escapeHTML(
+            item.sub
+            ||
+            ''
+        );
+
+
+    const mode =
+        escapeHTML(
+            normaliseMode(
+                item.mode
+            )
+        );
+
+
+    const status =
+        escapeHTML(
+            normaliseStatus(
+                item
+            )
+        );
+
+
+    const power =
+        escapeHTML(
+            item.power
+            ||
+            '—'
+        );
+
+
+    const objectID =
+        Number(
+            item.id
+        )
+        ||
+        0;
+
+
+    return `
+        <div
+            class="consumer"
+            data-key="${key}"
+        >
+
+            <div class="icon">
+                ${getIcon(item.icon)}
+            </div>
+
+
+            <div class="info">
+
+                <div
+                    class="name"
+                    title="${name}"
+                >
+                    ${name}
+                </div>
+
+
+                <div
+                    class="sub"
+                    title="${sub}"
+                >
+                    ${sub}
+                </div>
+
+            </div>
+
+
+            <div class="state">
+
+                <div class="state-line">
+
+                    <span
+                        class="state-dot ${item.isOn ? 'on' : ''}"
+                    ></span>
+
+                    <span
+                        class="state-text"
+                        title="${status}"
+                    >
+                        ${status}
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="mode"
+                    title="${mode}"
+                >
+                    ${mode}
+                </div>
+
+            </div>
+
+
+            <div
+                class="power"
+                title="${power}"
+            >
+                ${power}
+            </div>
+
+
+            <button
+                class="gear"
+                type="button"
+                data-object-id="${objectID}"
+                aria-label="Einstellungen ${name}"
+                title="Einstellungen öffnen"
+            >
+                ⚙
+            </button>
+
+        </div>
+    `;
+}
+
+
+// ============================================================================
+// STATUS
+// ============================================================================
+
+function normaliseStatus(
+    item
+)
+{
+    if (
+        item.status
+    ) {
+
+        return String(
+            item.status
+        );
+    }
+
+
+    return item.isOn
+        ?
+        'Ein'
+        :
+        'Aus';
+}
+
+
+// ============================================================================
+// BETRIEBSART
+// ============================================================================
+
+function normaliseMode(
+    value
+)
+{
+    if (
+        value === null
+        ||
+        value === undefined
+        ||
+        value === ''
+    ) {
+
+        return '';
+    }
+
+
+    return String(
+        value
+    );
+}
+
+
+// ============================================================================
+// ICONS
 // ============================================================================
 
 function getIcon(
@@ -1104,22 +1388,114 @@ function getIcon(
 
         case 'boiler':
 
-            return '◉';
+            return `
+                <svg
+                    viewBox="0 0 32 32"
+                    width="26"
+                    height="26"
+                >
+                    <rect
+                        x="9"
+                        y="4"
+                        width="14"
+                        height="24"
+                        rx="4"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.3"
+                    />
+
+                    <path
+                        d="M16 11 C13 15 12 17 12 19 A4 4 0 0 0 20 19 C20 17 19 15 16 11Z"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    />
+                </svg>
+            `;
 
 
         case 'drop':
 
-            return '◊';
+            return `
+                <svg
+                    viewBox="0 0 32 32"
+                    width="27"
+                    height="27"
+                >
+                    <path
+                        d="M16 3 C11 10 7 15 7 20 A9 9 0 0 0 25 20 C25 15 21 10 16 3Z"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.5"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            `;
 
 
         case 'pool':
 
-            return '≋';
+            return `
+                <svg
+                    viewBox="0 0 32 32"
+                    width="28"
+                    height="28"
+                >
+                    <path
+                        d="M5 11 H11 V4 M11 8 H18 V4"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.2"
+                        stroke-linecap="round"
+                    />
+
+                    <path
+                        d="M3 17 C6 14 9 20 12 17 C15 14 18 20 21 17 C24 14 27 20 30 17"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.2"
+                        stroke-linecap="round"
+                    />
+
+                    <path
+                        d="M3 23 C6 20 9 26 12 23 C15 20 18 26 21 23 C24 20 27 26 30 23"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.2"
+                        stroke-linecap="round"
+                    />
+                </svg>
+            `;
 
 
         case 'heater':
 
-            return '▤';
+            return `
+                <svg
+                    viewBox="0 0 32 32"
+                    width="27"
+                    height="27"
+                >
+                    <rect
+                        x="7"
+                        y="5"
+                        width="18"
+                        height="22"
+                        rx="2"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.3"
+                    />
+
+                    <path
+                        d="M11 9 V23 M16 9 V23 M21 9 V23"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    />
+                </svg>
+            `;
 
 
         default:
@@ -1130,7 +1506,7 @@ function getIcon(
 
 
 // ============================================================================
-// Sicherheit
+// HTML SICHER ESCAPEN
 // ============================================================================
 
 function escapeHTML(
@@ -1142,31 +1518,31 @@ function escapeHTML(
         ??
         ''
     )
-    .replaceAll(
-        '&',
-        '&amp;'
-    )
-    .replaceAll(
-        '<',
-        '&lt;'
-    )
-    .replaceAll(
-        '>',
-        '&gt;'
-    )
-    .replaceAll(
-        '"',
-        '&quot;'
-    )
-    .replaceAll(
-        "'",
-        '&#039;'
-    );
+        .replaceAll(
+            '&',
+            '&amp;'
+        )
+        .replaceAll(
+            '<',
+            '&lt;'
+        )
+        .replaceAll(
+            '>',
+            '&gt;'
+        )
+        .replaceAll(
+            '"',
+            '&quot;'
+        )
+        .replaceAll(
+            "'",
+            '&#039;'
+        );
 }
 
 
 // ============================================================================
-// Start
+// START
 // ============================================================================
 
 document.addEventListener(
@@ -1175,6 +1551,7 @@ document.addEventListener(
 );
 
 </script>
+
 
 </body>
 

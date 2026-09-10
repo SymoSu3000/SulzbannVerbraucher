@@ -1,9 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="de">
 
 <head>
 
 <meta charset="UTF-8">
+
 <meta
     name="viewport"
     content="width=device-width, initial-scale=1, viewport-fit=cover"
@@ -12,12 +14,13 @@
 <style>
 
     /* ================================================================ */
-    /* SYMCON THEME                                                     */
+    /* Farben                                                           */
     /* ================================================================ */
 
     :root {
 
-        color-scheme: light dark;
+        color-scheme:
+            light dark;
 
         --accent:
             var(
@@ -31,30 +34,27 @@
                 #f2f4f6
             );
 
-        --background:
-            var(
-                --card-color,
-                transparent
-            );
+        --green:
+            #20d17a;
 
-        --green: #20d17a;
-        --blue: #39a8ff;
-        --orange: #f5a623;
+        --blue:
+            #39a8ff;
 
-        /*
-         * Dezente neutrale Farben.
-         *
-         * Keine Abhängigkeit von color-mix(),
-         * da wir damit in der Energiefluss-Kachel bereits
-         * unterschiedliche Darstellungen gesehen haben.
-         */
+        --orange:
+            #f5a623;
+
+        --red:
+            #ff6470;
+
+        --grey:
+            #9099a3;
 
         --muted:
             rgba(
                 170,
                 176,
                 183,
-                .90
+                .92
             );
 
         --border:
@@ -74,6 +74,10 @@
             );
     }
 
+
+    /* ================================================================ */
+    /* Grundlayout                                                      */
+    /* ================================================================ */
 
     * {
 
@@ -123,15 +127,6 @@
     }
 
 
-    /* ================================================================ */
-    /* GESAMTBEREICH                                                    */
-    /*
-     * Symcon zeichnet seinen eigenen Kacheltitel darüber.
-     *
-     * Deshalb reservieren wir oben bewusst Platz und zeichnen
-     * KEINEN zweiten Titel.
-     * ================================================================ */
-
     #app {
 
         width:
@@ -162,11 +157,6 @@
         display:
             grid;
 
-        /*
-         * Exakt fünf Verbraucher.
-         * Jeder erhält denselben Anteil der verfügbaren Höhe.
-         */
-
         grid-template-rows:
             repeat(
                 5,
@@ -182,7 +172,7 @@
 
 
     /* ================================================================ */
-    /* VERBRAUCHERZEILE                                                 */
+    /* Verbraucherzeile                                                 */
     /* ================================================================ */
 
     .consumer {
@@ -203,15 +193,13 @@
             grid;
 
         grid-template-columns:
-
             46px
-            minmax(130px, 1.55fr)
-            minmax(105px, .95fr)
-            minmax(72px, .58fr)
+            minmax(150px, 1.55fr)
+            minmax(140px, 1.15fr)
+            minmax(85px, .65fr)
             46px;
 
         grid-template-areas:
-
             "icon info state power gear";
 
         align-items:
@@ -237,7 +225,7 @@
 
 
     /* ================================================================ */
-    /* ICON                                                             */
+    /* Icon                                                             */
     /* ================================================================ */
 
     .icon {
@@ -260,9 +248,6 @@
         justify-content:
             center;
 
-        flex:
-            0 0 auto;
-
         border:
             1px solid
             var(--border);
@@ -272,12 +257,6 @@
 
         color:
             var(--blue);
-
-        font-size:
-            23px;
-
-        line-height:
-            1;
     }
 
 
@@ -285,13 +264,6 @@
 
         color:
             var(--orange);
-    }
-
-
-    .consumer[data-key="pool"] .icon {
-
-        color:
-            var(--blue);
     }
 
 
@@ -303,7 +275,7 @@
 
 
     /* ================================================================ */
-    /* NAME                                                             */
+    /* Name                                                             */
     /* ================================================================ */
 
     .info {
@@ -313,25 +285,19 @@
 
         min-width:
             0;
-
-        overflow:
-            hidden;
     }
 
 
     .name {
 
-        max-width:
-            100%;
-
         overflow:
             hidden;
 
-        white-space:
-            nowrap;
-
         text-overflow:
             ellipsis;
+
+        white-space:
+            nowrap;
 
         color:
             var(--text);
@@ -349,34 +315,28 @@
 
     .sub {
 
-        max-width:
-            100%;
-
         margin-top:
             3px;
 
         overflow:
             hidden;
 
-        white-space:
-            nowrap;
-
         text-overflow:
             ellipsis;
+
+        white-space:
+            nowrap;
 
         color:
             var(--muted);
 
         font-size:
             11px;
-
-        line-height:
-            1.15;
     }
 
 
     /* ================================================================ */
-    /* STATUS                                                           */
+    /* Statusblock                                                      */
     /* ================================================================ */
 
     .state {
@@ -386,13 +346,10 @@
 
         min-width:
             0;
-
-        overflow:
-            hidden;
     }
 
 
-    .state-line {
+    .mode {
 
         display:
             flex;
@@ -409,17 +366,76 @@
         overflow:
             hidden;
 
-        color:
-            var(--text);
-
         font-size:
             13px;
 
+        font-weight:
+            700;
+
         line-height:
             1.15;
+    }
 
-        font-weight:
-            650;
+
+    .mode-text {
+
+        min-width:
+            0;
+
+        overflow:
+            hidden;
+
+        text-overflow:
+            ellipsis;
+
+        white-space:
+            nowrap;
+    }
+
+
+    .mode.auto {
+
+        color:
+            var(--blue);
+    }
+
+
+    .mode.force {
+
+        color:
+            var(--green);
+    }
+
+
+    .mode.off {
+
+        color:
+            var(--grey);
+    }
+
+
+    .real-state {
+
+        margin-top:
+            5px;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        gap:
+            6px;
+
+        min-width:
+            0;
+
+        font-size:
+            12px;
+
+        color:
+            var(--text);
     }
 
 
@@ -438,7 +454,7 @@
             50%;
 
         background:
-            #7d8790;
+            var(--grey);
     }
 
 
@@ -446,55 +462,45 @@
 
         background:
             var(--green);
+
+        box-shadow:
+            0 0 8px
+            rgba(
+                32,
+                209,
+                122,
+                .40
+            );
     }
 
 
-    .state-text {
-
-        min-width:
-            0;
-
-        overflow:
-            hidden;
-
-        white-space:
-            nowrap;
-
-        text-overflow:
-            ellipsis;
-    }
-
-
-    .mode {
+    .reason {
 
         margin-top:
-            3px;
+            4px;
 
-        min-width:
-            0;
+        max-width:
+            100%;
 
         overflow:
             hidden;
 
-        white-space:
-            nowrap;
-
         text-overflow:
             ellipsis;
+
+        white-space:
+            nowrap;
 
         color:
             var(--muted);
 
         font-size:
-            11px;
-
-        line-height:
-            1.15;
+            10px;
     }
 
 
     /* ================================================================ */
-    /* LEISTUNG                                                         */
+    /* Leistung                                                         */
     /* ================================================================ */
 
     .power {
@@ -502,20 +508,11 @@
         grid-area:
             power;
 
-        min-width:
-            0;
-
-        overflow:
-            hidden;
+        text-align:
+            right;
 
         white-space:
             nowrap;
-
-        text-overflow:
-            ellipsis;
-
-        text-align:
-            right;
 
         color:
             var(--text);
@@ -523,16 +520,13 @@
         font-size:
             15px;
 
-        line-height:
-            1;
-
         font-weight:
             750;
     }
 
 
     /* ================================================================ */
-    /* ZAHNRAD                                                          */
+    /* Zahnrad                                                          */
     /* ================================================================ */
 
     .gear {
@@ -549,10 +543,10 @@
         height:
             40px;
 
-        margin:
+        padding:
             0;
 
-        padding:
+        margin:
             0;
 
         display:
@@ -571,9 +565,6 @@
         border-radius:
             9px;
 
-        outline:
-            none;
-
         background:
             rgba(
                 127,
@@ -585,23 +576,20 @@
         color:
             var(--text);
 
-        font-size:
-            20px;
-
-        line-height:
-            1;
-
         cursor:
             pointer;
+
+        font-size:
+            20px;
     }
 
 
     .gear:hover {
 
-        border-color:
+        color:
             var(--accent);
 
-        color:
+        border-color:
             var(--accent);
     }
 
@@ -614,12 +602,8 @@
 
 
     /* ================================================================ */
-    /* MITTLERE / SCHMALE KACHEL                                       */
-    /*
-     * Wir verstecken nichts Wichtiges.
-     *
-     * Die Darstellung wird lediglich kompakter.
-     * ================================================================ */
+    /* Schmalere Ansicht                                                */
+    /* ================================================================ */
 
     @media
     (
@@ -643,19 +627,17 @@
         .consumer {
 
             grid-template-columns:
-
                 42px
                 minmax(0, 1fr)
-                minmax(82px, .7fr)
+                72px
                 42px;
 
             grid-template-areas:
-
                 "icon info power gear"
                 "icon state power gear";
 
             row-gap:
-                2px;
+                3px;
 
             column-gap:
                 8px;
@@ -673,9 +655,6 @@
 
             height:
                 36px;
-
-            font-size:
-                21px;
         }
 
 
@@ -693,14 +672,24 @@
         }
 
 
-        .state-line {
+        .mode {
 
             font-size:
                 12px;
         }
 
 
-        .mode {
+        .real-state {
+
+            margin-top:
+                2px;
+
+            font-size:
+                11px;
+        }
+
+
+        .reason {
 
             display:
                 none;
@@ -729,7 +718,7 @@
 
 
     /* ================================================================ */
-    /* MOBILE / SEHR SCHMAL                                             */
+    /* Mobile                                                           */
     /* ================================================================ */
 
     @media
@@ -739,11 +728,6 @@
     ) {
 
         #app {
-
-            /*
-             * Etwas weniger Kopfraum,
-             * da der mobile Symcon-Titel kompakter ist.
-             */
 
             padding-top:
                 49px;
@@ -769,14 +753,12 @@
         .consumer {
 
             grid-template-columns:
-
                 38px
                 minmax(0, 1fr)
-                64px
+                62px
                 38px;
 
             grid-template-areas:
-
                 "icon info power gear"
                 "icon state power gear";
 
@@ -796,12 +778,6 @@
 
             height:
                 34px;
-
-            border-radius:
-                8px;
-
-            font-size:
-                19px;
         }
 
 
@@ -819,23 +795,17 @@
         }
 
 
-        .state-line {
+        .mode {
 
             font-size:
                 11px;
         }
 
 
-        .state-dot {
+        .real-state {
 
-            width:
-                9px;
-
-            height:
-                9px;
-
-            flex-basis:
-                9px;
+            font-size:
+                10px;
         }
 
 
@@ -854,9 +824,6 @@
             height:
                 34px;
 
-            border-radius:
-                8px;
-
             font-size:
                 17px;
         }
@@ -864,11 +831,8 @@
 
 
     /* ================================================================ */
-    /* GERINGE HÖHE                                                     */
-    /*
-     * Für sehr flache Desktop-Kacheln reduzieren wir vertikal
-     * automatisch einige sekundäre Informationen.
-     * ================================================================ */
+    /* Flache Kachel                                                    */
+    /* ================================================================ */
 
     @media
     (
@@ -910,7 +874,7 @@
         }
 
 
-        .mode {
+        .reason {
 
             display:
                 none;
@@ -924,9 +888,6 @@
 
             height:
                 32px;
-
-            font-size:
-                18px;
         }
 
 
@@ -950,10 +911,17 @@
         }
 
 
-        .state-line {
+        .mode {
 
             font-size:
                 11px;
+        }
+
+
+        .real-state {
+
+            font-size:
+                10px;
         }
 
 
@@ -988,7 +956,7 @@
 
 
 // ============================================================================
-// START
+// Start
 // ============================================================================
 
 function init()
@@ -1002,15 +970,12 @@ function init()
 
     } catch (e) {
 
-        /*
-         * Nur relevant ausserhalb der Symcon Visualisierung.
-         */
     }
 }
 
 
 // ============================================================================
-// SYMCON LIVE-DATEN
+// Nachricht von Symcon
 // ============================================================================
 
 function handleMessage(
@@ -1066,7 +1031,7 @@ function handleMessage(
 
 
 // ============================================================================
-// RENDERING
+// Rendern
 // ============================================================================
 
 function renderConsumers(
@@ -1086,13 +1051,6 @@ function renderConsumers(
         return;
     }
 
-
-    /*
-     * Es existieren exakt fünf Verbraucher.
-     *
-     * Wir bauen die Liste nur beim Symcon-Update neu auf.
-     * Keine Timer, keine laufenden Animationen.
-     */
 
     const html =
         [];
@@ -1117,10 +1075,6 @@ function renderConsumers(
             ''
         );
 
-
-    /*
-     * Zahnrad-Ereignisse danach sauber registrieren.
-     */
 
     const buttons =
         list.querySelectorAll(
@@ -1165,7 +1119,7 @@ function renderConsumers(
                     } catch (e) {
 
                         console.log(
-                            'openObject konnte nicht ausgeführt werden',
+                            'openObject nicht verfügbar',
                             e
                         );
                     }
@@ -1177,21 +1131,13 @@ function renderConsumers(
 
 
 // ============================================================================
-// EINE ZEILE
+// Einzelne Zeile
 // ============================================================================
 
 function createConsumerHTML(
     item
 )
 {
-    const key =
-        escapeHTML(
-            item.key
-            ||
-            ''
-        );
-
-
     const name =
         escapeHTML(
             item.name
@@ -1208,27 +1154,35 @@ function createConsumerHTML(
         );
 
 
-    const mode =
+    const modeText =
         escapeHTML(
-            normaliseMode(
-                item.mode
-            )
+            item.modeText
+            ||
+            ''
         );
 
 
-    const status =
+    const statusText =
         escapeHTML(
-            normaliseStatus(
-                item
-            )
+            item.statusText
+            ||
+            ''
         );
 
 
-    const power =
+    const powerText =
         escapeHTML(
-            item.power
+            item.powerText
             ||
             '—'
+        );
+
+
+    const reason =
+        escapeHTML(
+            item.reason
+            ||
+            ''
         );
 
 
@@ -1240,10 +1194,18 @@ function createConsumerHTML(
         0;
 
 
+    const modeClass =
+        getModeClass(
+            Number(
+                item.modeRaw
+            )
+        );
+
+
     return `
         <div
             class="consumer"
-            data-key="${key}"
+            data-key="${escapeHTML(item.key || '')}"
         >
 
             <div class="icon">
@@ -1273,27 +1235,36 @@ function createConsumerHTML(
 
             <div class="state">
 
-                <div class="state-line">
+                <div
+                    class="mode ${modeClass}"
+                    title="${modeText}"
+                >
+
+                    <span class="mode-text">
+                        ${modeText}
+                    </span>
+
+                </div>
+
+
+                <div class="real-state">
 
                     <span
                         class="state-dot ${item.isOn ? 'on' : ''}"
                     ></span>
 
-                    <span
-                        class="state-text"
-                        title="${status}"
-                    >
-                        ${status}
+                    <span>
+                        Gerät ${statusText}
                     </span>
 
                 </div>
 
 
                 <div
-                    class="mode"
-                    title="${mode}"
+                    class="reason"
+                    title="${reason}"
                 >
-                    ${mode}
+                    ${reason}
                 </div>
 
             </div>
@@ -1301,9 +1272,9 @@ function createConsumerHTML(
 
             <div
                 class="power"
-                title="${power}"
+                title="Konfigurierte EMS-Leistung: ${powerText}"
             >
-                ${power}
+                ${powerText}
             </div>
 
 
@@ -1311,8 +1282,8 @@ function createConsumerHTML(
                 class="gear"
                 type="button"
                 data-object-id="${objectID}"
-                aria-label="Einstellungen ${name}"
                 title="Einstellungen öffnen"
+                aria-label="Einstellungen ${name}"
             >
                 ⚙
             </button>
@@ -1323,59 +1294,45 @@ function createConsumerHTML(
 
 
 // ============================================================================
-// STATUS
+// Farbe Betriebsart
 // ============================================================================
 
-function normaliseStatus(
-    item
+function getModeClass(
+    mode
 )
 {
-    if (
-        item.status
+    switch (
+        mode
     ) {
 
-        return String(
-            item.status
-        );
+        case 0:
+
+            return
+                'off';
+
+
+        case 1:
+
+            return
+                'auto';
+
+
+        case 2:
+
+            return
+                'force';
+
+
+        default:
+
+            return
+                '';
     }
-
-
-    return item.isOn
-        ?
-        'Ein'
-        :
-        'Aus';
 }
 
 
 // ============================================================================
-// BETRIEBSART
-// ============================================================================
-
-function normaliseMode(
-    value
-)
-{
-    if (
-        value === null
-        ||
-        value === undefined
-        ||
-        value === ''
-    ) {
-
-        return '';
-    }
-
-
-    return String(
-        value
-    );
-}
-
-
-// ============================================================================
-// ICONS
+// Icons
 // ============================================================================
 
 function getIcon(
@@ -1500,13 +1457,14 @@ function getIcon(
 
         default:
 
-            return '●';
+            return
+                '●';
     }
 }
 
 
 // ============================================================================
-// HTML SICHER ESCAPEN
+// HTML escapen
 // ============================================================================
 
 function escapeHTML(
@@ -1518,31 +1476,31 @@ function escapeHTML(
         ??
         ''
     )
-        .replaceAll(
-            '&',
-            '&amp;'
-        )
-        .replaceAll(
-            '<',
-            '&lt;'
-        )
-        .replaceAll(
-            '>',
-            '&gt;'
-        )
-        .replaceAll(
-            '"',
-            '&quot;'
-        )
-        .replaceAll(
-            "'",
-            '&#039;'
-        );
+    .replaceAll(
+        '&',
+        '&amp;'
+    )
+    .replaceAll(
+        '<',
+        '&lt;'
+    )
+    .replaceAll(
+        '>',
+        '&gt;'
+    )
+    .replaceAll(
+        '"',
+        '&quot;'
+    )
+    .replaceAll(
+        "'",
+        '&#039;'
+    );
 }
 
 
 // ============================================================================
-// START
+// Start
 // ============================================================================
 
 document.addEventListener(

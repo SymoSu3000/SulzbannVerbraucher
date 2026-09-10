@@ -1,1 +1,13 @@
-
+{
+    "id": "{B4A94243-89DD-4C5A-BE35-9BCA4511F316}",
+    "name": "FlexibleConsumersLive",
+    "type": 3,
+    "vendor": "Sulzbann",
+    "aliases": [
+        "Flexible Verbraucher Live"
+    ],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "SULZFC"
+}

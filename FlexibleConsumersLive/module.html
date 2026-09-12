@@ -1,757 +1,510 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+*{box-sizing:border-box}
 
-* {
-    box-sizing: border-box;
+:root{
+  color-scheme: light dark;
+
+  --text:#20262b;
+  --muted:#7d878d;
+  --line:rgba(0,0,0,.14);
+  --row-bg:rgba(0,0,0,.02);
+
+  --blue:#2196f3;
+  --orange:#f4a321;
+  --green:#19c989;
+  --grey:#9ca7af;
 }
 
-:root {
-    color-scheme: light dark;
+@media (prefers-color-scheme: dark){
+  :root{
+    --text:#f1f4f6;
+    --muted:#a7afb5;
+    --line:rgba(255,255,255,.14);
+    --row-bg:rgba(255,255,255,.02);
 
-    --text: #20262b;
-    --muted: #7d878d;
-    --line: rgba(0,0,0,.14);
-    --row-bg: rgba(0,0,0,.015);
-
-    --blue: #2196f3;
-    --orange: #f4a321;
-    --green: #19c989;
-    --grey: #9ca7af;
+    --blue:#38a9ff;
+    --orange:#ffad2f;
+    --green:#22d695;
+    --grey:#a4adb6;
+  }
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --text: #f1f4f6;
-        --muted: #a7afb5;
-        --line: rgba(255,255,255,.15);
-        --row-bg: rgba(255,255,255,.018);
-
-        --blue: #38a9ff;
-        --orange: #ffad2f;
-        --green: #1bd491;
-        --grey: #9ca7af;
-    }
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:transparent;
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
 }
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-
-    width: 100%;
-    height: 100%;
-
-    overflow: hidden;
-
-    background: transparent;
-    color: var(--text);
-
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
+/* ganze kachel */
+.consumer-list{
+  width:100%;
+  height:100%;
+  padding:2.7rem .5rem .5rem;
+  display:grid;
+  grid-template-rows:repeat(5,minmax(0,1fr));
+  gap:.32rem;
+  overflow:hidden;
 }
 
-
-/* ============================================================
-   GESAMTKACHEL
-============================================================ */
-
-.consumers {
-    width: 100%;
-    height: 100%;
-
-    display: grid;
-    grid-template-rows: repeat(5,minmax(0,1fr));
-
-    gap: .3rem;
-
-    padding: 2.7rem .5rem .5rem;
-
-    overflow: hidden;
+/* zeile */
+.consumer-row{
+  min-width:0;
+  min-height:0;
+  display:grid;
+  grid-template-columns:3.1rem minmax(0,1fr) max-content max-content 2.55rem;
+  align-items:center;
+  column-gap:.55rem;
+  padding:.22rem .38rem;
+  border:1px solid var(--line);
+  border-radius:.82rem;
+  background:var(--row-bg);
+  overflow:hidden;
 }
 
-
-/* ============================================================
-   ZEILE
-============================================================ */
-
-.consumer-row {
-    min-width: 0;
-    min-height: 0;
-
-    display: grid;
-
-    /*
-     * Drei Hauptbereiche:
-     *
-     * links   = Verbraucher
-     * mitte   = Modus / Zustand
-     * rechts  = Leistung / Zahnrad
-     */
-
-    grid-template-columns:
-        minmax(0, 1.45fr)
-        minmax(max-content, .8fr)
-        max-content;
-
-    align-items: center;
-
-    gap: .8rem;
-
-    padding: .25rem .45rem;
-
-    border: 1px solid var(--line);
-    border-radius: .8rem;
-
-    background: var(--row-bg);
-
-    overflow: hidden;
+/* alle zellen schön mittig */
+.row-cell{
+  min-width:0;
+  min-height:0;
+  display:flex;
+  align-items:center;
 }
 
-
-/* ============================================================
-   LINKS
-============================================================ */
-
-.main-zone {
-    min-width: 0;
-
-    display: grid;
-
-    grid-template-columns:
-        auto
-        minmax(0,1fr);
-
-    align-items: center;
-
-    gap: .6rem;
+/* icon */
+.icon-wrap{
+  justify-content:center;
 }
 
-
-.icon-box {
-    width: 2.55rem;
-    aspect-ratio: 1;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 1px solid var(--line);
-    border-radius: .65rem;
+.icon-box{
+  width:2.55rem;
+  height:2.55rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--line);
+  border-radius:.72rem;
+  margin:auto;
 }
 
-
-.icon {
-    font-size: 1.65rem;
-    line-height: 1;
+.icon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:100%;
+  font-size:1.55rem;
+  line-height:1;
 }
 
+.blue{color:var(--blue)}
+.orange{color:var(--orange)}
 
-.blue {
-    color: var(--blue);
+/* name */
+.name-wrap{
+  overflow:hidden;
+  justify-content:flex-start;
 }
 
-
-.orange {
-    color: var(--orange);
+.name-col{
+  min-width:0;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
 }
 
-
-.name-area {
-    min-width: 0;
+.name{
+  font-size:14px;
+  font-weight:700;
+  line-height:1.12;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
-
-.name {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1.08;
+.sub{
+  margin-top:.14rem;
+  font-size:13px;
+  line-height:1.08;
+  color:var(--muted);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
-
-.subtitle {
-    margin-top: .15rem;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    color: var(--muted);
-
-    font-size: 13px;
-    line-height: 1.05;
+/* mode + status */
+.state-wrap{
+  justify-content:center;
 }
 
-
-/* ============================================================
-   MITTE
-============================================================ */
-
-.state-zone {
-    min-width: max-content;
-
-    display: grid;
-
-    grid-template-rows:
-        auto
-        auto;
-
-    justify-items: start;
-
-    align-content: center;
-
-    row-gap: .2rem;
+.state-col{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
 }
 
-
-.mode {
-    color: var(--blue);
-
-    font-size: 13px;
-    font-weight: 650;
-
-    line-height: 1.05;
-
-    white-space: nowrap;
+.mode{
+  font-size:13px;
+  font-weight:650;
+  line-height:1.06;
+  color:var(--blue);
+  white-space:nowrap;
 }
 
-
-.mode.off {
-    color: var(--muted);
+.mode.off{
+  color:var(--muted);
 }
 
-
-.real-state {
-    display: flex;
-
-    align-items: center;
-
-    gap: .35rem;
-
-    font-size: 13px;
-
-    line-height: 1.05;
-
-    white-space: nowrap;
+.status-line{
+  margin-top:.14rem;
+  display:flex;
+  align-items:center;
+  gap:.34rem;
+  font-size:13px;
+  line-height:1.06;
+  white-space:nowrap;
 }
 
-
-.state-dot {
-    width: .65rem;
-    height: .65rem;
-
-    flex: 0 0 auto;
-
-    border-radius: 50%;
-
-    background: var(--grey);
+.dot{
+  width:.72rem;
+  height:.72rem;
+  border-radius:50%;
+  background:var(--grey);
+  flex:0 0 auto;
 }
 
-
-.state-dot.on {
-    background: var(--green);
+.dot.on{
+  background:var(--green);
 }
 
-
-/* ============================================================
-   RECHTS
-============================================================ */
-
-.right-zone {
-    min-width: max-content;
-
-    display: grid;
-
-    grid-template-columns:
-        max-content
-        auto;
-
-    align-items: center;
-
-    column-gap: .75rem;
+/* power */
+.power-wrap{
+  justify-content:center;
 }
 
-
-.power {
-    min-width: 4.2rem;
-
-    font-size: 14px;
-    font-weight: 700;
-
-    line-height: 1;
-
-    text-align: right;
-
-    white-space: nowrap;
+.power{
+  min-width:4.35rem;
+  text-align:right;
+  font-size:14px;
+  font-weight:700;
+  line-height:1;
+  white-space:nowrap;
 }
 
-
-.gear {
-    width: 2.3rem;
-    aspect-ratio: 1;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 0;
-
-    border: 1px solid var(--line);
-    border-radius: .65rem;
-
-    background: transparent;
-    color: var(--text);
-
-    font-size: 1.2rem;
+/* gear */
+.gear-wrap{
+  justify-content:center;
 }
 
-
-/* ============================================================
-   MOBILE
-============================================================ */
-
-@media (hover:none) and (pointer:coarse) {
-
-    .consumers {
-        padding: 2.65rem .45rem .45rem;
-        gap: .25rem;
-    }
-
-
-    .consumer-row {
-        grid-template-columns:
-            minmax(0,1.35fr)
-            minmax(max-content,.75fr)
-            max-content;
-
-        gap: .55rem;
-
-        padding: .2rem .4rem;
-    }
-
-
-    .main-zone {
-        gap: .5rem;
-    }
-
-
-    .icon-box {
-        width: 2.4rem;
-    }
-
-
-    .icon {
-        font-size: 1.55rem;
-    }
-
-
-    .name {
-        font-size: 14px;
-    }
-
-
-    .subtitle,
-    .mode,
-    .real-state {
-        font-size: 12px;
-    }
-
-
-    .power {
-        min-width: 3.8rem;
-
-        font-size: 14px;
-    }
-
-
-    .right-zone {
-        column-gap: .55rem;
-    }
-
-
-    .gear {
-        width: 2.15rem;
-
-        font-size: 1.1rem;
-    }
-
+.gear{
+  width:2.28rem;
+  height:2.28rem;
+  border:1px solid var(--line);
+  border-radius:.7rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.12rem;
+  line-height:1;
+  background:transparent;
+  color:var(--text);
 }
 
+/* DESKTOP / LAPTOP */
+@media (hover:hover) and (pointer:fine){
+  .consumer-row{
+    grid-template-columns:3.15rem minmax(0,1fr) max-content max-content 2.55rem;
+  }
 
-/* ============================================================
-   SCHMALES MOBILE
-============================================================ */
-
-@media
-    (hover:none)
-    and
-    (pointer:coarse)
-    and
-    (max-width:430px)
-{
-
-    .consumer-row {
-        gap: .35rem;
-
-        padding-left: .3rem;
-        padding-right: .3rem;
-    }
-
-
-    .main-zone {
-        gap: .4rem;
-    }
-
-
-    .icon-box {
-        width: 2.15rem;
-    }
-
-
-    .icon {
-        font-size: 1.4rem;
-    }
-
-
-    .name {
-        font-size: 13px;
-    }
-
-
-    .subtitle,
-    .mode,
-    .real-state {
-        font-size: 12px;
-    }
-
-
-    .power {
-        min-width: 3.3rem;
-
-        font-size: 13px;
-    }
-
-
-    .right-zone {
-        column-gap: .35rem;
-    }
-
-
-    .gear {
-        width: 1.95rem;
-    }
-
+  .name{font-size:13px}
+  .sub{font-size:13px}
+  .mode{font-size:13px}
+  .status-line{font-size:13px}
+  .power{font-size:13px}
 }
 
+/* MOBILE */
+@media (hover:none) and (pointer:coarse){
+  .consumer-list{
+    padding:2.7rem .42rem .42rem;
+    gap:.28rem;
+  }
 
-/* ============================================================
-   DESKTOP / LAPTOP
-============================================================ */
+  .consumer-row{
+    grid-template-columns:2.9rem minmax(0,1fr) max-content max-content 2.3rem;
+    column-gap:.46rem;
+    padding:.20rem .32rem;
+  }
 
-@media (hover:hover) and (pointer:fine) {
+  .icon-box{
+    width:2.35rem;
+    height:2.35rem;
+  }
 
-    .name,
-    .subtitle,
-    .mode,
-    .real-state,
-    .power {
-        font-size: 13px;
-    }
+  .icon{
+    font-size:1.42rem;
+  }
 
+  .name{font-size:14px}
+  .sub{font-size:12px}
+  .mode{font-size:12px}
+  .status-line{font-size:12px}
+  .power{
+    min-width:3.9rem;
+    font-size:14px;
+  }
+
+  .gear{
+    width:2.08rem;
+    height:2.08rem;
+    font-size:1.02rem;
+  }
 }
 
+/* sehr schmal */
+@media (hover:none) and (pointer:coarse) and (max-width:430px){
+  .consumer-row{
+    grid-template-columns:2.75rem minmax(0,1fr) max-content max-content 2.15rem;
+    column-gap:.38rem;
+    padding:.18rem .28rem;
+  }
+
+  .icon-box{
+    width:2.18rem;
+    height:2.18rem;
+  }
+
+  .icon{
+    font-size:1.34rem;
+  }
+
+  .name{font-size:13px}
+  .sub{font-size:12px}
+  .mode{font-size:12px}
+  .status-line{font-size:12px}
+  .power{
+    min-width:3.45rem;
+    font-size:13px;
+  }
+
+  .gear{
+    width:1.98rem;
+    height:1.98rem;
+    font-size:.98rem;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="consumers">
+<div class="consumer-list">
 
-
-    <div class="consumer-row">
-
-        <div class="main-zone">
-            <div class="icon-box">
-                <div class="icon blue">♧</div>
-            </div>
-
-            <div class="name-area">
-                <div class="name">Entfeuchter UG</div>
-                <div class="subtitle">Untergeschoss</div>
-            </div>
-        </div>
-
-        <div class="state-zone">
-            <div class="mode" id="ug-mode">—</div>
-
-            <div class="real-state">
-                <span class="state-dot" id="ug-dot"></span>
-                <span id="ug-state">—</span>
-            </div>
-        </div>
-
-        <div class="right-zone">
-            <div class="power" id="ug-power">—</div>
-            <button class="gear" type="button">⚙</button>
-        </div>
-
+  <div class="consumer-row">
+    <div class="row-cell icon-wrap">
+      <div class="icon-box"><div class="icon blue">♧</div></div>
     </div>
-
-
-    <div class="consumer-row">
-
-        <div class="main-zone">
-            <div class="icon-box">
-                <div class="icon blue">♧</div>
-            </div>
-
-            <div class="name-area">
-                <div class="name">Entfeuchter OG</div>
-                <div class="subtitle">Obergeschoss</div>
-            </div>
-        </div>
-
-        <div class="state-zone">
-            <div class="mode" id="og-mode">—</div>
-
-            <div class="real-state">
-                <span class="state-dot" id="og-dot"></span>
-                <span id="og-state">—</span>
-            </div>
-        </div>
-
-        <div class="right-zone">
-            <div class="power" id="og-power">—</div>
-            <button class="gear" type="button">⚙</button>
-        </div>
-
+    <div class="row-cell name-wrap">
+      <div class="name-col">
+        <div class="name">Entfeuchter UG</div>
+        <div class="sub">Untergeschoss</div>
+      </div>
     </div>
-
-
-    <div class="consumer-row">
-
-        <div class="main-zone">
-            <div class="icon-box">
-                <div class="icon blue">≋</div>
-            </div>
-
-            <div class="name-area">
-                <div class="name">Poolpumpe</div>
-                <div class="subtitle">Pooltechnik</div>
-            </div>
+    <div class="row-cell state-wrap">
+      <div class="state-col">
+        <div class="mode" id="ug-mode">—</div>
+        <div class="status-line">
+          <span class="dot" id="ug-dot"></span>
+          <span id="ug-state">—</span>
         </div>
-
-        <div class="state-zone">
-            <div class="mode" id="pool-mode">—</div>
-
-            <div class="real-state">
-                <span class="state-dot" id="pool-dot"></span>
-                <span id="pool-state">—</span>
-            </div>
-        </div>
-
-        <div class="right-zone">
-            <div class="power" id="pool-power">—</div>
-            <button class="gear" type="button">⚙</button>
-        </div>
-
+      </div>
     </div>
-
-
-    <div class="consumer-row">
-
-        <div class="main-zone">
-            <div class="icon-box">
-                <div class="icon orange">◉</div>
-            </div>
-
-            <div class="name-area">
-                <div class="name">Boiler</div>
-                <div class="subtitle">Warmwasser</div>
-            </div>
-        </div>
-
-        <div class="state-zone">
-            <div class="mode" id="boiler-mode">—</div>
-
-            <div class="real-state">
-                <span class="state-dot" id="boiler-dot"></span>
-                <span id="boiler-state">—</span>
-            </div>
-        </div>
-
-        <div class="right-zone">
-            <div class="power" id="boiler-power">—</div>
-            <button class="gear" type="button">⚙</button>
-        </div>
-
+    <div class="row-cell power-wrap">
+      <div class="power" id="ug-power">—</div>
     </div>
-
-
-    <div class="consumer-row">
-
-        <div class="main-zone">
-            <div class="icon-box">
-                <div class="icon orange">▥</div>
-            </div>
-
-            <div class="name-area">
-                <div class="name">Heizstab / Puffer</div>
-                <div class="subtitle">Heizung</div>
-            </div>
-        </div>
-
-        <div class="state-zone">
-            <div class="mode" id="heater-mode">—</div>
-
-            <div class="real-state">
-                <span class="state-dot" id="heater-dot"></span>
-                <span id="heater-state">—</span>
-            </div>
-        </div>
-
-        <div class="right-zone">
-            <div class="power" id="heater-power">—</div>
-            <button class="gear" type="button">⚙</button>
-        </div>
-
+    <div class="row-cell gear-wrap">
+      <div class="gear">⚙</div>
     </div>
+  </div>
+
+  <div class="consumer-row">
+    <div class="row-cell icon-wrap">
+      <div class="icon-box"><div class="icon blue">♧</div></div>
+    </div>
+    <div class="row-cell name-wrap">
+      <div class="name-col">
+        <div class="name">Entfeuchter OG</div>
+        <div class="sub">Obergeschoss</div>
+      </div>
+    </div>
+    <div class="row-cell state-wrap">
+      <div class="state-col">
+        <div class="mode" id="og-mode">—</div>
+        <div class="status-line">
+          <span class="dot" id="og-dot"></span>
+          <span id="og-state">—</span>
+        </div>
+      </div>
+    </div>
+    <div class="row-cell power-wrap">
+      <div class="power" id="og-power">—</div>
+    </div>
+    <div class="row-cell gear-wrap">
+      <div class="gear">⚙</div>
+    </div>
+  </div>
+
+  <div class="consumer-row">
+    <div class="row-cell icon-wrap">
+      <div class="icon-box"><div class="icon blue">≋</div></div>
+    </div>
+    <div class="row-cell name-wrap">
+      <div class="name-col">
+        <div class="name">Poolpumpe</div>
+        <div class="sub">Pooltechnik</div>
+      </div>
+    </div>
+    <div class="row-cell state-wrap">
+      <div class="state-col">
+        <div class="mode" id="pool-mode">—</div>
+        <div class="status-line">
+          <span class="dot" id="pool-dot"></span>
+          <span id="pool-state">—</span>
+        </div>
+      </div>
+    </div>
+    <div class="row-cell power-wrap">
+      <div class="power" id="pool-power">—</div>
+    </div>
+    <div class="row-cell gear-wrap">
+      <div class="gear">⚙</div>
+    </div>
+  </div>
+
+  <div class="consumer-row">
+    <div class="row-cell icon-wrap">
+      <div class="icon-box"><div class="icon orange">◉</div></div>
+    </div>
+    <div class="row-cell name-wrap">
+      <div class="name-col">
+        <div class="name">Boiler</div>
+        <div class="sub">Warmwasser</div>
+      </div>
+    </div>
+    <div class="row-cell state-wrap">
+      <div class="state-col">
+        <div class="mode" id="boiler-mode">—</div>
+        <div class="status-line">
+          <span class="dot" id="boiler-dot"></span>
+          <span id="boiler-state">—</span>
+        </div>
+      </div>
+    </div>
+    <div class="row-cell power-wrap">
+      <div class="power" id="boiler-power">—</div>
+    </div>
+    <div class="row-cell gear-wrap">
+      <div class="gear">⚙</div>
+    </div>
+  </div>
+
+  <div class="consumer-row">
+    <div class="row-cell icon-wrap">
+      <div class="icon-box"><div class="icon orange">▥</div></div>
+    </div>
+    <div class="row-cell name-wrap">
+      <div class="name-col">
+        <div class="name">Heizstab / Puffer</div>
+        <div class="sub">Heizung</div>
+      </div>
+    </div>
+    <div class="row-cell state-wrap">
+      <div class="state-col">
+        <div class="mode" id="heater-mode">—</div>
+        <div class="status-line">
+          <span class="dot" id="heater-dot"></span>
+          <span id="heater-state">—</span>
+        </div>
+      </div>
+    </div>
+    <div class="row-cell power-wrap">
+      <div class="power" id="heater-power">—</div>
+    </div>
+    <div class="row-cell gear-wrap">
+      <div class="gear">⚙</div>
+    </div>
+  </div>
 
 </div>
 
-
 <script>
-
 function setText(id,value){
-    const e=document.getElementById(id);
-    if(e)e.textContent=value;
+  const el=document.getElementById(id);
+  if(el) el.textContent=value;
 }
 
-function modeText(value){
-    const mode=Number(value);
-
-    if(mode===1)return "Automatik";
-    if(mode===2)return "Erzwungen Ein";
-
-    return "Aus";
+function modeText(v){
+  v=Number(v);
+  if(v===1) return "Automatik";
+  if(v===2) return "Erzwungen Ein";
+  return "Aus";
 }
 
-function powerText(value){
-
-    if(
-        value===null ||
-        value===undefined ||
-        Number.isNaN(Number(value))
-    ){
-        return "—";
-    }
-
-    const n=Number(value);
-
-    return Math.abs(n)<1
-        ? Math.round(n*1000)+" W"
-        : n.toFixed(1)+" kW";
+function powerText(v){
+  if(v===null || v===undefined || Number.isNaN(Number(v))) return "—";
+  const n=Number(v);
+  return Math.abs(n)<1 ? Math.round(n*1000)+" W" : n.toFixed(1)+" kW";
 }
 
 function updateConsumer(key,data){
+  if(!data) return;
 
-    if(!data)return;
+  const mode=Number(data.mode);
+  const active=Boolean(data.active);
 
-    const mode=Number(data.mode);
-    const active=Boolean(data.active);
+  setText(key+"-mode", modeText(mode));
+  setText(key+"-state", active ? "Gerät Ein" : "Gerät Aus");
+  setText(key+"-power", powerText(data.power));
 
-    setText(
-        key+"-mode",
-        modeText(mode)
-    );
+  const modeEl=document.getElementById(key+"-mode");
+  const dotEl=document.getElementById(key+"-dot");
 
-    setText(
-        key+"-state",
-        active ? "Gerät Ein" : "Gerät Aus"
-    );
-
-    setText(
-        key+"-power",
-        powerText(data.power)
-    );
-
-    const modeEl=
-        document.getElementById(
-            key+"-mode"
-        );
-
-    if(modeEl){
-        modeEl.classList.toggle(
-            "off",
-            mode===0
-        );
-    }
-
-    const dot=
-        document.getElementById(
-            key+"-dot"
-        );
-
-    if(dot){
-        dot.classList.toggle(
-            "on",
-            active
-        );
-    }
+  if(modeEl) modeEl.classList.toggle("off", mode===0);
+  if(dotEl) dotEl.classList.toggle("on", active);
 }
 
 function handleMessage(data){
+  if(!data) return;
 
-    if(!data)return;
+  if(typeof data==="string"){
+    try{ data=JSON.parse(data); }
+    catch(e){ return; }
+  }
 
-    if(typeof data==="string"){
-
-        try{
-            data=JSON.parse(data);
-        }
-        catch(e){
-            return;
-        }
-    }
-
-    updateConsumer("ug",data.ug);
-    updateConsumer("og",data.og);
-    updateConsumer("pool",data.pool);
-    updateConsumer("boiler",data.boiler);
-    updateConsumer("heater",data.heater);
+  updateConsumer("ug", data.ug);
+  updateConsumer("og", data.og);
+  updateConsumer("pool", data.pool);
+  updateConsumer("boiler", data.boiler);
+  updateConsumer("heater", data.heater);
 }
 
-window.addEventListener(
-    "load",
-    function(){
-
-        if(
-            typeof requestAction===
-            "function"
-        ){
-            requestAction(
-                "Refresh",
-                true
-            );
-        }
-    }
-);
-
+window.addEventListener("load", function(){
+  if(typeof requestAction==="function"){
+    requestAction("Refresh", true);
+  }
+});
 </script>
 
 </body>

@@ -4,37 +4,6 @@ declare(strict_types=1);
 
 class FlexibleConsumersLive extends IPSModule
 {
-    /*
-     * ============================================================
-     * FESTE, BESTÄTIGTE DATENPUNKTE
-     * ============================================================
-     *
-     * ug:
-     *   Mode   #48725
-     *   Status #21846
-     *   Power  #47479
-     *
-     * og:
-     *   Mode   #37326
-     *   Status #20351
-     *   Power  #48347
-     *
-     * pool:
-     *   Mode   #29959
-     *   Power  #56815
-     *   Status wird bei Bedarf unter Schaltinstanz #17098 gesucht.
-     *
-     * boiler:
-     *   Mode   #17552
-     *   Status #10737
-     *   Power  #19394
-     *
-     * heater:
-     *   Mode   #24813
-     *   Status #53546
-     *   Power  #37285
-     */
-
     private const CONSUMERS = [
 
         'ug' => [
@@ -52,8 +21,7 @@ class FlexibleConsumersLive extends IPSModule
         'pool' => [
             'mode'   => 29959,
             'status' => 21048,
-            'power'  => 56815,
-            'switch' => 17098
+            'power'  => 56815
         ],
 
         'boiler' => [
@@ -77,7 +45,7 @@ class FlexibleConsumersLive extends IPSModule
 
         /*
          * Native Visualisierung.
-         * HTML bleibt bestehen, nur Werte werden aktualisiert.
+         * HTML wird einmal geladen, Werte danach live aktualisiert.
          */
         $this->SetVisualizationType(1);
     }
@@ -112,26 +80,16 @@ class FlexibleConsumersLive extends IPSModule
 
 
         if (!file_exists($file)) {
-
-            return
-                '<div style="padding:20px;">' .
-                'module.html nicht gefunden.' .
-                '</div>';
+            return '<div style="padding:20px;">module.html nicht gefunden.</div>';
         }
 
 
         $html =
-            file_get_contents(
-                $file
-            );
+            file_get_contents($file);
 
 
         if ($html === false) {
-
-            return
-                '<div style="padding:20px;">' .
-                'module.html konnte nicht gelesen werden.' .
-                '</div>';
+            return '<div style="padding:20px;">module.html konnte nicht gelesen werden.</div>';
         }
 
 
@@ -145,7 +103,6 @@ class FlexibleConsumersLive extends IPSModule
         $Message,
         $Data
     ): void {
-
         parent::MessageSink(
             $TimeStamp,
             $SenderID,
@@ -155,7 +112,6 @@ class FlexibleConsumersLive extends IPSModule
 
 
         if ($Message === VM_UPDATE) {
-
             $this->SendLiveValues();
         }
     }
@@ -165,7 +121,6 @@ class FlexibleConsumersLive extends IPSModule
         $Ident,
         $Value
     ): void {
-
         if ($Ident === 'Refresh') {
 
             $this->SendLiveValues();
@@ -181,113 +136,6 @@ class FlexibleConsumersLive extends IPSModule
     }
 
 
-    /* ============================================================
-       STATUSVARIABLE AUFLÖSEN
-    ============================================================ */
-
-    private function ResolveStatusID(
-        array $config
-    ): int {
-
-        /*
-         * Zuerst bekannte Status-ID verwenden.
-         */
-
-        $preferred =
-            (int) (
-                $config['status'] ??
-                0
-            );
-
-
-        if (
-            $preferred > 0 &&
-            IPS_VariableExists(
-                $preferred
-            )
-        ) {
-
-            return $preferred;
-        }
-
-
-        /*
-         * Pool:
-         * Falls die bekannte Status-ID nicht existiert,
-         * Bool-Variable "Value" unter der Schaltinstanz suchen.
-         */
-
-        $switchID =
-            (int) (
-                $config['switch'] ??
-                0
-            );
-
-
-        if (
-            $switchID <= 0 ||
-            !IPS_InstanceExists(
-                $switchID
-            )
-        ) {
-
-            return 0;
-        }
-
-
-        foreach (
-            IPS_GetChildrenIDs(
-                $switchID
-            )
-            as $childID
-        ) {
-
-            if (
-                !IPS_VariableExists(
-                    $childID
-                )
-            ) {
-                continue;
-            }
-
-
-            $object =
-                IPS_GetObject(
-                    $childID
-                );
-
-
-            $variable =
-                IPS_GetVariable(
-                    $childID
-                );
-
-
-            if (
-                (
-                    $object['ObjectIdent'] ??
-                    ''
-                ) === 'Value'
-                &&
-                (
-                    $variable['VariableType'] ??
-                    -1
-                ) === 0
-            ) {
-
-                return $childID;
-            }
-        }
-
-
-        return 0;
-    }
-
-
-    /* ============================================================
-       BEOBACHTETE IDS
-    ============================================================ */
-
     private function GetObservedIDs(): array
     {
         $ids = [];
@@ -302,12 +150,10 @@ class FlexibleConsumersLive extends IPSModule
                 (int) $config['mode'];
 
             $ids[] =
-                (int) $config['power'];
+                (int) $config['status'];
 
             $ids[] =
-                $this->ResolveStatusID(
-                    $config
-                );
+                (int) $config['power'];
         }
 
 
@@ -323,79 +169,53 @@ class FlexibleConsumersLive extends IPSModule
     }
 
 
-    /* ============================================================
-       WERTE LESEN
-    ============================================================ */
-
     private function ReadInt(
         int $id
     ): ?int {
-
         if (
             $id <= 0 ||
-            !IPS_VariableExists(
-                $id
-            )
+            !IPS_VariableExists($id)
         ) {
-
             return null;
         }
 
 
         return (int)
-            GetValue(
-                $id
-            );
+            GetValue($id);
     }
 
 
     private function ReadFloat(
         int $id
     ): ?float {
-
         if (
             $id <= 0 ||
-            !IPS_VariableExists(
-                $id
-            )
+            !IPS_VariableExists($id)
         ) {
-
             return null;
         }
 
 
         return (float)
-            GetValue(
-                $id
-            );
+            GetValue($id);
     }
 
 
     private function ReadBool(
         int $id
     ): ?bool {
-
         if (
             $id <= 0 ||
-            !IPS_VariableExists(
-                $id
-            )
+            !IPS_VariableExists($id)
         ) {
-
             return null;
         }
 
 
         return (bool)
-            GetValue(
-                $id
-            );
+            GetValue($id);
     }
 
-
-    /* ============================================================
-       DATEN AN HTML SENDEN
-    ============================================================ */
 
     private function SendLiveValues(): void
     {
@@ -407,31 +227,22 @@ class FlexibleConsumersLive extends IPSModule
             as $key => $config
         ) {
 
-            $statusID =
-                $this->ResolveStatusID(
-                    $config
-                );
-
-
             $payload[$key] = [
 
                 'mode' =>
                     $this->ReadInt(
-                        (int)
-                        $config['mode']
+                        (int) $config['mode']
                     ),
 
                 'active' =>
                     $this->ReadBool(
-                        $statusID
+                        (int) $config['status']
                     ),
 
                 'power' =>
                     $this->ReadFloat(
-                        (int)
-                        $config['power']
+                        (int) $config['power']
                     )
-
             ];
         }
 

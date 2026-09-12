@@ -5,246 +5,401 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{box-sizing:border-box}
 
-:root{
-  color-scheme:light dark;
-  --text:#20262b;
-  --muted:#7d878d;
-  --line:rgba(0,0,0,.14);
-  --row-bg:rgba(0,0,0,.015);
-  --blue:#2196f3;
-  --orange:#f4a321;
-  --green:#19c989;
-  --grey:#9ca7af;
+* {
+    box-sizing: border-box;
 }
 
-@media (prefers-color-scheme:dark){
-  :root{
-    --text:#f1f4f6;
-    --muted:#a7afb5;
-    --line:rgba(255,255,255,.15);
-    --row-bg:rgba(255,255,255,.018);
-    --blue:#38a9ff;
-    --orange:#ffad2f;
-    --green:#1bd491;
-    --grey:#9ca7af;
-  }
+:root {
+    color-scheme: light dark;
+
+    --text: #20262b;
+    --muted: #7d878d;
+    --line: rgba(0,0,0,.14);
+    --row-bg: rgba(0,0,0,.015);
+
+    --blue: #2196f3;
+    --orange: #f4a321;
+    --green: #19c989;
+    --grey: #9ca7af;
 }
 
-html,body{
-  margin:0;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  background:transparent;
-  color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text: #f1f4f6;
+        --muted: #a7afb5;
+        --line: rgba(255,255,255,.15);
+        --row-bg: rgba(255,255,255,.018);
+
+        --blue: #38a9ff;
+        --orange: #ffad2f;
+        --green: #1bd491;
+        --grey: #9ca7af;
+    }
 }
 
-.consumers{
-  width:100%;
-  height:100%;
-  display:grid;
-  grid-template-rows:repeat(5,minmax(0,1fr));
-  gap:.3rem;
-  padding:2.8rem .55rem .5rem;
-}
+html,
+body {
+    margin: 0;
+    padding: 0;
 
-.consumer-row{
-  min-width:0;
-  min-height:0;
-  display:grid;
-  grid-template-columns:auto minmax(0,1fr) max-content max-content auto;
-  grid-template-areas:"icon main state power gear";
-  align-items:center;
-  gap:.65rem;
-  padding:.25rem .45rem;
-  border:1px solid var(--line);
-  border-radius:.75rem;
-  background:var(--row-bg);
-  overflow:hidden;
-}
+    width: 100%;
+    height: 100%;
 
-.icon-box{
-  grid-area:icon;
-  width:2.6rem;
-  aspect-ratio:1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border:1px solid var(--line);
-  border-radius:.65rem;
-}
+    overflow: hidden;
 
-.icon{
-  font-size:1.7rem;
-  line-height:1;
-}
+    background: transparent;
+    color: var(--text);
 
-.blue{color:var(--blue)}
-.orange{color:var(--orange)}
-
-.main-area{
-  grid-area:main;
-  min-width:0;
-}
-
-.name{
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  font-size:14px;
-  font-weight:700;
-  line-height:1.1;
-}
-
-.subtitle{
-  margin-top:.15rem;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  font-size:13px;
-  color:var(--muted);
-  line-height:1.1;
-}
-
-.state-area{
-  grid-area:state;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  justify-content:center;
-  min-width:max-content;
-}
-
-.mode{
-  color:var(--blue);
-  font-size:13px;
-  font-weight:650;
-  white-space:nowrap;
-}
-
-.mode.off{
-  color:var(--muted);
-}
-
-.real-state{
-  margin-top:.2rem;
-  display:flex;
-  align-items:center;
-  gap:.35rem;
-  font-size:13px;
-  white-space:nowrap;
-}
-
-.state-dot{
-  width:.65rem;
-  height:.65rem;
-  border-radius:50%;
-  background:var(--grey);
-  flex:0 0 auto;
-}
-
-.state-dot.on{
-  background:var(--green);
-}
-
-.power{
-  grid-area:power;
-  font-size:14px;
-  font-weight:700;
-  white-space:nowrap;
-  text-align:right;
-}
-
-.gear{
-  grid-area:gear;
-  width:2.3rem;
-  aspect-ratio:1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border:1px solid var(--line);
-  border-radius:.65rem;
-  background:transparent;
-  color:var(--text);
-  font-size:1.2rem;
-  padding:0;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
 }
 
 
-/* Mobile */
-@media (hover:none) and (pointer:coarse){
+/* ============================================================
+   GESAMTKACHEL
+============================================================ */
 
-  .consumers{
-    padding:2.65rem .45rem .45rem;
-    gap:.25rem;
-  }
+.consumers {
+    width: 100%;
+    height: 100%;
 
-  .consumer-row{
-    grid-template-columns:auto minmax(0,1fr) max-content auto;
-    grid-template-areas:
-      "icon main  power gear"
-      "icon state state gear";
-    column-gap:.55rem;
-    row-gap:.1rem;
-    padding:.25rem .4rem;
-  }
+    display: grid;
+    grid-template-rows: repeat(5, minmax(0, 1fr));
 
-  .icon-box{
-    width:2.55rem;
-  }
+    gap: 5px;
 
-  .icon{
-    font-size:1.65rem;
-  }
+    /*
+     * Symcon-Titel freihalten
+     */
+    padding: 46px 9px 9px;
 
-  .name{
-    font-size:14px;
-  }
-
-  .subtitle{
-    font-size:12px;
-  }
-
-  .state-area{
-    flex-direction:row;
-    align-items:center;
-    gap:.65rem;
-    min-width:0;
-  }
-
-  .mode,
-  .real-state{
-    font-size:12px;
-  }
-
-  .real-state{
-    margin-top:0;
-  }
-
-  .power{
-    font-size:14px;
-  }
-
-  .gear{
-    width:2.25rem;
-  }
+    overflow: hidden;
 }
 
 
-/* Desktop/Laptop */
-@media (hover:hover) and (pointer:fine){
+/* ============================================================
+   VERBRAUCHERZEILE
+============================================================ */
 
-  .name,
-  .subtitle,
-  .mode,
-  .real-state,
-  .power{
-    font-size:13px;
-  }
+.consumer-row {
+    min-width: 0;
+    min-height: 0;
+
+    display: grid;
+
+    /*
+     * Nur Name erhält flexiblen Restplatz.
+     * Rest benötigt nur den tatsächlich nötigen Platz.
+     */
+    grid-template-columns:
+        auto
+        minmax(0, 1fr)
+        max-content
+        max-content
+        auto;
+
+    align-items: center;
+
+    gap: clamp(.35rem, 1.1vw, .75rem);
+
+    padding: .25rem .45rem;
+
+    border: 1px solid var(--line);
+    border-radius: .75rem;
+
+    background: var(--row-bg);
+
+    overflow: hidden;
 }
+
+
+/* ============================================================
+   ICON
+============================================================ */
+
+.icon-box {
+    width: 2.55rem;
+    aspect-ratio: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--line);
+    border-radius: .65rem;
+}
+
+.icon {
+    font-size: 1.7rem;
+    line-height: 1;
+}
+
+.blue {
+    color: var(--blue);
+}
+
+.orange {
+    color: var(--orange);
+}
+
+
+/* ============================================================
+   NAME
+============================================================ */
+
+.name-area {
+    min-width: 0;
+}
+
+.name {
+    min-width: 0;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.subtitle {
+    min-width: 0;
+
+    margin-top: 2px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-size: 13px;
+    line-height: 1.1;
+
+    color: var(--muted);
+}
+
+
+/* ============================================================
+   MODUS / STATUS
+============================================================ */
+
+.state-area {
+    min-width: max-content;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.mode {
+    color: var(--blue);
+
+    font-size: 13px;
+    font-weight: 650;
+    line-height: 1.05;
+
+    white-space: nowrap;
+}
+
+.mode.off {
+    color: var(--muted);
+}
+
+.real-state {
+    margin-top: 3px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+
+    font-size: 13px;
+    line-height: 1.05;
+
+    white-space: nowrap;
+}
+
+.state-dot {
+    width: 10px;
+    height: 10px;
+
+    flex: 0 0 auto;
+
+    border-radius: 50%;
+    background: var(--grey);
+}
+
+.state-dot.on {
+    background: var(--green);
+}
+
+
+/* ============================================================
+   LEISTUNG
+============================================================ */
+
+.power {
+    min-width: max-content;
+
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+
+    text-align: right;
+
+    white-space: nowrap;
+}
+
+
+/* ============================================================
+   ZAHNRAD
+============================================================ */
+
+.gear {
+    width: 2.3rem;
+    aspect-ratio: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: 1px solid var(--line);
+    border-radius: .65rem;
+
+    background: transparent;
+    color: var(--text);
+
+    font-size: 1.2rem;
+}
+
+
+/* ============================================================
+   DESKTOP / LAPTOP
+   kleinste Schrift = 13 px
+============================================================ */
+
+@media (hover: hover) and (pointer: fine) {
+
+    .name,
+    .subtitle,
+    .mode,
+    .real-state,
+    .power {
+        font-size: 13px;
+    }
+
+}
+
+
+/* ============================================================
+   MOBILE
+   kleinste Schrift = 12 px
+============================================================ */
+
+@media (hover: none) and (pointer: coarse) {
+
+    .consumers {
+        /*
+         * Genug Abstand zum Symcon-Titel,
+         * aber keine unnötige Höhenverschwendung.
+         */
+        padding: 44px 7px 7px;
+        gap: 4px;
+    }
+
+    .consumer-row {
+        gap: clamp(.25rem, 1vw, .55rem);
+
+        padding: .2rem .35rem;
+    }
+
+    .icon-box {
+        width: 2.45rem;
+    }
+
+    .icon {
+        font-size: 1.6rem;
+    }
+
+    .name {
+        font-size: 14px;
+    }
+
+    .subtitle,
+    .mode,
+    .real-state {
+        font-size: 12px;
+    }
+
+    .power {
+        font-size: 14px;
+    }
+
+    .gear {
+        width: 2.2rem;
+        font-size: 1.15rem;
+    }
+
+}
+
+
+/* ============================================================
+   SEHR SCHMALES MOBILE
+   Struktur bleibt identisch.
+   Nur Zwischenräume werden kleiner.
+============================================================ */
+
+@media
+    (hover: none)
+    and
+    (pointer: coarse)
+    and
+    (max-width: 430px)
+{
+
+    .consumer-row {
+        gap: .25rem;
+        padding-left: .25rem;
+        padding-right: .25rem;
+    }
+
+    .icon-box {
+        width: 2.25rem;
+    }
+
+    .icon {
+        font-size: 1.45rem;
+    }
+
+    .name {
+        font-size: 13px;
+    }
+
+    .subtitle,
+    .mode,
+    .real-state {
+        font-size: 12px;
+    }
+
+    .power {
+        font-size: 13px;
+    }
+
+    .gear {
+        width: 2rem;
+    }
+
+}
+
 </style>
 </head>
 
@@ -252,149 +407,292 @@ html,body{
 
 <div class="consumers">
 
-  <div class="consumer-row">
-    <div class="icon-box"><div class="icon blue">♧</div></div>
-    <div class="main-area">
-      <div class="name">Entfeuchter UG</div>
-      <div class="subtitle">Untergeschoss</div>
-    </div>
-    <div class="state-area">
-      <div class="mode" id="ug-mode">—</div>
-      <div class="real-state">
-        <span class="state-dot" id="ug-dot"></span>
-        <span id="ug-state">—</span>
-      </div>
-    </div>
-    <div class="power" id="ug-power">—</div>
-    <button class="gear" type="button">⚙</button>
-  </div>
 
-  <div class="consumer-row">
-    <div class="icon-box"><div class="icon blue">♧</div></div>
-    <div class="main-area">
-      <div class="name">Entfeuchter OG</div>
-      <div class="subtitle">Obergeschoss</div>
-    </div>
-    <div class="state-area">
-      <div class="mode" id="og-mode">—</div>
-      <div class="real-state">
-        <span class="state-dot" id="og-dot"></span>
-        <span id="og-state">—</span>
-      </div>
-    </div>
-    <div class="power" id="og-power">—</div>
-    <button class="gear" type="button">⚙</button>
-  </div>
+    <!-- UG -->
 
-  <div class="consumer-row">
-    <div class="icon-box"><div class="icon blue">≋</div></div>
-    <div class="main-area">
-      <div class="name">Poolpumpe + Salzelektrolyse</div>
-      <div class="subtitle">Pooltechnik</div>
-    </div>
-    <div class="state-area">
-      <div class="mode" id="pool-mode">—</div>
-      <div class="real-state">
-        <span class="state-dot" id="pool-dot"></span>
-        <span id="pool-state">—</span>
-      </div>
-    </div>
-    <div class="power" id="pool-power">—</div>
-    <button class="gear" type="button">⚙</button>
-  </div>
+    <div class="consumer-row">
 
-  <div class="consumer-row">
-    <div class="icon-box"><div class="icon orange">◉</div></div>
-    <div class="main-area">
-      <div class="name">Boiler</div>
-      <div class="subtitle">Warmwasser</div>
-    </div>
-    <div class="state-area">
-      <div class="mode" id="boiler-mode">—</div>
-      <div class="real-state">
-        <span class="state-dot" id="boiler-dot"></span>
-        <span id="boiler-state">—</span>
-      </div>
-    </div>
-    <div class="power" id="boiler-power">—</div>
-    <button class="gear" type="button">⚙</button>
-  </div>
+        <div class="icon-box">
+            <div class="icon blue">♧</div>
+        </div>
 
-  <div class="consumer-row">
-    <div class="icon-box"><div class="icon orange">▥</div></div>
-    <div class="main-area">
-      <div class="name">Heizstab / Puffer</div>
-      <div class="subtitle">Heizung</div>
+        <div class="name-area">
+            <div class="name">Entfeuchter UG</div>
+            <div class="subtitle">Untergeschoss</div>
+        </div>
+
+        <div class="state-area">
+            <div class="mode" id="ug-mode">—</div>
+
+            <div class="real-state">
+                <span class="state-dot" id="ug-dot"></span>
+                <span id="ug-state">—</span>
+            </div>
+        </div>
+
+        <div class="power" id="ug-power">—</div>
+
+        <button class="gear" type="button">⚙</button>
+
     </div>
-    <div class="state-area">
-      <div class="mode" id="heater-mode">—</div>
-      <div class="real-state">
-        <span class="state-dot" id="heater-dot"></span>
-        <span id="heater-state">—</span>
-      </div>
+
+
+    <!-- OG -->
+
+    <div class="consumer-row">
+
+        <div class="icon-box">
+            <div class="icon blue">♧</div>
+        </div>
+
+        <div class="name-area">
+            <div class="name">Entfeuchter OG</div>
+            <div class="subtitle">Obergeschoss</div>
+        </div>
+
+        <div class="state-area">
+            <div class="mode" id="og-mode">—</div>
+
+            <div class="real-state">
+                <span class="state-dot" id="og-dot"></span>
+                <span id="og-state">—</span>
+            </div>
+        </div>
+
+        <div class="power" id="og-power">—</div>
+
+        <button class="gear" type="button">⚙</button>
+
     </div>
-    <div class="power" id="heater-power">—</div>
-    <button class="gear" type="button">⚙</button>
-  </div>
+
+
+    <!-- POOL -->
+
+    <div class="consumer-row">
+
+        <div class="icon-box">
+            <div class="icon blue">≋</div>
+        </div>
+
+        <div class="name-area">
+            <div class="name">
+                Poolpumpe + Salzelektrolyse
+            </div>
+            <div class="subtitle">Pooltechnik</div>
+        </div>
+
+        <div class="state-area">
+            <div class="mode" id="pool-mode">—</div>
+
+            <div class="real-state">
+                <span class="state-dot" id="pool-dot"></span>
+                <span id="pool-state">—</span>
+            </div>
+        </div>
+
+        <div class="power" id="pool-power">—</div>
+
+        <button class="gear" type="button">⚙</button>
+
+    </div>
+
+
+    <!-- BOILER -->
+
+    <div class="consumer-row">
+
+        <div class="icon-box">
+            <div class="icon orange">◉</div>
+        </div>
+
+        <div class="name-area">
+            <div class="name">Boiler</div>
+            <div class="subtitle">Warmwasser</div>
+        </div>
+
+        <div class="state-area">
+            <div class="mode" id="boiler-mode">—</div>
+
+            <div class="real-state">
+                <span class="state-dot" id="boiler-dot"></span>
+                <span id="boiler-state">—</span>
+            </div>
+        </div>
+
+        <div class="power" id="boiler-power">—</div>
+
+        <button class="gear" type="button">⚙</button>
+
+    </div>
+
+
+    <!-- HEIZSTAB -->
+
+    <div class="consumer-row">
+
+        <div class="icon-box">
+            <div class="icon orange">▥</div>
+        </div>
+
+        <div class="name-area">
+            <div class="name">Heizstab / Puffer</div>
+            <div class="subtitle">Heizung</div>
+        </div>
+
+        <div class="state-area">
+            <div class="mode" id="heater-mode">—</div>
+
+            <div class="real-state">
+                <span class="state-dot" id="heater-dot"></span>
+                <span id="heater-state">—</span>
+            </div>
+        </div>
+
+        <div class="power" id="heater-power">—</div>
+
+        <button class="gear" type="button">⚙</button>
+
+    </div>
 
 </div>
 
+
 <script>
-function setText(id,value){
-  const e=document.getElementById(id);
-  if(e)e.textContent=value;
+
+function setText(id, value) {
+    const element = document.getElementById(id);
+
+    if (element) {
+        element.textContent = value;
+    }
 }
 
-function modeText(value){
-  const mode=Number(value);
-  if(mode===1)return "Automatik";
-  if(mode===2)return "Erzwungen Ein";
-  return "Aus";
+
+function modeText(value) {
+
+    const mode = Number(value);
+
+    if (mode === 1) {
+        return "Automatik";
+    }
+
+    if (mode === 2) {
+        return "Erzwungen Ein";
+    }
+
+    return "Aus";
 }
 
-function powerText(value){
-  if(value===null||value===undefined||Number.isNaN(Number(value)))return "—";
-  const n=Number(value);
-  return Math.abs(n)<1 ? Math.round(n*1000)+" W" : n.toFixed(1)+" kW";
+
+function powerText(value) {
+
+    if (
+        value === null ||
+        value === undefined ||
+        Number.isNaN(Number(value))
+    ) {
+        return "—";
+    }
+
+    const number = Number(value);
+
+    if (Math.abs(number) < 1) {
+        return Math.round(number * 1000) + " W";
+    }
+
+    return number.toFixed(1) + " kW";
 }
 
-function updateConsumer(key,data){
-  if(!data)return;
 
-  const mode=Number(data.mode);
-  const active=Boolean(data.active);
+function updateConsumer(key, data) {
 
-  setText(key+"-mode",modeText(mode));
-  setText(key+"-state",active?"Gerät Ein":"Gerät Aus");
-  setText(key+"-power",powerText(data.power));
+    if (!data) {
+        return;
+    }
 
-  const modeEl=document.getElementById(key+"-mode");
-  if(modeEl)modeEl.classList.toggle("off",mode===0);
+    const mode = Number(data.mode);
+    const active = Boolean(data.active);
 
-  const dot=document.getElementById(key+"-dot");
-  if(dot)dot.classList.toggle("on",active);
+    setText(
+        key + "-mode",
+        modeText(mode)
+    );
+
+    setText(
+        key + "-state",
+        active ? "Gerät Ein" : "Gerät Aus"
+    );
+
+    setText(
+        key + "-power",
+        powerText(data.power)
+    );
+
+    const modeElement =
+        document.getElementById(
+            key + "-mode"
+        );
+
+    if (modeElement) {
+        modeElement.classList.toggle(
+            "off",
+            mode === 0
+        );
+    }
+
+    const dot =
+        document.getElementById(
+            key + "-dot"
+        );
+
+    if (dot) {
+        dot.classList.toggle(
+            "on",
+            active
+        );
+    }
 }
 
-function handleMessage(data){
-  if(!data)return;
 
-  if(typeof data==="string"){
-    try{data=JSON.parse(data);}
-    catch(e){return;}
-  }
+function handleMessage(data) {
 
-  updateConsumer("ug",data.ug);
-  updateConsumer("og",data.og);
-  updateConsumer("pool",data.pool);
-  updateConsumer("boiler",data.boiler);
-  updateConsumer("heater",data.heater);
+    if (!data) {
+        return;
+    }
+
+    if (typeof data === "string") {
+
+        try {
+            data = JSON.parse(data);
+        } catch (error) {
+            return;
+        }
+    }
+
+    updateConsumer("ug", data.ug);
+    updateConsumer("og", data.og);
+    updateConsumer("pool", data.pool);
+    updateConsumer("boiler", data.boiler);
+    updateConsumer("heater", data.heater);
 }
 
-window.addEventListener("load",function(){
-  if(typeof requestAction==="function"){
-    requestAction("Refresh",true);
-  }
-});
+
+window.addEventListener(
+    "load",
+    function () {
+
+        if (
+            typeof requestAction ===
+            "function"
+        ) {
+            requestAction(
+                "Refresh",
+                true
+            );
+        }
+    }
+);
+
 </script>
 
 </body>

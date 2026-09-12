@@ -27,15 +27,26 @@
     --text: #20262b;
     --muted: #7c878d;
 
-    --line: rgba(0, 0, 0, 0.14);
+    --line:
+        rgba(
+            0,
+            0,
+            0,
+            0.14
+        );
 
-    --row-bg: rgba(0, 0, 0, 0.015);
-    --icon-bg: rgba(0, 0, 0, 0.015);
+    --row:
+        rgba(
+            0,
+            0,
+            0,
+            0.015
+        );
 
     --blue: #2196f3;
     --orange: #f5a623;
-    --green: #17c989;
-    --grey: #9aa6af;
+    --green: #19c98a;
+    --grey: #9ca7af;
 }
 
 
@@ -45,15 +56,26 @@
         --text: #f1f4f6;
         --muted: #a6adb3;
 
-        --line: rgba(255, 255, 255, 0.15);
+        --line:
+            rgba(
+                255,
+                255,
+                255,
+                0.15
+            );
 
-        --row-bg: rgba(255, 255, 255, 0.018);
-        --icon-bg: rgba(255, 255, 255, 0.018);
+        --row:
+            rgba(
+                255,
+                255,
+                255,
+                0.018
+            );
 
         --blue: #38a9ff;
         --orange: #ffad2f;
         --green: #1bd491;
-        --grey: #9ba6ae;
+        --grey: #9ca7af;
     }
 
 }
@@ -87,10 +109,11 @@ body {
 }
 
 
-/*
- * Der Symcon-Titel liegt oberhalb.
- * Darunter müssen alle fünf Zeilen sicher Platz finden.
- */
+/* ============================================================
+   GESAMTKACHEL
+
+   Oben bewusst genügend Platz für den Symcon-Titel.
+============================================================ */
 
 .consumers {
     width: 100%;
@@ -101,15 +124,18 @@ body {
     grid-template-rows:
         repeat(
             5,
-            minmax(0, 1fr)
+            minmax(
+                0,
+                1fr
+            )
         );
 
     gap: 4px;
 
     padding:
-        34px
+        48px
         8px
-        7px
+        8px
         8px;
 
     overflow: hidden;
@@ -117,7 +143,7 @@ body {
 
 
 /* ============================================================
-   VERBRAUCHERZEILE
+   ZEILE
 ============================================================ */
 
 .consumer-row {
@@ -126,11 +152,19 @@ body {
 
     display: grid;
 
+    /*
+     * Symbol
+     * Name
+     * Modus / Status
+     * Leistung
+     * Zahnrad
+     */
+
     grid-template-columns:
-        46px
+        44px
         minmax(0, 1.65fr)
-        minmax(105px, 1.05fr)
-        69px
+        minmax(104px, 1fr)
+        70px
         40px;
 
     column-gap: 6px;
@@ -145,22 +179,23 @@ body {
         1px solid
         var(--line);
 
-    border-radius: 11px;
+    border-radius:
+        11px;
 
     background:
-        var(--row-bg);
+        var(--row);
 
     overflow: hidden;
 }
 
 
 /* ============================================================
-   SYMBOL
+   ICON
 ============================================================ */
 
-.consumer-icon-box {
-    width: 39px;
-    height: 39px;
+.icon-box {
+    width: 38px;
+    height: 38px;
 
     display: flex;
 
@@ -173,48 +208,41 @@ body {
         1px solid
         var(--line);
 
-    border-radius: 10px;
-
-    background:
-        var(--icon-bg);
+    border-radius:
+        10px;
 }
 
 
-.consumer-icon {
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    width: 30px;
-    height: 30px;
-
-    font-size: 27px;
+.icon {
+    font-size: 25px;
 
     line-height: 1;
 }
 
 
-.consumer-icon.blue {
+.blue {
     color: var(--blue);
 }
 
 
-.consumer-icon.orange {
+.orange {
     color: var(--orange);
 }
 
 
 /* ============================================================
-   NAME / UNTERTITEL
+   NAME
+
+   Desktop:
+   kleinste Schrift = 13 px
 ============================================================ */
 
-.consumer-name-area {
+.name-area {
     min-width: 0;
 }
 
 
-.consumer-name {
+.name {
     overflow: hidden;
 
     color: var(--text);
@@ -222,7 +250,7 @@ body {
     font-size: 13px;
     font-weight: 700;
 
-    line-height: 1.1;
+    line-height: 1.08;
 
     white-space: nowrap;
 
@@ -230,7 +258,7 @@ body {
 }
 
 
-.consumer-subtitle {
+.subtitle {
     margin-top: 2px;
 
     overflow: hidden;
@@ -251,7 +279,7 @@ body {
    MODUS / STATUS
 ============================================================ */
 
-.consumer-state-area {
+.state-area {
     min-width: 0;
 
     display: flex;
@@ -264,7 +292,7 @@ body {
 }
 
 
-.consumer-mode {
+.mode {
     max-width: 100%;
 
     overflow: hidden;
@@ -282,12 +310,12 @@ body {
 }
 
 
-.consumer-mode.off {
+.mode.off {
     color: var(--muted);
 }
 
 
-.consumer-real-state {
+.real-state {
     margin-top: 3px;
 
     max-width: 100%;
@@ -310,31 +338,23 @@ body {
 }
 
 
-.consumer-real-state-text {
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-}
-
-
 .state-dot {
-    flex: 0 0 auto;
-
     width: 10px;
     height: 10px;
 
+    flex:
+        0 0 auto;
+
     border-radius: 50%;
 
-    background: var(--grey);
+    background:
+        var(--grey);
 }
 
 
 .state-dot.on {
-    background: var(--green);
-
-    box-shadow:
-        0 0 5px
-        rgba(27, 212, 145, 0.35);
+    background:
+        var(--green);
 }
 
 
@@ -342,9 +362,7 @@ body {
    LEISTUNG
 ============================================================ */
 
-.consumer-power {
-    overflow: hidden;
-
+.power {
     color: var(--text);
 
     font-size: 13px;
@@ -355,8 +373,6 @@ body {
     text-align: right;
 
     white-space: nowrap;
-
-    text-overflow: ellipsis;
 }
 
 
@@ -364,7 +380,7 @@ body {
    ZAHNRAD
 ============================================================ */
 
-.settings-button {
+.gear {
     width: 36px;
     height: 36px;
 
@@ -381,162 +397,28 @@ body {
         1px solid
         var(--line);
 
-    border-radius: 10px;
+    border-radius:
+        10px;
 
-    background: transparent;
+    background:
+        transparent;
 
     color: var(--text);
 
     font-size: 19px;
 
     line-height: 1;
-
-    cursor: pointer;
-}
-
-
-.settings-button:active {
-    transform: scale(0.96);
-}
-
-
-/* ============================================================
-   LAPTOP / DESKTOP
-============================================================ */
-
-@media
-    (hover: hover)
-    and
-    (pointer: fine)
-{
-
-    /*
-     * Feste Erkenntnis aus unserem Schriftgrössen-Test:
-     * Desktop/Laptop nie unter 13 px.
-     */
-
-    .consumer-name,
-    .consumer-subtitle,
-    .consumer-mode,
-    .consumer-real-state,
-    .consumer-power {
-        font-size: 13px;
-    }
-
-}
-
-
-/* ============================================================
-   GROSSE DESKTOPANSICHT
-============================================================ */
-
-@media
-    (hover: hover)
-    and
-    (pointer: fine)
-    and
-    (min-height: 560px)
-{
-
-    .consumers {
-        gap: 7px;
-
-        padding:
-            46px
-            14px
-            14px
-            14px;
-    }
-
-
-    .consumer-row {
-        grid-template-columns:
-            62px
-            minmax(0, 1.7fr)
-            minmax(145px, 1.1fr)
-            100px
-            56px;
-
-        column-gap: 12px;
-
-        padding:
-            7px
-            10px;
-
-        border-radius: 14px;
-    }
-
-
-    .consumer-icon-box {
-        width: 52px;
-        height: 52px;
-
-        border-radius: 13px;
-    }
-
-
-    .consumer-icon {
-        width: 40px;
-        height: 40px;
-
-        font-size: 36px;
-    }
-
-
-    .consumer-name {
-        font-size: 17px;
-    }
-
-
-    .consumer-subtitle {
-        margin-top: 4px;
-
-        font-size: 14px;
-    }
-
-
-    .consumer-mode {
-        font-size: 15px;
-    }
-
-
-    .consumer-real-state {
-        margin-top: 5px;
-
-        font-size: 14px;
-    }
-
-
-    .state-dot {
-        width: 12px;
-        height: 12px;
-    }
-
-
-    .consumer-power {
-        font-size: 17px;
-    }
-
-
-    .settings-button {
-        width: 47px;
-        height: 47px;
-
-        font-size: 23px;
-
-        border-radius: 12px;
-    }
-
 }
 
 
 /* ============================================================
    MOBILE
 
-   WICHTIG:
-   - keine pauschale Vergrösserung aller Abstände
-   - alle 5 Zeilen müssen weiterhin passen
-   - kleinste Schrift mindestens 12 px
+   Keine Breiten-Erkennung für Laptop/Tablet.
+   Mobile nur über Touch / coarse pointer.
+
+   Kleinste Schrift:
+   12 px
 ============================================================ */
 
 @media
@@ -546,27 +428,26 @@ body {
 {
 
     .consumers {
-        gap: 5px;
-
         /*
-         * Genügend Abstand zum Symcon-Titel,
-         * aber nicht unnötig viel Höhe verschwenden.
+         * Titelzone Mobile etwas höher.
          */
         padding:
-            40px
+            52px
             8px
             8px
             8px;
+
+        gap: 5px;
     }
 
 
     .consumer-row {
         grid-template-columns:
-            51px
+            48px
             minmax(0, 1.55fr)
-            minmax(104px, 1.05fr)
-            69px
-            43px;
+            minmax(104px, 1fr)
+            72px
+            42px;
 
         column-gap: 6px;
 
@@ -574,53 +455,38 @@ body {
             4px
             6px;
 
-        border-radius: 12px;
+        border-radius:
+            12px;
     }
 
 
-    .consumer-icon-box {
-        width: 44px;
-        height: 44px;
-
-        border-radius: 11px;
+    .icon-box {
+        width: 42px;
+        height: 42px;
     }
 
 
-    .consumer-icon {
-        width: 34px;
-        height: 34px;
-
-        font-size: 30px;
+    .icon {
+        font-size: 29px;
     }
 
 
-    .consumer-name {
+    .name {
         font-size: 14px;
     }
 
 
-    /*
-     * Mobile:
-     * Schrift-Test Zeile 05 = 12 px.
-     */
-
-    .consumer-subtitle {
-        margin-top: 2px;
-
+    .subtitle {
         font-size: 12px;
     }
 
 
-    .consumer-mode {
+    .mode {
         font-size: 12px;
     }
 
 
-    .consumer-real-state {
-        margin-top: 3px;
-
-        gap: 5px;
-
+    .real-state {
         font-size: 12px;
     }
 
@@ -631,14 +497,14 @@ body {
     }
 
 
-    .consumer-power {
+    .power {
         font-size: 14px;
     }
 
 
-    .settings-button {
-        width: 40px;
-        height: 40px;
+    .gear {
+        width: 39px;
+        height: 39px;
 
         font-size: 20px;
     }
@@ -650,7 +516,7 @@ body {
    SEHR SCHMALES MOBILE
 
    Auch hier:
-   NIE UNTER 12 px.
+   keine Schrift kleiner als 12 px.
 ============================================================ */
 
 @media
@@ -662,79 +528,63 @@ body {
 {
 
     .consumers {
-        gap: 4px;
-
         padding:
-            39px
+            50px
             5px
             6px
             5px;
+
+        gap: 4px;
     }
 
 
     .consumer-row {
         grid-template-columns:
-            45px
+            43px
             minmax(0, 1.5fr)
-            minmax(91px, 1fr)
-            61px
-            39px;
+            minmax(90px, 1fr)
+            60px
+            38px;
 
         column-gap: 4px;
 
         padding:
             3px
             4px;
-
-        border-radius: 11px;
     }
 
 
-    .consumer-icon-box {
-        width: 40px;
-        height: 40px;
+    .icon-box {
+        width: 38px;
+        height: 38px;
     }
 
 
-    .consumer-icon {
-        width: 31px;
-        height: 31px;
-
-        font-size: 27px;
+    .icon {
+        font-size: 26px;
     }
 
 
-    .consumer-name {
+    .name {
         font-size: 13px;
     }
 
 
-    .consumer-subtitle,
-    .consumer-mode,
-    .consumer-real-state {
+    .subtitle,
+    .mode,
+    .real-state {
         font-size: 12px;
     }
 
 
-    .consumer-real-state {
-        gap: 4px;
-    }
-
-
-    .state-dot {
-        width: 10px;
-        height: 10px;
-    }
-
-
-    .consumer-power {
+    .power {
         font-size: 13px;
     }
 
 
-    .settings-button {
-        width: 36px;
-        height: 36px;
+    .gear {
+        width: 35px;
+        height: 35px;
 
         font-size: 18px;
     }
@@ -756,51 +606,47 @@ body {
          ENTFEUCHTER UG
     ========================================================= -->
 
-    <div
-        class="consumer-row"
-        data-consumer="ug"
-    >
+    <div class="consumer-row">
 
-        <div class="consumer-icon-box">
-            <div class="consumer-icon blue">
+        <div class="icon-box">
+
+            <div class="icon blue">
                 ♧
             </div>
+
         </div>
 
 
-        <div class="consumer-name-area">
+        <div class="name-area">
 
-            <div class="consumer-name">
+            <div class="name">
                 Entfeuchter UG
             </div>
 
-            <div class="consumer-subtitle">
+            <div class="subtitle">
                 Untergeschoss
             </div>
 
         </div>
 
 
-        <div class="consumer-state-area">
+        <div class="state-area">
 
             <div
-                class="consumer-mode"
+                class="mode"
                 id="ug-mode"
             >
                 —
             </div>
 
-            <div class="consumer-real-state">
+            <div class="real-state">
 
                 <span
                     class="state-dot"
                     id="ug-dot"
                 ></span>
 
-                <span
-                    class="consumer-real-state-text"
-                    id="ug-state"
-                >
+                <span id="ug-state">
                     —
                 </span>
 
@@ -810,7 +656,7 @@ body {
 
 
         <div
-            class="consumer-power"
+            class="power"
             id="ug-power"
         >
             —
@@ -818,10 +664,8 @@ body {
 
 
         <button
+            class="gear"
             type="button"
-            class="settings-button"
-            data-key="ug"
-            aria-label="Entfeuchter UG Einstellungen"
         >
             ⚙
         </button>
@@ -834,51 +678,47 @@ body {
          ENTFEUCHTER OG
     ========================================================= -->
 
-    <div
-        class="consumer-row"
-        data-consumer="og"
-    >
+    <div class="consumer-row">
 
-        <div class="consumer-icon-box">
-            <div class="consumer-icon blue">
+        <div class="icon-box">
+
+            <div class="icon blue">
                 ♧
             </div>
+
         </div>
 
 
-        <div class="consumer-name-area">
+        <div class="name-area">
 
-            <div class="consumer-name">
+            <div class="name">
                 Entfeuchter OG
             </div>
 
-            <div class="consumer-subtitle">
+            <div class="subtitle">
                 Obergeschoss
             </div>
 
         </div>
 
 
-        <div class="consumer-state-area">
+        <div class="state-area">
 
             <div
-                class="consumer-mode"
+                class="mode"
                 id="og-mode"
             >
                 —
             </div>
 
-            <div class="consumer-real-state">
+            <div class="real-state">
 
                 <span
                     class="state-dot"
                     id="og-dot"
                 ></span>
 
-                <span
-                    class="consumer-real-state-text"
-                    id="og-state"
-                >
+                <span id="og-state">
                     —
                 </span>
 
@@ -888,7 +728,7 @@ body {
 
 
         <div
-            class="consumer-power"
+            class="power"
             id="og-power"
         >
             —
@@ -896,10 +736,8 @@ body {
 
 
         <button
+            class="gear"
             type="button"
-            class="settings-button"
-            data-key="og"
-            aria-label="Entfeuchter OG Einstellungen"
         >
             ⚙
         </button>
@@ -912,51 +750,47 @@ body {
          POOL
     ========================================================= -->
 
-    <div
-        class="consumer-row"
-        data-consumer="pool"
-    >
+    <div class="consumer-row">
 
-        <div class="consumer-icon-box">
-            <div class="consumer-icon blue">
+        <div class="icon-box">
+
+            <div class="icon blue">
                 ≋
             </div>
+
         </div>
 
 
-        <div class="consumer-name-area">
+        <div class="name-area">
 
-            <div class="consumer-name">
+            <div class="name">
                 Poolpumpe + Salzelektrolyse
             </div>
 
-            <div class="consumer-subtitle">
+            <div class="subtitle">
                 Pooltechnik
             </div>
 
         </div>
 
 
-        <div class="consumer-state-area">
+        <div class="state-area">
 
             <div
-                class="consumer-mode"
+                class="mode"
                 id="pool-mode"
             >
                 —
             </div>
 
-            <div class="consumer-real-state">
+            <div class="real-state">
 
                 <span
                     class="state-dot"
                     id="pool-dot"
                 ></span>
 
-                <span
-                    class="consumer-real-state-text"
-                    id="pool-state"
-                >
+                <span id="pool-state">
                     —
                 </span>
 
@@ -966,7 +800,7 @@ body {
 
 
         <div
-            class="consumer-power"
+            class="power"
             id="pool-power"
         >
             —
@@ -974,10 +808,8 @@ body {
 
 
         <button
+            class="gear"
             type="button"
-            class="settings-button"
-            data-key="pool"
-            aria-label="Pool Einstellungen"
         >
             ⚙
         </button>
@@ -990,51 +822,47 @@ body {
          BOILER
     ========================================================= -->
 
-    <div
-        class="consumer-row"
-        data-consumer="boiler"
-    >
+    <div class="consumer-row">
 
-        <div class="consumer-icon-box">
-            <div class="consumer-icon orange">
+        <div class="icon-box">
+
+            <div class="icon orange">
                 ◉
             </div>
+
         </div>
 
 
-        <div class="consumer-name-area">
+        <div class="name-area">
 
-            <div class="consumer-name">
+            <div class="name">
                 Boiler
             </div>
 
-            <div class="consumer-subtitle">
+            <div class="subtitle">
                 Warmwasser
             </div>
 
         </div>
 
 
-        <div class="consumer-state-area">
+        <div class="state-area">
 
             <div
-                class="consumer-mode"
+                class="mode"
                 id="boiler-mode"
             >
                 —
             </div>
 
-            <div class="consumer-real-state">
+            <div class="real-state">
 
                 <span
                     class="state-dot"
                     id="boiler-dot"
                 ></span>
 
-                <span
-                    class="consumer-real-state-text"
-                    id="boiler-state"
-                >
+                <span id="boiler-state">
                     —
                 </span>
 
@@ -1044,7 +872,7 @@ body {
 
 
         <div
-            class="consumer-power"
+            class="power"
             id="boiler-power"
         >
             —
@@ -1052,10 +880,8 @@ body {
 
 
         <button
+            class="gear"
             type="button"
-            class="settings-button"
-            data-key="boiler"
-            aria-label="Boiler Einstellungen"
         >
             ⚙
         </button>
@@ -1068,51 +894,47 @@ body {
          HEIZSTAB / PUFFER
     ========================================================= -->
 
-    <div
-        class="consumer-row"
-        data-consumer="heater"
-    >
+    <div class="consumer-row">
 
-        <div class="consumer-icon-box">
-            <div class="consumer-icon orange">
+        <div class="icon-box">
+
+            <div class="icon orange">
                 ▥
             </div>
+
         </div>
 
 
-        <div class="consumer-name-area">
+        <div class="name-area">
 
-            <div class="consumer-name">
+            <div class="name">
                 Heizstab / Puffer
             </div>
 
-            <div class="consumer-subtitle">
+            <div class="subtitle">
                 Heizung
             </div>
 
         </div>
 
 
-        <div class="consumer-state-area">
+        <div class="state-area">
 
             <div
-                class="consumer-mode"
+                class="mode"
                 id="heater-mode"
             >
                 —
             </div>
 
-            <div class="consumer-real-state">
+            <div class="real-state">
 
                 <span
                     class="state-dot"
                     id="heater-dot"
                 ></span>
 
-                <span
-                    class="consumer-real-state-text"
-                    id="heater-state"
-                >
+                <span id="heater-state">
                     —
                 </span>
 
@@ -1122,7 +944,7 @@ body {
 
 
         <div
-            class="consumer-power"
+            class="power"
             id="heater-power"
         >
             —
@@ -1130,10 +952,8 @@ body {
 
 
         <button
+            class="gear"
             type="button"
-            class="settings-button"
-            data-key="heater"
-            aria-label="Heizstab Puffer Einstellungen"
         >
             ⚙
         </button>
@@ -1147,8 +967,9 @@ body {
 
 <script>
 
+
 /* ============================================================
-   HILFSFUNKTIONEN
+   HELPER
 ============================================================ */
 
 function setText(
@@ -1157,7 +978,9 @@ function setText(
 ) {
 
     const element =
-        document.getElementById(id);
+        document.getElementById(
+            id
+        );
 
 
     if (!element) {
@@ -1166,19 +989,39 @@ function setText(
 
 
     element.textContent =
-        value ?? "—";
+        value;
 }
 
 
 
-function formatPower(
-    value
-) {
+function modeText(value) {
+
+    const mode =
+        Number(
+            value
+        );
+
+
+    if (mode === 1) {
+        return "Automatik";
+    }
+
+
+    if (mode === 2) {
+        return "Erzwungen Ein";
+    }
+
+
+    return "Aus";
+}
+
+
+
+function powerText(value) {
 
     if (
         value === null ||
         value === undefined ||
-        value === "" ||
         Number.isNaN(
             Number(value)
         )
@@ -1188,19 +1031,15 @@ function formatPower(
 
 
     const number =
-        Number(value);
+        Number(
+            value
+        );
 
-
-    /*
-     * Die festen Verbraucherleistungen im EMS
-     * werden in kW geführt:
-     *
-     * 0.5 => 500 W
-     * 6   => 6.0 kW
-     */
 
     if (
-        Math.abs(number) < 1
+        Math.abs(
+            number
+        ) < 1
     ) {
 
         return (
@@ -1220,198 +1059,55 @@ function formatPower(
 
 
 
-function formatMode(
-    value
-) {
-
-    /*
-     * 0 = Aus
-     * 1 = Automatik
-     * 2 = Erzwungen Ein
-     */
-
-    const mode =
-        Number(value);
-
-
-    if (mode === 1) {
-        return "Automatik";
-    }
-
-
-    if (mode === 2) {
-        return "Erzwungen Ein";
-    }
-
-
-    return "Aus";
-}
-
-
 /* ============================================================
-   DATENSTRUKTUR ROBUST LESEN
-============================================================ */
-
-function findConsumer(
-    data,
-    key,
-    aliases
-) {
-
-    const names =
-        [
-            key,
-            ...aliases
-        ];
-
-
-    /*
-     * data.consumers als Objekt
-     */
-
-    if (
-        data.consumers &&
-        typeof data.consumers === "object" &&
-        !Array.isArray(
-            data.consumers
-        )
-    ) {
-
-        for (
-            const name of names
-        ) {
-
-            if (
-                data.consumers[name] &&
-                typeof data.consumers[name] === "object"
-            ) {
-                return data.consumers[name];
-            }
-
-        }
-
-    }
-
-
-    /*
-     * direktes Objekt
-     */
-
-    for (
-        const name of names
-    ) {
-
-        if (
-            data[name] &&
-            typeof data[name] === "object"
-        ) {
-            return data[name];
-        }
-
-    }
-
-
-    /*
-     * Array
-     */
-
-    const list =
-        Array.isArray(data)
-            ? data
-            : (
-                Array.isArray(data.consumers)
-                    ? data.consumers
-                    : null
-            );
-
-
-    if (list) {
-
-        for (
-            const item of list
-        ) {
-
-            if (!item) {
-                continue;
-            }
-
-
-            const itemKey =
-                String(
-                    item.key ??
-                    item.ident ??
-                    item.id ??
-                    item.name ??
-                    ""
-                ).toLowerCase();
-
-
-            for (
-                const name of names
-            ) {
-
-                if (
-                    itemKey ===
-                    String(name)
-                        .toLowerCase()
-                ) {
-                    return item;
-                }
-
-            }
-
-        }
-
-    }
-
-
-    return null;
-}
-
-
-/* ============================================================
-   EINEN VERBRAUCHER DARSTELLEN
+   EINZELNE ZEILE
 ============================================================ */
 
 function updateConsumer(
     key,
-    consumer
+    data
 ) {
 
-    if (!consumer) {
+    if (!data) {
         return;
     }
 
 
     const mode =
-        consumer.mode ??
-        consumer.Mode ??
-        consumer.operationMode ??
-        consumer.betriebsart ??
-        0;
+        Number(
+            data.mode ??
+            0
+        );
 
 
     const active =
         Boolean(
-            consumer.active ??
-            consumer.status ??
-            consumer.on ??
-            consumer.state ??
-            false
+            data.active
         );
-
-
-    const power =
-        consumer.power ??
-        consumer.Power ??
-        consumer.configuredPower ??
-        consumer.leistung ??
-        null;
 
 
     setText(
         key + "-mode",
-        formatMode(mode)
+        modeText(
+            mode
+        )
+    );
+
+
+    setText(
+        key + "-state",
+
+        active
+            ? "Gerät Ein"
+            : "Gerät Aus"
+    );
+
+
+    setText(
+        key + "-power",
+        powerText(
+            data.power
+        )
     );
 
 
@@ -1425,18 +1121,10 @@ function updateConsumer(
 
         modeElement.classList.toggle(
             "off",
-            Number(mode) === 0
+            mode === 0
         );
 
     }
-
-
-    setText(
-        key + "-state",
-        active
-            ? "Gerät Ein"
-            : "Gerät Aus"
-    );
 
 
     const dot =
@@ -1454,13 +1142,8 @@ function updateConsumer(
 
     }
 
-
-    setText(
-        key + "-power",
-        formatPower(power)
-    );
-
 }
+
 
 
 /* ============================================================
@@ -1469,14 +1152,22 @@ function updateConsumer(
 
 function handleMessage(data) {
 
+    if (!data) {
+        return;
+    }
+
+
     if (
-        typeof data === "string"
+        typeof data ===
+        "string"
     ) {
 
         try {
 
             data =
-                JSON.parse(data);
+                JSON.parse(
+                    data
+                );
 
         } catch (error) {
 
@@ -1486,125 +1177,110 @@ function handleMessage(data) {
     }
 
 
-    if (
-        !data ||
-        typeof data !== "object"
-    ) {
-        return;
-    }
-
-
     updateConsumer(
         "ug",
-        findConsumer(
-            data,
-            "ug",
-            [
-                "entfeuchterUG",
-                "Entfeuchter UG"
-            ]
-        )
+        data.ug
     );
 
 
     updateConsumer(
         "og",
-        findConsumer(
-            data,
-            "og",
-            [
-                "entfeuchterOG",
-                "Entfeuchter OG"
-            ]
-        )
+        data.og
     );
 
 
     updateConsumer(
         "pool",
-        findConsumer(
-            data,
-            "pool",
-            [
-                "poolpumpe",
-                "Poolpumpe + Salzelektrolyse"
-            ]
-        )
+        data.pool
     );
 
 
     updateConsumer(
         "boiler",
-        findConsumer(
-            data,
-            "boiler",
-            [
-                "Boiler"
-            ]
-        )
+        data.boiler
     );
 
 
     updateConsumer(
         "heater",
-        findConsumer(
-            data,
-            "heater",
-            [
-                "heizstab",
-                "puffer",
-                "Heizstab / Puffer"
-            ]
-        )
+        data.heater
     );
 
 }
 
 
-/* ============================================================
-   ZAHNRAD
-============================================================ */
-
-document
-    .querySelectorAll(
-        ".settings-button"
-    )
-    .forEach(
-        function (button) {
-
-            button.addEventListener(
-                "click",
-                function () {
-
-                    if (
-                        typeof requestAction !== "function"
-                    ) {
-                        return;
-                    }
-
-
-                    requestAction(
-                        "OpenConfig",
-                        button.dataset.key
-                    );
-
-                }
-            );
-
-        }
-    );
-
 
 /* ============================================================
-   INITIALISIERUNG
+   INITIAL
 ============================================================ */
 
 window.addEventListener(
     "load",
     function () {
 
+        /*
+         * Eingebauter Test:
+         *
+         * module.html?test=1
+         *
+         * Damit kann die Anzeige unabhängig von Symcon
+         * mit definierten Werten geprüft werden.
+         */
+
+        const test =
+            new URLSearchParams(
+                location.search
+            ).get(
+                "test"
+            );
+
+
         if (
-            typeof requestAction === "function"
+            test === "1"
+        ) {
+
+            handleMessage({
+
+                ug: {
+                    mode: 1,
+                    active: true,
+                    power: 0.5
+                },
+
+                og: {
+                    mode: 1,
+                    active: true,
+                    power: 0.5
+                },
+
+                pool: {
+                    mode: 1,
+                    active: false,
+                    power: 0.5
+                },
+
+                boiler: {
+                    mode: 1,
+                    active: false,
+                    power: 6
+                },
+
+                heater: {
+                    mode: 0,
+                    active: false,
+                    power: 6
+                }
+
+            });
+
+
+            return;
+        }
+
+
+        if (
+            typeof requestAction ===
+            "function"
         ) {
 
             requestAction(
@@ -1616,6 +1292,7 @@ window.addEventListener(
 
     }
 );
+
 
 </script>
 

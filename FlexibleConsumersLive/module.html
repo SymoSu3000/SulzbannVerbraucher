@@ -25,27 +25,17 @@
     color-scheme: light dark;
 
     --text: #20262b;
-    --muted: #7c878d;
+    --muted: #7d878d;
 
     --line:
-        rgba(
-            0,
-            0,
-            0,
-            0.14
-        );
+        rgba(0, 0, 0, 0.14);
 
-    --row:
-        rgba(
-            0,
-            0,
-            0,
-            0.015
-        );
+    --row-bg:
+        rgba(0, 0, 0, 0.015);
 
     --blue: #2196f3;
-    --orange: #f5a623;
-    --green: #19c98a;
+    --orange: #f4a321;
+    --green: #19c989;
     --grey: #9ca7af;
 }
 
@@ -54,23 +44,13 @@
 
     :root {
         --text: #f1f4f6;
-        --muted: #a6adb3;
+        --muted: #a7afb5;
 
         --line:
-            rgba(
-                255,
-                255,
-                255,
-                0.15
-            );
+            rgba(255, 255, 255, 0.15);
 
-        --row:
-            rgba(
-                255,
-                255,
-                255,
-                0.018
-            );
+        --row-bg:
+            rgba(255, 255, 255, 0.018);
 
         --blue: #38a9ff;
         --orange: #ffad2f;
@@ -111,8 +91,6 @@ body {
 
 /* ============================================================
    GESAMTKACHEL
-
-   Oben bewusst genügend Platz für den Symcon-Titel.
 ============================================================ */
 
 .consumers {
@@ -124,21 +102,22 @@ body {
     grid-template-rows:
         repeat(
             5,
-            minmax(
-                0,
-                1fr
-            )
+            minmax(0, 1fr)
         );
 
     gap: 4px;
 
+    overflow: hidden;
+
+    /*
+     * Desktop:
+     * genügend Abstand zum Symcon-Kacheltitel
+     */
     padding:
-        48px
+        44px
         8px
         8px
         8px;
-
-    overflow: hidden;
 }
 
 
@@ -152,20 +131,12 @@ body {
 
     display: grid;
 
-    /*
-     * Symbol
-     * Name
-     * Modus / Status
-     * Leistung
-     * Zahnrad
-     */
-
     grid-template-columns:
-        44px
-        minmax(0, 1.65fr)
-        minmax(104px, 1fr)
-        70px
-        40px;
+        42px
+        minmax(0, 1.55fr)
+        minmax(100px, 1fr)
+        66px
+        38px;
 
     column-gap: 6px;
 
@@ -183,7 +154,7 @@ body {
         11px;
 
     background:
-        var(--row);
+        var(--row-bg);
 
     overflow: hidden;
 }
@@ -194,8 +165,8 @@ body {
 ============================================================ */
 
 .icon-box {
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
 
     display: flex;
 
@@ -209,13 +180,12 @@ body {
         var(--line);
 
     border-radius:
-        10px;
+        9px;
 }
 
 
 .icon {
-    font-size: 25px;
-
+    font-size: 24px;
     line-height: 1;
 }
 
@@ -232,9 +202,6 @@ body {
 
 /* ============================================================
    NAME
-
-   Desktop:
-   kleinste Schrift = 13 px
 ============================================================ */
 
 .name-area {
@@ -250,7 +217,7 @@ body {
     font-size: 13px;
     font-weight: 700;
 
-    line-height: 1.08;
+    line-height: 1.05;
 
     white-space: nowrap;
 
@@ -276,7 +243,7 @@ body {
 
 
 /* ============================================================
-   MODUS / STATUS
+   STATUS
 ============================================================ */
 
 .state-area {
@@ -286,9 +253,8 @@ body {
 
     flex-direction: column;
 
-    justify-content: center;
-
     align-items: flex-start;
+    justify-content: center;
 }
 
 
@@ -318,13 +284,13 @@ body {
 .real-state {
     margin-top: 3px;
 
-    max-width: 100%;
-
     display: flex;
 
     align-items: center;
 
     gap: 5px;
+
+    max-width: 100%;
 
     overflow: hidden;
 
@@ -339,22 +305,20 @@ body {
 
 
 .state-dot {
-    width: 10px;
-    height: 10px;
-
     flex:
         0 0 auto;
 
+    width: 10px;
+    height: 10px;
+
     border-radius: 50%;
 
-    background:
-        var(--grey);
+    background: var(--grey);
 }
 
 
 .state-dot.on {
-    background:
-        var(--green);
+    background: var(--green);
 }
 
 
@@ -363,6 +327,8 @@ body {
 ============================================================ */
 
 .power {
+    overflow: hidden;
+
     color: var(--text);
 
     font-size: 13px;
@@ -381,8 +347,8 @@ body {
 ============================================================ */
 
 .gear {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
 
     display: flex;
 
@@ -398,14 +364,13 @@ body {
         var(--line);
 
     border-radius:
-        10px;
+        9px;
 
-    background:
-        transparent;
+    background: transparent;
 
     color: var(--text);
 
-    font-size: 19px;
+    font-size: 18px;
 
     line-height: 1;
 }
@@ -414,11 +379,8 @@ body {
 /* ============================================================
    MOBILE
 
-   Keine Breiten-Erkennung für Laptop/Tablet.
-   Mobile nur über Touch / coarse pointer.
-
-   Kleinste Schrift:
-   12 px
+   Kleinste Schrift 12px.
+   Alle 5 Zeilen müssen passen.
 ============================================================ */
 
 @media
@@ -429,10 +391,10 @@ body {
 
     .consumers {
         /*
-         * Titelzone Mobile etwas höher.
+         * Mobile Titelzone etwas höher.
          */
         padding:
-            52px
+            50px
             8px
             8px
             8px;
@@ -443,17 +405,17 @@ body {
 
     .consumer-row {
         grid-template-columns:
-            48px
-            minmax(0, 1.55fr)
-            minmax(104px, 1fr)
-            72px
-            42px;
+            46px
+            minmax(0, 1.5fr)
+            minmax(96px, 1fr)
+            67px
+            40px;
 
-        column-gap: 6px;
+        column-gap: 5px;
 
         padding:
             4px
-            6px;
+            5px;
 
         border-radius:
             12px;
@@ -461,13 +423,15 @@ body {
 
 
     .icon-box {
-        width: 42px;
-        height: 42px;
+        width: 40px;
+        height: 40px;
+
+        border-radius: 10px;
     }
 
 
     .icon {
-        font-size: 29px;
+        font-size: 28px;
     }
 
 
@@ -503,10 +467,10 @@ body {
 
 
     .gear {
-        width: 39px;
-        height: 39px;
+        width: 37px;
+        height: 37px;
 
-        font-size: 20px;
+        font-size: 19px;
     }
 
 }
@@ -514,9 +478,6 @@ body {
 
 /* ============================================================
    SEHR SCHMALES MOBILE
-
-   Auch hier:
-   keine Schrift kleiner als 12 px.
 ============================================================ */
 
 @media
@@ -529,7 +490,7 @@ body {
 
     .consumers {
         padding:
-            50px
+            48px
             5px
             6px
             5px;
@@ -540,11 +501,11 @@ body {
 
     .consumer-row {
         grid-template-columns:
-            43px
-            minmax(0, 1.5fr)
-            minmax(90px, 1fr)
-            60px
-            38px;
+            42px
+            minmax(0, 1.45fr)
+            minmax(87px, 1fr)
+            58px
+            36px;
 
         column-gap: 4px;
 
@@ -555,13 +516,13 @@ body {
 
 
     .icon-box {
-        width: 38px;
-        height: 38px;
+        width: 37px;
+        height: 37px;
     }
 
 
     .icon {
-        font-size: 26px;
+        font-size: 25px;
     }
 
 
@@ -583,10 +544,10 @@ body {
 
 
     .gear {
-        width: 35px;
-        height: 35px;
+        width: 33px;
+        height: 33px;
 
-        font-size: 18px;
+        font-size: 17px;
     }
 
 }
@@ -602,20 +563,13 @@ body {
 <div class="consumers">
 
 
-    <!-- ========================================================
-         ENTFEUCHTER UG
-    ========================================================= -->
+    <!-- UG -->
 
     <div class="consumer-row">
 
         <div class="icon-box">
-
-            <div class="icon blue">
-                ♧
-            </div>
-
+            <div class="icon blue">♧</div>
         </div>
-
 
         <div class="name-area">
 
@@ -628,7 +582,6 @@ body {
             </div>
 
         </div>
-
 
         <div class="state-area">
 
@@ -654,7 +607,6 @@ body {
 
         </div>
 
-
         <div
             class="power"
             id="ug-power"
@@ -662,10 +614,9 @@ body {
             —
         </div>
 
-
         <button
-            class="gear"
             type="button"
+            class="gear"
         >
             ⚙
         </button>
@@ -674,20 +625,13 @@ body {
 
 
 
-    <!-- ========================================================
-         ENTFEUCHTER OG
-    ========================================================= -->
+    <!-- OG -->
 
     <div class="consumer-row">
 
         <div class="icon-box">
-
-            <div class="icon blue">
-                ♧
-            </div>
-
+            <div class="icon blue">♧</div>
         </div>
-
 
         <div class="name-area">
 
@@ -700,7 +644,6 @@ body {
             </div>
 
         </div>
-
 
         <div class="state-area">
 
@@ -726,7 +669,6 @@ body {
 
         </div>
 
-
         <div
             class="power"
             id="og-power"
@@ -734,10 +676,9 @@ body {
             —
         </div>
 
-
         <button
-            class="gear"
             type="button"
+            class="gear"
         >
             ⚙
         </button>
@@ -746,20 +687,13 @@ body {
 
 
 
-    <!-- ========================================================
-         POOL
-    ========================================================= -->
+    <!-- POOL -->
 
     <div class="consumer-row">
 
         <div class="icon-box">
-
-            <div class="icon blue">
-                ≋
-            </div>
-
+            <div class="icon blue">≋</div>
         </div>
-
 
         <div class="name-area">
 
@@ -772,7 +706,6 @@ body {
             </div>
 
         </div>
-
 
         <div class="state-area">
 
@@ -798,7 +731,6 @@ body {
 
         </div>
 
-
         <div
             class="power"
             id="pool-power"
@@ -806,10 +738,9 @@ body {
             —
         </div>
 
-
         <button
-            class="gear"
             type="button"
+            class="gear"
         >
             ⚙
         </button>
@@ -818,20 +749,13 @@ body {
 
 
 
-    <!-- ========================================================
-         BOILER
-    ========================================================= -->
+    <!-- BOILER -->
 
     <div class="consumer-row">
 
         <div class="icon-box">
-
-            <div class="icon orange">
-                ◉
-            </div>
-
+            <div class="icon orange">◉</div>
         </div>
-
 
         <div class="name-area">
 
@@ -844,7 +768,6 @@ body {
             </div>
 
         </div>
-
 
         <div class="state-area">
 
@@ -870,7 +793,6 @@ body {
 
         </div>
 
-
         <div
             class="power"
             id="boiler-power"
@@ -878,10 +800,9 @@ body {
             —
         </div>
 
-
         <button
-            class="gear"
             type="button"
+            class="gear"
         >
             ⚙
         </button>
@@ -890,20 +811,13 @@ body {
 
 
 
-    <!-- ========================================================
-         HEIZSTAB / PUFFER
-    ========================================================= -->
+    <!-- HEIZSTAB -->
 
     <div class="consumer-row">
 
         <div class="icon-box">
-
-            <div class="icon orange">
-                ▥
-            </div>
-
+            <div class="icon orange">▥</div>
         </div>
-
 
         <div class="name-area">
 
@@ -916,7 +830,6 @@ body {
             </div>
 
         </div>
-
 
         <div class="state-area">
 
@@ -942,7 +855,6 @@ body {
 
         </div>
 
-
         <div
             class="power"
             id="heater-power"
@@ -950,10 +862,9 @@ body {
             —
         </div>
 
-
         <button
-            class="gear"
             type="button"
+            class="gear"
         >
             ⚙
         </button>
@@ -967,9 +878,8 @@ body {
 
 <script>
 
-
 /* ============================================================
-   HELPER
+   HELPERS
 ============================================================ */
 
 function setText(
@@ -993,8 +903,9 @@ function setText(
 }
 
 
-
-function modeText(value) {
+function modeText(
+    value
+) {
 
     const mode =
         Number(
@@ -1016,8 +927,9 @@ function modeText(value) {
 }
 
 
-
-function powerText(value) {
+function powerText(
+    value
+) {
 
     if (
         value === null ||
@@ -1058,9 +970,8 @@ function powerText(value) {
 }
 
 
-
 /* ============================================================
-   EINZELNE ZEILE
+   EINEN VERBRAUCHER
 ============================================================ */
 
 function updateConsumer(
@@ -1075,8 +986,7 @@ function updateConsumer(
 
     const mode =
         Number(
-            data.mode ??
-            0
+            data.mode
         );
 
 
@@ -1096,7 +1006,6 @@ function updateConsumer(
 
     setText(
         key + "-state",
-
         active
             ? "Gerät Ein"
             : "Gerät Aus"
@@ -1145,12 +1054,13 @@ function updateConsumer(
 }
 
 
-
 /* ============================================================
-   LIVE UPDATE
+   LIVE MESSAGE
 ============================================================ */
 
-function handleMessage(data) {
+function handleMessage(
+    data
+) {
 
     if (!data) {
         return;
@@ -1209,7 +1119,6 @@ function handleMessage(data) {
 }
 
 
-
 /* ============================================================
    INITIAL
 ============================================================ */
@@ -1219,64 +1128,8 @@ window.addEventListener(
     function () {
 
         /*
-         * Eingebauter Test:
-         *
-         * module.html?test=1
-         *
-         * Damit kann die Anzeige unabhängig von Symcon
-         * mit definierten Werten geprüft werden.
+         * Startanforderung an Modul.
          */
-
-        const test =
-            new URLSearchParams(
-                location.search
-            ).get(
-                "test"
-            );
-
-
-        if (
-            test === "1"
-        ) {
-
-            handleMessage({
-
-                ug: {
-                    mode: 1,
-                    active: true,
-                    power: 0.5
-                },
-
-                og: {
-                    mode: 1,
-                    active: true,
-                    power: 0.5
-                },
-
-                pool: {
-                    mode: 1,
-                    active: false,
-                    power: 0.5
-                },
-
-                boiler: {
-                    mode: 1,
-                    active: false,
-                    power: 6
-                },
-
-                heater: {
-                    mode: 0,
-                    active: false,
-                    power: 6
-                }
-
-            });
-
-
-            return;
-        }
-
 
         if (
             typeof requestAction ===
@@ -1293,8 +1146,8 @@ window.addEventListener(
     }
 );
 
-
 </script>
+
 
 </body>
 

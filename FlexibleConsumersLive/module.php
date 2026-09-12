@@ -10,35 +10,53 @@ class FlexibleConsumersLive extends IPSModule
             'mode'   => 48725,
             'status' => 21846,
             'power'  => 47479,
-            'reason' => 57923
+            'reason' => 57923,
+            'temp'   => 0,
+            'limit'  => 0
         ],
 
         'og' => [
             'mode'   => 37326,
             'status' => 20351,
             'power'  => 48347,
-            'reason' => 55280
+            'reason' => 55280,
+            'temp'   => 0,
+            'limit'  => 0
         ],
 
         'pool' => [
             'mode'   => 29959,
             'status' => 21048,
             'power'  => 56815,
-            'reason' => 26781
+            'reason' => 26781,
+            'temp'   => 0,
+            'limit'  => 0
         ],
 
         'boiler' => [
             'mode'   => 17552,
             'status' => 10737,
             'power'  => 19394,
-            'reason' => 23015
+            'reason' => 23015,
+
+            // B3 oben
+            'temp'   => 39112,
+
+            // Temperaturgrenze
+            'limit'  => 41703
         ],
 
         'heater' => [
             'mode'   => 24813,
             'status' => 53546,
             'power'  => 37285,
-            'reason' => 50074
+            'reason' => 50074,
+
+            // Puffer B4 oben
+            'temp'   => 27553,
+
+            // Temperaturgrenze
+            'limit'  => 50024
         ]
     ];
 
@@ -156,28 +174,31 @@ class FlexibleConsumersLive extends IPSModule
             as $config
         ) {
 
-            $ids[] =
-                (int)$config['mode'];
+            foreach (
+                [
+                    'mode',
+                    'status',
+                    'power',
+                    'reason',
+                    'temp',
+                    'limit'
+                ]
+                as $key
+            ) {
 
-            $ids[] =
-                (int)$config['status'];
+                $id =
+                    (int)$config[$key];
 
-            $ids[] =
-                (int)$config['power'];
+                if ($id > 0) {
 
-            $ids[] =
-                (int)$config['reason'];
+                    $ids[] = $id;
+                }
+            }
         }
 
 
         return array_values(
-            array_unique(
-                array_filter(
-                    $ids,
-                    static fn($id) =>
-                        $id > 0
-                )
-            )
+            array_unique($ids)
         );
     }
 
@@ -194,8 +215,7 @@ class FlexibleConsumersLive extends IPSModule
         }
 
 
-        return
-            (int)GetValue($id);
+        return (int)GetValue($id);
     }
 
 
@@ -211,8 +231,7 @@ class FlexibleConsumersLive extends IPSModule
         }
 
 
-        return
-            (float)GetValue($id);
+        return (float)GetValue($id);
     }
 
 
@@ -228,8 +247,7 @@ class FlexibleConsumersLive extends IPSModule
         }
 
 
-        return
-            (bool)GetValue($id);
+        return (bool)GetValue($id);
     }
 
 
@@ -245,8 +263,7 @@ class FlexibleConsumersLive extends IPSModule
         }
 
 
-        return
-            (string)GetValue($id);
+        return (string)GetValue($id);
     }
 
 
@@ -280,6 +297,16 @@ class FlexibleConsumersLive extends IPSModule
                 'reason' =>
                     $this->ReadString(
                         (int)$config['reason']
+                    ),
+
+                'temperature' =>
+                    $this->ReadFloat(
+                        (int)$config['temp']
+                    ),
+
+                'temperatureLimit' =>
+                    $this->ReadFloat(
+                        (int)$config['limit']
                     )
             ];
         }

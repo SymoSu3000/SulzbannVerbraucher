@@ -27,11 +27,8 @@
     --text: #20262b;
     --muted: #7d878d;
 
-    --line:
-        rgba(0, 0, 0, 0.14);
-
-    --row-bg:
-        rgba(0, 0, 0, 0.015);
+    --line: rgba(0, 0, 0, 0.14);
+    --row-bg: rgba(0, 0, 0, 0.015);
 
     --blue: #2196f3;
     --orange: #f4a321;
@@ -46,11 +43,8 @@
         --text: #f1f4f6;
         --muted: #a7afb5;
 
-        --line:
-            rgba(255, 255, 255, 0.15);
-
-        --row-bg:
-            rgba(255, 255, 255, 0.018);
+        --line: rgba(255, 255, 255, 0.15);
+        --row-bg: rgba(255, 255, 255, 0.018);
 
         --blue: #38a9ff;
         --orange: #ffad2f;
@@ -104,8 +98,11 @@ body {
 
     gap: 5px;
 
+    /*
+     * Symcon-Titel sicher freihalten.
+     */
     padding:
-        46px
+        48px
         9px
         9px
         9px;
@@ -115,7 +112,7 @@ body {
 
 
 /* ============================================================
-   ZEILE
+   VERBRAUCHERKARTE
 ============================================================ */
 
 .consumer-row {
@@ -124,10 +121,17 @@ body {
 
     display: grid;
 
+    /*
+     * Zeile 1:
+     * Icon | Name | Leistung | Zahnrad
+     *
+     * Zeile 2:
+     * Icon | Untertitel + Status | | Zahnrad
+     */
+
     grid-template-columns:
         48px
         minmax(0, 1fr)
-        118px
         76px
         44px;
 
@@ -136,8 +140,8 @@ body {
         1fr;
 
     grid-template-areas:
-        "icon name mode power gear"
-        "icon sub  state power gear";
+        "icon name power gear"
+        "icon meta meta gear";
 
     column-gap: 8px;
     row-gap: 1px;
@@ -152,8 +156,7 @@ body {
         1px solid
         var(--line);
 
-    border-radius:
-        13px;
+    border-radius: 13px;
 
     background:
         var(--row-bg);
@@ -169,8 +172,8 @@ body {
 .icon-box {
     grid-area: icon;
 
-    width: 43px;
-    height: 43px;
+    width: 42px;
+    height: 42px;
 
     display: flex;
 
@@ -178,7 +181,6 @@ body {
     justify-content: center;
 
     justify-self: center;
-    align-self: center;
 
     border:
         1px solid
@@ -211,7 +213,7 @@ body {
 
 
 /* ============================================================
-   NAME / UNTERTITEL
+   NAME
 ============================================================ */
 
 .name {
@@ -236,64 +238,15 @@ body {
 }
 
 
-.subtitle {
-    grid-area: sub;
-
-    min-width: 0;
-
-    align-self: start;
-
-    overflow: hidden;
-
-    color: var(--muted);
-
-    font-size: 13px;
-
-    line-height: 1.1;
-
-    white-space: nowrap;
-
-    text-overflow: ellipsis;
-}
-
-
 /* ============================================================
-   MODUS
+   META-ZEILE
+
+   Untertitel links
+   Modus + Status rechts
 ============================================================ */
 
-.mode {
-    grid-area: mode;
-
-    min-width: 0;
-
-    align-self: end;
-
-    overflow: hidden;
-
-    color: var(--blue);
-
-    font-size: 13px;
-    font-weight: 650;
-
-    line-height: 1.1;
-
-    white-space: nowrap;
-
-    text-overflow: ellipsis;
-}
-
-
-.mode.off {
-    color: var(--muted);
-}
-
-
-/* ============================================================
-   GERÄTESTATUS
-============================================================ */
-
-.real-state {
-    grid-area: state;
+.meta {
+    grid-area: meta;
 
     min-width: 0;
 
@@ -302,10 +255,65 @@ body {
     display: flex;
 
     align-items: center;
+    justify-content: space-between;
 
-    gap: 6px;
+    gap: 10px;
+}
+
+
+.subtitle {
+    min-width: 0;
 
     overflow: hidden;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.1;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+
+.state-group {
+    flex: 0 0 auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    min-width: 0;
+}
+
+
+.mode {
+    color: var(--blue);
+
+    font-size: 13px;
+    font-weight: 650;
+
+    line-height: 1.1;
+
+    white-space: nowrap;
+}
+
+
+.mode.off {
+    color: var(--muted);
+}
+
+
+.real-state {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
 
     color: var(--text);
 
@@ -320,8 +328,8 @@ body {
 .state-dot {
     flex: 0 0 auto;
 
-    width: 11px;
-    height: 11px;
+    width: 10px;
+    height: 10px;
 
     border-radius: 50%;
 
@@ -331,10 +339,6 @@ body {
 
 .state-dot.on {
     background: var(--green);
-
-    box-shadow:
-        0 0 5px
-        rgba(27, 212, 145, 0.30);
 }
 
 
@@ -345,16 +349,14 @@ body {
 .power {
     grid-area: power;
 
-    align-self: center;
-
-    overflow: hidden;
+    align-self: end;
 
     color: var(--text);
 
     font-size: 14px;
     font-weight: 700;
 
-    line-height: 1;
+    line-height: 1.1;
 
     text-align: right;
 
@@ -369,8 +371,8 @@ body {
 .gear {
     grid-area: gear;
 
-    width: 39px;
-    height: 39px;
+    width: 38px;
+    height: 38px;
 
     display: flex;
 
@@ -378,7 +380,6 @@ body {
     justify-content: center;
 
     justify-self: center;
-    align-self: center;
 
     padding: 0;
 
@@ -392,7 +393,7 @@ body {
 
     color: var(--text);
 
-    font-size: 20px;
+    font-size: 19px;
 
     line-height: 1;
 }
@@ -400,8 +401,7 @@ body {
 
 /* ============================================================
    DESKTOP / LAPTOP
-
-   Kleinste Schrift = 13 px
+   MINDESTSCHRIFT 13 PX
 ============================================================ */
 
 @media
@@ -411,7 +411,7 @@ body {
 {
 
     .consumers {
-        padding-top: 48px;
+        padding-top: 52px;
     }
 
 
@@ -419,7 +419,6 @@ body {
         grid-template-columns:
             44px
             minmax(0, 1fr)
-            112px
             72px
             40px;
 
@@ -434,10 +433,10 @@ body {
 
 
     .icon-box {
-        width: 39px;
-        height: 39px;
+        width: 38px;
+        height: 38px;
 
-        border-radius: 10px;
+        border-radius: 9px;
     }
 
 
@@ -446,7 +445,11 @@ body {
     }
 
 
-    .name,
+    .name {
+        font-size: 13px;
+    }
+
+
     .subtitle,
     .mode,
     .real-state {
@@ -460,8 +463,8 @@ body {
 
 
     .gear {
-        width: 36px;
-        height: 36px;
+        width: 35px;
+        height: 35px;
 
         font-size: 18px;
     }
@@ -471,8 +474,7 @@ body {
 
 /* ============================================================
    MOBILE
-
-   Kleinste Schrift = 12 px.
+   MINDESTSCHRIFT 12 PX
 ============================================================ */
 
 @media
@@ -482,12 +484,8 @@ body {
 {
 
     .consumers {
-        /*
-         * Titelbereich der Symcon-Kachel freihalten,
-         * gleichzeitig nicht unnötig Höhe verlieren.
-         */
         padding:
-            50px
+            52px
             9px
             9px
             9px;
@@ -500,11 +498,10 @@ body {
         grid-template-columns:
             50px
             minmax(0, 1fr)
-            118px
-            74px
-            44px;
+            76px
+            45px;
 
-        column-gap: 7px;
+        column-gap: 8px;
 
         padding:
             5px
@@ -561,7 +558,9 @@ body {
 
 
 /* ============================================================
-   SCHMALES MOBILE
+   SCHMALERES MOBILE
+
+   Nicht kleiner als 12 px.
 ============================================================ */
 
 @media
@@ -574,7 +573,7 @@ body {
 
     .consumers {
         padding:
-            48px
+            50px
             6px
             7px
             6px;
@@ -587,11 +586,10 @@ body {
         grid-template-columns:
             43px
             minmax(0, 1fr)
-            96px
-            58px
-            36px;
+            62px
+            37px;
 
-        column-gap: 4px;
+        column-gap: 5px;
 
         padding:
             4px
@@ -617,6 +615,16 @@ body {
     }
 
 
+    .meta {
+        gap: 5px;
+    }
+
+
+    .state-group {
+        gap: 5px;
+    }
+
+
     .subtitle,
     .mode,
     .real-state {
@@ -625,13 +633,15 @@ body {
 
 
     .real-state {
-        gap: 4px;
+        gap: 3px;
     }
 
 
-    .state-dot {
-        width: 10px;
-        height: 10px;
+    /*
+     * Auf sehr schmalen Displays "Gerät" sparen.
+     */
+    .state-prefix {
+        display: none;
     }
 
 
@@ -664,7 +674,7 @@ body {
 
     .consumers {
         padding:
-            52px
+            56px
             16px
             16px
             16px;
@@ -675,9 +685,8 @@ body {
 
     .consumer-row {
         grid-template-columns:
-            60px
+            62px
             minmax(0, 1fr)
-            155px
             105px
             58px;
 
@@ -763,27 +772,35 @@ body {
             Entfeuchter UG
         </div>
 
-        <div class="subtitle">
-            Untergeschoss
-        </div>
+        <div class="meta">
 
-        <div
-            class="mode"
-            id="ug-mode"
-        >
-            —
-        </div>
+            <div class="subtitle">
+                Untergeschoss
+            </div>
 
-        <div class="real-state">
+            <div class="state-group">
 
-            <span
-                class="state-dot"
-                id="ug-dot"
-            ></span>
+                <div
+                    class="mode"
+                    id="ug-mode"
+                >
+                    —
+                </div>
 
-            <span id="ug-state">
-                —
-            </span>
+                <div class="real-state">
+
+                    <span
+                        class="state-dot"
+                        id="ug-dot"
+                    ></span>
+
+                    <span>
+                        <span class="state-prefix">Gerät </span><span id="ug-state">—</span>
+                    </span>
+
+                </div>
+
+            </div>
 
         </div>
 
@@ -819,27 +836,35 @@ body {
             Entfeuchter OG
         </div>
 
-        <div class="subtitle">
-            Obergeschoss
-        </div>
+        <div class="meta">
 
-        <div
-            class="mode"
-            id="og-mode"
-        >
-            —
-        </div>
+            <div class="subtitle">
+                Obergeschoss
+            </div>
 
-        <div class="real-state">
+            <div class="state-group">
 
-            <span
-                class="state-dot"
-                id="og-dot"
-            ></span>
+                <div
+                    class="mode"
+                    id="og-mode"
+                >
+                    —
+                </div>
 
-            <span id="og-state">
-                —
-            </span>
+                <div class="real-state">
+
+                    <span
+                        class="state-dot"
+                        id="og-dot"
+                    ></span>
+
+                    <span>
+                        <span class="state-prefix">Gerät </span><span id="og-state">—</span>
+                    </span>
+
+                </div>
+
+            </div>
 
         </div>
 
@@ -875,27 +900,35 @@ body {
             Poolpumpe + Salzelektrolyse
         </div>
 
-        <div class="subtitle">
-            Pooltechnik
-        </div>
+        <div class="meta">
 
-        <div
-            class="mode"
-            id="pool-mode"
-        >
-            —
-        </div>
+            <div class="subtitle">
+                Pooltechnik
+            </div>
 
-        <div class="real-state">
+            <div class="state-group">
 
-            <span
-                class="state-dot"
-                id="pool-dot"
-            ></span>
+                <div
+                    class="mode"
+                    id="pool-mode"
+                >
+                    —
+                </div>
 
-            <span id="pool-state">
-                —
-            </span>
+                <div class="real-state">
+
+                    <span
+                        class="state-dot"
+                        id="pool-dot"
+                    ></span>
+
+                    <span>
+                        <span class="state-prefix">Gerät </span><span id="pool-state">—</span>
+                    </span>
+
+                </div>
+
+            </div>
 
         </div>
 
@@ -931,27 +964,35 @@ body {
             Boiler
         </div>
 
-        <div class="subtitle">
-            Warmwasser
-        </div>
+        <div class="meta">
 
-        <div
-            class="mode"
-            id="boiler-mode"
-        >
-            —
-        </div>
+            <div class="subtitle">
+                Warmwasser
+            </div>
 
-        <div class="real-state">
+            <div class="state-group">
 
-            <span
-                class="state-dot"
-                id="boiler-dot"
-            ></span>
+                <div
+                    class="mode"
+                    id="boiler-mode"
+                >
+                    —
+                </div>
 
-            <span id="boiler-state">
-                —
-            </span>
+                <div class="real-state">
+
+                    <span
+                        class="state-dot"
+                        id="boiler-dot"
+                    ></span>
+
+                    <span>
+                        <span class="state-prefix">Gerät </span><span id="boiler-state">—</span>
+                    </span>
+
+                </div>
+
+            </div>
 
         </div>
 
@@ -974,7 +1015,7 @@ body {
 
 
     <!-- ========================================================
-         HEIZSTAB
+         HEIZSTAB / PUFFER
     ========================================================= -->
 
     <div class="consumer-row">
@@ -987,27 +1028,35 @@ body {
             Heizstab / Puffer
         </div>
 
-        <div class="subtitle">
-            Heizung
-        </div>
+        <div class="meta">
 
-        <div
-            class="mode"
-            id="heater-mode"
-        >
-            —
-        </div>
+            <div class="subtitle">
+                Heizung
+            </div>
 
-        <div class="real-state">
+            <div class="state-group">
 
-            <span
-                class="state-dot"
-                id="heater-dot"
-            ></span>
+                <div
+                    class="mode"
+                    id="heater-mode"
+                >
+                    —
+                </div>
 
-            <span id="heater-state">
-                —
-            </span>
+                <div class="real-state">
+
+                    <span
+                        class="state-dot"
+                        id="heater-dot"
+                    ></span>
+
+                    <span>
+                        <span class="state-prefix">Gerät </span><span id="heater-state">—</span>
+                    </span>
+
+                </div>
+
+            </div>
 
         </div>
 
@@ -1034,9 +1083,8 @@ body {
 
 <script>
 
-
 /* ============================================================
-   HELPER
+   HELPERS
 ============================================================ */
 
 function setText(
@@ -1049,11 +1097,9 @@ function setText(
             id
         );
 
-
     if (!element) {
         return;
     }
-
 
     element.textContent =
         value;
@@ -1101,7 +1147,9 @@ function powerText(
         Number(value);
 
 
-    if (Math.abs(number) < 1) {
+    if (
+        Math.abs(number) < 1
+    ) {
 
         return (
             Math.round(
@@ -1120,7 +1168,7 @@ function powerText(
 
 
 /* ============================================================
-   EINZELNER VERBRAUCHER
+   VERBRAUCHER AKTUALISIEREN
 ============================================================ */
 
 function updateConsumer(
@@ -1147,15 +1195,22 @@ function updateConsumer(
 
     setText(
         key + "-mode",
-        modeText(mode)
+        modeText(
+            mode
+        )
     );
 
+
+    /*
+     * Nur Ein/Aus setzen.
+     * "Gerät" steht separat im HTML.
+     */
 
     setText(
         key + "-state",
         active
-            ? "Gerät Ein"
-            : "Gerät Aus"
+            ? "Ein"
+            : "Aus"
     );
 
 
@@ -1286,7 +1341,6 @@ window.addEventListener(
 
     }
 );
-
 
 </script>
 

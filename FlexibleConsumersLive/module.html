@@ -99,7 +99,7 @@ body {
     gap: 5px;
 
     /*
-     * Symcon-Titel sicher freihalten.
+     * Symcon-Kacheltitel bleibt komplett frei.
      */
     padding:
         48px
@@ -112,7 +112,7 @@ body {
 
 
 /* ============================================================
-   VERBRAUCHERKARTE
+   VERBRAUCHERZEILE
 ============================================================ */
 
 .consumer-row {
@@ -122,34 +122,22 @@ body {
     display: grid;
 
     /*
-     * Zeile 1:
-     * Icon | Name | Leistung | Zahnrad
-     *
-     * Zeile 2:
-     * Icon | Untertitel + Status | | Zahnrad
+     * Icon | Verbraucher | Zustand | Leistung | Zahnrad
      */
 
     grid-template-columns:
-        48px
+        50px
         minmax(0, 1fr)
-        76px
+        125px
+        78px
         44px;
 
-    grid-template-rows:
-        1fr
-        1fr;
-
-    grid-template-areas:
-        "icon name power gear"
-        "icon meta meta gear";
-
     column-gap: 8px;
-    row-gap: 1px;
 
     align-items: center;
 
     padding:
-        5px
+        4px
         7px;
 
     border:
@@ -166,14 +154,12 @@ body {
 
 
 /* ============================================================
-   ICON
+   SYMBOL
 ============================================================ */
 
 .icon-box {
-    grid-area: icon;
-
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
 
     display: flex;
 
@@ -196,7 +182,7 @@ body {
     align-items: center;
     justify-content: center;
 
-    font-size: 28px;
+    font-size: 29px;
 
     line-height: 1;
 }
@@ -213,15 +199,22 @@ body {
 
 
 /* ============================================================
-   NAME
+   VERBRAUCHER
 ============================================================ */
 
-.name {
-    grid-area: name;
-
+.name-area {
     min-width: 0;
 
-    align-self: end;
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+
+.name {
+    min-width: 0;
 
     overflow: hidden;
 
@@ -238,31 +231,10 @@ body {
 }
 
 
-/* ============================================================
-   META-ZEILE
-
-   Untertitel links
-   Modus + Status rechts
-============================================================ */
-
-.meta {
-    grid-area: meta;
-
-    min-width: 0;
-
-    align-self: start;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: space-between;
-
-    gap: 10px;
-}
-
-
 .subtitle {
     min-width: 0;
+
+    margin-top: 3px;
 
     overflow: hidden;
 
@@ -270,7 +242,7 @@ body {
 
     font-size: 13px;
 
-    line-height: 1.1;
+    line-height: 1.05;
 
     white-space: nowrap;
 
@@ -278,28 +250,37 @@ body {
 }
 
 
-.state-group {
-    flex: 0 0 auto;
+/* ============================================================
+   MODUS / STATUS
+============================================================ */
+
+.state-area {
+    min-width: 0;
 
     display: flex;
 
-    align-items: center;
+    flex-direction: column;
 
-    gap: 9px;
-
-    min-width: 0;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 
 .mode {
+    max-width: 100%;
+
+    overflow: hidden;
+
     color: var(--blue);
 
     font-size: 13px;
     font-weight: 650;
 
-    line-height: 1.1;
+    line-height: 1.05;
 
     white-space: nowrap;
+
+    text-overflow: ellipsis;
 }
 
 
@@ -309,17 +290,23 @@ body {
 
 
 .real-state {
+    max-width: 100%;
+
+    margin-top: 4px;
+
     display: flex;
 
     align-items: center;
 
-    gap: 5px;
+    gap: 6px;
+
+    overflow: hidden;
 
     color: var(--text);
 
     font-size: 13px;
 
-    line-height: 1.1;
+    line-height: 1.05;
 
     white-space: nowrap;
 }
@@ -328,8 +315,8 @@ body {
 .state-dot {
     flex: 0 0 auto;
 
-    width: 10px;
-    height: 10px;
+    width: 11px;
+    height: 11px;
 
     border-radius: 50%;
 
@@ -347,16 +334,14 @@ body {
 ============================================================ */
 
 .power {
-    grid-area: power;
-
-    align-self: end;
+    min-width: 0;
 
     color: var(--text);
 
     font-size: 14px;
     font-weight: 700;
 
-    line-height: 1.1;
+    line-height: 1;
 
     text-align: right;
 
@@ -369,10 +354,8 @@ body {
 ============================================================ */
 
 .gear {
-    grid-area: gear;
-
-    width: 38px;
-    height: 38px;
+    width: 39px;
+    height: 39px;
 
     display: flex;
 
@@ -393,7 +376,7 @@ body {
 
     color: var(--text);
 
-    font-size: 19px;
+    font-size: 20px;
 
     line-height: 1;
 }
@@ -401,7 +384,7 @@ body {
 
 /* ============================================================
    DESKTOP / LAPTOP
-   MINDESTSCHRIFT 13 PX
+   MINDESTENS 13 PX
 ============================================================ */
 
 @media
@@ -419,13 +402,14 @@ body {
         grid-template-columns:
             44px
             minmax(0, 1fr)
+            118px
             72px
             40px;
 
         column-gap: 7px;
 
         padding:
-            4px
+            3px
             6px;
 
         border-radius: 11px;
@@ -433,10 +417,10 @@ body {
 
 
     .icon-box {
-        width: 38px;
-        height: 38px;
+        width: 39px;
+        height: 39px;
 
-        border-radius: 9px;
+        border-radius: 10px;
     }
 
 
@@ -452,19 +436,15 @@ body {
 
     .subtitle,
     .mode,
-    .real-state {
-        font-size: 13px;
-    }
-
-
+    .real-state,
     .power {
         font-size: 13px;
     }
 
 
     .gear {
-        width: 35px;
-        height: 35px;
+        width: 36px;
+        height: 36px;
 
         font-size: 18px;
     }
@@ -474,7 +454,7 @@ body {
 
 /* ============================================================
    MOBILE
-   MINDESTSCHRIFT 12 PX
+   MINDESTENS 12 PX
 ============================================================ */
 
 @media
@@ -485,7 +465,7 @@ body {
 
     .consumers {
         padding:
-            52px
+            50px
             9px
             9px
             9px;
@@ -498,13 +478,14 @@ body {
         grid-template-columns:
             50px
             minmax(0, 1fr)
-            76px
-            45px;
+            118px
+            74px
+            44px;
 
-        column-gap: 8px;
+        column-gap: 7px;
 
         padding:
-            5px
+            4px
             7px;
 
         border-radius: 13px;
@@ -558,9 +539,7 @@ body {
 
 
 /* ============================================================
-   SCHMALERES MOBILE
-
-   Nicht kleiner als 12 px.
+   MOBILE SCHMAL
 ============================================================ */
 
 @media
@@ -573,7 +552,7 @@ body {
 
     .consumers {
         padding:
-            50px
+            49px
             6px
             7px
             6px;
@@ -583,16 +562,22 @@ body {
 
 
     .consumer-row {
+        /*
+         * Symbol und Zahnrad etwas kleiner.
+         * Mittelbereich bekommt den Platz.
+         */
+
         grid-template-columns:
             43px
             minmax(0, 1fr)
-            62px
-            37px;
+            95px
+            59px
+            36px;
 
         column-gap: 5px;
 
         padding:
-            4px
+            3px
             5px;
 
         border-radius: 11px;
@@ -615,16 +600,6 @@ body {
     }
 
 
-    .meta {
-        gap: 5px;
-    }
-
-
-    .state-group {
-        gap: 5px;
-    }
-
-
     .subtitle,
     .mode,
     .real-state {
@@ -633,15 +608,13 @@ body {
 
 
     .real-state {
-        gap: 3px;
+        gap: 4px;
     }
 
 
-    /*
-     * Auf sehr schmalen Displays "Gerät" sparen.
-     */
-    .state-prefix {
-        display: none;
+    .state-dot {
+        width: 10px;
+        height: 10px;
     }
 
 
@@ -687,13 +660,14 @@ body {
         grid-template-columns:
             62px
             minmax(0, 1fr)
+            155px
             105px
             58px;
 
         column-gap: 14px;
 
         padding:
-            9px
+            8px
             12px;
 
         border-radius: 15px;
@@ -768,41 +742,44 @@ body {
             <div class="icon blue">♧</div>
         </div>
 
-        <div class="name">
-            Entfeuchter UG
-        </div>
 
-        <div class="meta">
+        <div class="name-area">
+
+            <div class="name">
+                Entfeuchter UG
+            </div>
 
             <div class="subtitle">
                 Untergeschoss
             </div>
 
-            <div class="state-group">
+        </div>
 
-                <div
-                    class="mode"
-                    id="ug-mode"
-                >
+
+        <div class="state-area">
+
+            <div
+                class="mode"
+                id="ug-mode"
+            >
+                —
+            </div>
+
+            <div class="real-state">
+
+                <span
+                    class="state-dot"
+                    id="ug-dot"
+                ></span>
+
+                <span id="ug-state">
                     —
-                </div>
-
-                <div class="real-state">
-
-                    <span
-                        class="state-dot"
-                        id="ug-dot"
-                    ></span>
-
-                    <span>
-                        <span class="state-prefix">Gerät </span><span id="ug-state">—</span>
-                    </span>
-
-                </div>
+                </span>
 
             </div>
 
         </div>
+
 
         <div
             class="power"
@@ -810,6 +787,7 @@ body {
         >
             —
         </div>
+
 
         <button
             type="button"
@@ -832,41 +810,44 @@ body {
             <div class="icon blue">♧</div>
         </div>
 
-        <div class="name">
-            Entfeuchter OG
-        </div>
 
-        <div class="meta">
+        <div class="name-area">
+
+            <div class="name">
+                Entfeuchter OG
+            </div>
 
             <div class="subtitle">
                 Obergeschoss
             </div>
 
-            <div class="state-group">
+        </div>
 
-                <div
-                    class="mode"
-                    id="og-mode"
-                >
+
+        <div class="state-area">
+
+            <div
+                class="mode"
+                id="og-mode"
+            >
+                —
+            </div>
+
+            <div class="real-state">
+
+                <span
+                    class="state-dot"
+                    id="og-dot"
+                ></span>
+
+                <span id="og-state">
                     —
-                </div>
-
-                <div class="real-state">
-
-                    <span
-                        class="state-dot"
-                        id="og-dot"
-                    ></span>
-
-                    <span>
-                        <span class="state-prefix">Gerät </span><span id="og-state">—</span>
-                    </span>
-
-                </div>
+                </span>
 
             </div>
 
         </div>
+
 
         <div
             class="power"
@@ -874,6 +855,7 @@ body {
         >
             —
         </div>
+
 
         <button
             type="button"
@@ -896,41 +878,44 @@ body {
             <div class="icon blue">≋</div>
         </div>
 
-        <div class="name">
-            Poolpumpe + Salzelektrolyse
-        </div>
 
-        <div class="meta">
+        <div class="name-area">
+
+            <div class="name">
+                Poolpumpe + Salzelektrolyse
+            </div>
 
             <div class="subtitle">
                 Pooltechnik
             </div>
 
-            <div class="state-group">
+        </div>
 
-                <div
-                    class="mode"
-                    id="pool-mode"
-                >
+
+        <div class="state-area">
+
+            <div
+                class="mode"
+                id="pool-mode"
+            >
+                —
+            </div>
+
+            <div class="real-state">
+
+                <span
+                    class="state-dot"
+                    id="pool-dot"
+                ></span>
+
+                <span id="pool-state">
                     —
-                </div>
-
-                <div class="real-state">
-
-                    <span
-                        class="state-dot"
-                        id="pool-dot"
-                    ></span>
-
-                    <span>
-                        <span class="state-prefix">Gerät </span><span id="pool-state">—</span>
-                    </span>
-
-                </div>
+                </span>
 
             </div>
 
         </div>
+
 
         <div
             class="power"
@@ -938,6 +923,7 @@ body {
         >
             —
         </div>
+
 
         <button
             type="button"
@@ -960,41 +946,44 @@ body {
             <div class="icon orange">◉</div>
         </div>
 
-        <div class="name">
-            Boiler
-        </div>
 
-        <div class="meta">
+        <div class="name-area">
+
+            <div class="name">
+                Boiler
+            </div>
 
             <div class="subtitle">
                 Warmwasser
             </div>
 
-            <div class="state-group">
+        </div>
 
-                <div
-                    class="mode"
-                    id="boiler-mode"
-                >
+
+        <div class="state-area">
+
+            <div
+                class="mode"
+                id="boiler-mode"
+            >
+                —
+            </div>
+
+            <div class="real-state">
+
+                <span
+                    class="state-dot"
+                    id="boiler-dot"
+                ></span>
+
+                <span id="boiler-state">
                     —
-                </div>
-
-                <div class="real-state">
-
-                    <span
-                        class="state-dot"
-                        id="boiler-dot"
-                    ></span>
-
-                    <span>
-                        <span class="state-prefix">Gerät </span><span id="boiler-state">—</span>
-                    </span>
-
-                </div>
+                </span>
 
             </div>
 
         </div>
+
 
         <div
             class="power"
@@ -1002,6 +991,7 @@ body {
         >
             —
         </div>
+
 
         <button
             type="button"
@@ -1024,41 +1014,44 @@ body {
             <div class="icon orange">▥</div>
         </div>
 
-        <div class="name">
-            Heizstab / Puffer
-        </div>
 
-        <div class="meta">
+        <div class="name-area">
+
+            <div class="name">
+                Heizstab / Puffer
+            </div>
 
             <div class="subtitle">
                 Heizung
             </div>
 
-            <div class="state-group">
+        </div>
 
-                <div
-                    class="mode"
-                    id="heater-mode"
-                >
+
+        <div class="state-area">
+
+            <div
+                class="mode"
+                id="heater-mode"
+            >
+                —
+            </div>
+
+            <div class="real-state">
+
+                <span
+                    class="state-dot"
+                    id="heater-dot"
+                ></span>
+
+                <span id="heater-state">
                     —
-                </div>
-
-                <div class="real-state">
-
-                    <span
-                        class="state-dot"
-                        id="heater-dot"
-                    ></span>
-
-                    <span>
-                        <span class="state-prefix">Gerät </span><span id="heater-state">—</span>
-                    </span>
-
-                </div>
+                </span>
 
             </div>
 
         </div>
+
 
         <div
             class="power"
@@ -1066,6 +1059,7 @@ body {
         >
             —
         </div>
+
 
         <button
             type="button"
@@ -1082,6 +1076,7 @@ body {
 
 
 <script>
+
 
 /* ============================================================
    HELPERS
@@ -1201,16 +1196,11 @@ function updateConsumer(
     );
 
 
-    /*
-     * Nur Ein/Aus setzen.
-     * "Gerät" steht separat im HTML.
-     */
-
     setText(
         key + "-state",
         active
-            ? "Ein"
-            : "Aus"
+            ? "Gerät Ein"
+            : "Gerät Aus"
     );
 
 
@@ -1341,6 +1331,7 @@ window.addEventListener(
 
     }
 );
+
 
 </script>
 

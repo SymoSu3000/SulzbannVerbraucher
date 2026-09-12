@@ -4,132 +4,119 @@ declare(strict_types=1);
 
 class FlexibleConsumersLive extends IPSModule
 {
-    // ========================================================================
-    // Verbraucher - feste Zuordnung
-    // ========================================================================
+    /*
+     * ============================================================
+     * FESTE, BESTÄTIGTE DATENPUNKTE
+     * ============================================================
+     *
+     * ug:
+     *   Mode   #48725
+     *   Status #21846
+     *   Power  #47479
+     *
+     * og:
+     *   Mode   #37326
+     *   Status #20351
+     *   Power  #48347
+     *
+     * pool:
+     *   Mode   #29959
+     *   Power  #56815
+     *   Status wird bei Bedarf unter Schaltinstanz #17098 gesucht.
+     *
+     * boiler:
+     *   Mode   #17552
+     *   Status #10737
+     *   Power  #19394
+     *
+     * heater:
+     *   Mode   #24813
+     *   Status #53546
+     *   Power  #37285
+     */
 
     private const CONSUMERS = [
 
-        [
-            'id'       => 33007,
-            'key'      => 'boiler',
-            'name'     => 'Boiler',
-            'sub'      => 'Warmwasser',
-
-            'mode'     => 17552,
-            'status'   => 10737,
-            'power'    => 19394,
-            'reason'   => 23015,
-            'priority' => 55502,
-
-            'icon'     => 'boiler'
+        'ug' => [
+            'mode'   => 48725,
+            'status' => 21846,
+            'power'  => 47479
         ],
 
-        [
-            'id'       => 52793,
-            'key'      => 'dehum_ug',
-            'name'     => 'Entfeuchter UG',
-            'sub'      => 'Untergeschoss',
-
-            'mode'     => 48725,
-            'status'   => 21846,
-            'power'    => 47479,
-            'reason'   => 57923,
-            'priority' => 53271,
-
-            'icon'     => 'drop'
+        'og' => [
+            'mode'   => 37326,
+            'status' => 20351,
+            'power'  => 48347
         ],
 
-        [
-            'id'       => 55387,
-            'key'      => 'dehum_og',
-            'name'     => 'Entfeuchter OG',
-            'sub'      => 'Obergeschoss',
-
-            'mode'     => 37326,
-            'status'   => 20351,
-            'power'    => 48347,
-            'reason'   => 55280,
-            'priority' => 10472,
-
-            'icon'     => 'drop'
+        'pool' => [
+            'mode'   => 29959,
+            'status' => 21048,
+            'power'  => 56815,
+            'switch' => 17098
         ],
 
-        [
-            'id'       => 31862,
-            'key'      => 'pool',
-            'name'     => 'Poolpumpe + Salzelektrolyse',
-            'sub'      => 'Pooltechnik',
-
-            'mode'     => 29959,
-            'status'   => 21048,
-            'power'    => 56815,
-            'reason'   => 26781,
-            'priority' => 17428,
-
-            'icon'     => 'pool'
+        'boiler' => [
+            'mode'   => 17552,
+            'status' => 10737,
+            'power'  => 19394
         ],
 
-        [
-            'id'       => 16478,
-            'key'      => 'buffer',
-            'name'     => 'Heizstab / Puffer',
-            'sub'      => 'Heizung',
-
-            'mode'     => 24813,
-            'status'   => 53546,
-            'power'    => 37285,
-            'reason'   => 50074,
-            'priority' => 19333,
-
-            'icon'     => 'heater'
+        'heater' => [
+            'mode'   => 24813,
+            'status' => 53546,
+            'power'  => 37285
         ]
+
     ];
 
-
-    // ========================================================================
-    // Create
-    // ========================================================================
 
     public function Create(): void
     {
         parent::Create();
 
+        /*
+         * Native Visualisierung.
+         * HTML bleibt bestehen, nur Werte werden aktualisiert.
+         */
         $this->SetVisualizationType(1);
     }
 
-
-    // ========================================================================
-    // ApplyChanges
-    // ========================================================================
 
     public function ApplyChanges(): void
     {
         parent::ApplyChanges();
 
-        $this->RegisterConsumerMessages();
+        foreach ($this->GetObservedIDs() as $id) {
+
+            if (
+                $id > 0 &&
+                IPS_VariableExists($id)
+            ) {
+
+                $this->RegisterMessage(
+                    $id,
+                    VM_UPDATE
+                );
+            }
+        }
     }
 
-
-    // ========================================================================
-    // HTML SDK
-    // ========================================================================
 
     public function GetVisualizationTile(): string
     {
         $file =
             __DIR__ .
-            '/module.html';
+            DIRECTORY_SEPARATOR .
+            'module.html';
 
 
-        if (
-            !file_exists(
-                $file
-            )
-        ) {
+        if (!file_exists($file)) {
 
             return
-                '<div>module.html nicht gefunden</div>';
+                '<div style="padding:20px;">' .
+                'module.html nicht gefunden.' .
+                '</div>';
         }
 
 
@@ -139,12 +126,12 @@ class FlexibleConsumersLive extends IPSModule
             );
 
 
-        if (
-            $html === false
-        ) {
+        if ($html === false) {
 
             return
-                '<div>module.html konnte nicht gelesen werden</div>';
+                '<div style="padding:20px;">' .
+                'module.html konnte nicht gelesen werden.' .
+                '</div>';
         }
 
 
@@ -152,41 +139,13 @@ class FlexibleConsumersLive extends IPSModule
     }
 
 
-    // ========================================================================
-    // Aktionen
-    // ========================================================================
-
-    public function RequestAction(
-        $Ident,
-        $Value
-    ): void {
-        if (
-            $Ident === 'Refresh'
-        ) {
-
-            $this->SendLiveValues();
-
-            return;
-        }
-
-
-        throw new Exception(
-            'Ungültige Aktion: ' .
-            $Ident
-        );
-    }
-
-
-    // ========================================================================
-    // Nachrichten
-    // ========================================================================
-
     public function MessageSink(
         $TimeStamp,
         $SenderID,
         $Message,
         $Data
     ): void {
+
         parent::MessageSink(
             $TimeStamp,
             $SenderID,
@@ -195,411 +154,80 @@ class FlexibleConsumersLive extends IPSModule
         );
 
 
-        if (
-            $Message === VM_UPDATE
-        ) {
+        if ($Message === VM_UPDATE) {
 
             $this->SendLiveValues();
         }
     }
 
 
-    // ========================================================================
-    // Variablen registrieren
-    // ========================================================================
+    public function RequestAction(
+        $Ident,
+        $Value
+    ): void {
 
-    private function RegisterConsumerMessages(): void
-    {
-        foreach (
-            self::CONSUMERS
-            as
-            $consumer
-        ) {
+        if ($Ident === 'Refresh') {
 
-            $ids = [
+            $this->SendLiveValues();
 
-                intval(
-                    $consumer['mode']
-                ),
-
-                intval(
-                    $consumer['status']
-                ),
-
-                intval(
-                    $consumer['power']
-                ),
-
-                intval(
-                    $consumer['reason']
-                ),
-
-                intval(
-                    $consumer['priority']
-                )
-            ];
-
-
-            foreach (
-                $ids
-                as
-                $id
-            ) {
-
-                if (
-                    IPS_VariableExists(
-                        $id
-                    )
-                ) {
-
-                    $this->RegisterMessage(
-                        $id,
-                        VM_UPDATE
-                    );
-                }
-            }
-        }
-    }
-
-
-    // ========================================================================
-    // Live-Werte senden
-    // ========================================================================
-
-    private function SendLiveValues(): void
-    {
-        $items =
-            [];
-
-
-        foreach (
-            self::CONSUMERS
-            as
-            $consumer
-        ) {
-
-            $items[] =
-                $this->BuildConsumerData(
-                    $consumer
-                );
+            return;
         }
 
 
-        // ====================================================================
-        // Automatisch nach Priorität sortieren
-        //
-        // Kleine Zahl = höhere Priorität = weiter oben
-        // ====================================================================
-
-        usort(
-            $items,
-            function (
-                array $a,
-                array $b
-            ): int {
-
-                $priorityA =
-                    intval(
-                        $a['priority']
-                        ??
-                        PHP_INT_MAX
-                    );
-
-                $priorityB =
-                    intval(
-                        $b['priority']
-                        ??
-                        PHP_INT_MAX
-                    );
-
-
-                // Bei gleicher Priorität stabil nach Name sortieren
-                if (
-                    $priorityA
-                    ===
-                    $priorityB
-                ) {
-
-                    return
-                        strcasecmp(
-                            strval(
-                                $a['name']
-                                ??
-                                ''
-                            ),
-                            strval(
-                                $b['name']
-                                ??
-                                ''
-                            )
-                        );
-                }
-
-
-                return
-                    $priorityA
-                    <=>
-                    $priorityB;
-            }
-        );
-
-
-        $payload = [
-
-            'type' =>
-                'consumers',
-
-            'timestamp' =>
-                time(),
-
-            'items' =>
-                $items
-        ];
-
-
-        $this->UpdateVisualizationValue(
-            json_encode(
-                $payload,
-                JSON_UNESCAPED_UNICODE |
-                JSON_UNESCAPED_SLASHES
-            )
+        throw new Exception(
+            'Invalid Ident: ' .
+            $Ident
         );
     }
 
 
-    // ========================================================================
-    // Einzelnen Verbraucher aufbauen
-    // ========================================================================
+    /* ============================================================
+       STATUSVARIABLE AUFLÖSEN
+    ============================================================ */
 
-    private function BuildConsumerData(
-        array $consumer
-    ): array {
-        $modeID =
-            intval(
-                $consumer['mode']
-            );
-
-        $statusID =
-            intval(
-                $consumer['status']
-            );
-
-        $powerID =
-            intval(
-                $consumer['power']
-            );
-
-        $reasonID =
-            intval(
-                $consumer['reason']
-            );
-
-        $priorityID =
-            intval(
-                $consumer['priority']
-            );
-
-
-        $modeRaw =
-            $this->ReadInt(
-                $modeID
-            );
-
-
-        $isOn =
-            $this->ReadBool(
-                $statusID
-            );
-
-
-        $configuredPowerKW =
-            $this->ReadFloat(
-                $powerID
-            );
-
-
-        $reason =
-            $this->ReadString(
-                $reasonID
-            );
-
-
-        $priority =
-            $this->ReadInt(
-                $priorityID
-            );
-
-
-        return [
-
-            'id' =>
-                intval(
-                    $consumer['id']
-                ),
-
-            'key' =>
-                strval(
-                    $consumer['key']
-                ),
-
-            'name' =>
-                strval(
-                    $consumer['name']
-                ),
-
-            'sub' =>
-                strval(
-                    $consumer['sub']
-                ),
-
-            'icon' =>
-                strval(
-                    $consumer['icon']
-                ),
-
-            // Betriebsart
-            'modeRaw' =>
-                $modeRaw,
-
-            'modeText' =>
-                $this->ModeText(
-                    $modeRaw
-                ),
-
-            // Tatsächlicher Zustand
-            'isOn' =>
-                $isOn,
-
-            'statusText' =>
-                $isOn
-                    ?
-                    'Ein'
-                    :
-                    'Aus',
-
-            // Konfigurierte EMS-Leistung
-            'powerKW' =>
-                $configuredPowerKW,
-
-            'powerText' =>
-                $this->FormatPowerKW(
-                    $configuredPowerKW
-                ),
-
-            // EMS Status / Grund
-            'reason' =>
-                $reason,
-
-            // Priorität
-            'priority' =>
-                $priority
-        ];
-    }
-
-
-    // ========================================================================
-    // Betriebsart
-    //
-    // 0 = Aus
-    // 1 = Automatik
-    // 2 = Erzwungen Ein
-    // ========================================================================
-
-    private function ModeText(
-        int $mode
-    ): string {
-        switch (
-            $mode
-        ) {
-
-            case 0:
-
-                return
-                    'Aus';
-
-
-            case 1:
-
-                return
-                    'Automatik';
-
-
-            case 2:
-
-                return
-                    'Erzwungen Ein';
-
-
-            default:
-
-                return
-                    'Unbekannt';
-        }
-    }
-
-
-    // ========================================================================
-    // Leistung
-    // ========================================================================
-
-    private function FormatPowerKW(
-        float $kw
-    ): string {
-        if (
-            abs(
-                $kw
-            )
-            <
-            0.05
-        ) {
-
-            return
-                '0 W';
-        }
-
-
-        if (
-            abs(
-                $kw
-            )
-            <
-            1.0
-        ) {
-
-            return
-                number_format(
-                    $kw * 1000,
-                    0,
-                    '.',
-                    ''
-                )
-                .
-                ' W';
-        }
-
-
-        return
-            number_format(
-                $kw,
-                1,
-                '.',
-                ''
-            )
-            .
-            ' kW';
-    }
-
-
-    // ========================================================================
-    // Sichere Leser
-    // ========================================================================
-
-    private function ReadInt(
-        int $id
+    private function ResolveStatusID(
+        array $config
     ): int {
+
+        /*
+         * Zuerst bekannte Status-ID verwenden.
+         */
+
+        $preferred =
+            (int) (
+                $config['status'] ??
+                0
+            );
+
+
         if (
-            !IPS_VariableExists(
-                $id
+            $preferred > 0 &&
+            IPS_VariableExists(
+                $preferred
+            )
+        ) {
+
+            return $preferred;
+        }
+
+
+        /*
+         * Pool:
+         * Falls die bekannte Status-ID nicht existiert,
+         * Bool-Variable "Value" unter der Schaltinstanz suchen.
+         */
+
+        $switchID =
+            (int) (
+                $config['switch'] ??
+                0
+            );
+
+
+        if (
+            $switchID <= 0 ||
+            !IPS_InstanceExists(
+                $switchID
             )
         ) {
 
@@ -607,77 +235,222 @@ class FlexibleConsumersLive extends IPSModule
         }
 
 
-        return
-            intval(
-                GetValue(
-                    $id
+        foreach (
+            IPS_GetChildrenIDs(
+                $switchID
+            )
+            as $childID
+        ) {
+
+            if (
+                !IPS_VariableExists(
+                    $childID
                 )
-            );
+            ) {
+                continue;
+            }
+
+
+            $object =
+                IPS_GetObject(
+                    $childID
+                );
+
+
+            $variable =
+                IPS_GetVariable(
+                    $childID
+                );
+
+
+            if (
+                (
+                    $object['ObjectIdent'] ??
+                    ''
+                ) === 'Value'
+                &&
+                (
+                    $variable['VariableType'] ??
+                    -1
+                ) === 0
+            ) {
+
+                return $childID;
+            }
+        }
+
+
+        return 0;
     }
 
 
-    private function ReadBool(
+    /* ============================================================
+       BEOBACHTETE IDS
+    ============================================================ */
+
+    private function GetObservedIDs(): array
+    {
+        $ids = [];
+
+
+        foreach (
+            self::CONSUMERS
+            as $config
+        ) {
+
+            $ids[] =
+                (int) $config['mode'];
+
+            $ids[] =
+                (int) $config['power'];
+
+            $ids[] =
+                $this->ResolveStatusID(
+                    $config
+                );
+        }
+
+
+        return array_values(
+            array_unique(
+                array_filter(
+                    $ids,
+                    static fn($id) =>
+                        $id > 0
+                )
+            )
+        );
+    }
+
+
+    /* ============================================================
+       WERTE LESEN
+    ============================================================ */
+
+    private function ReadInt(
         int $id
-    ): bool {
+    ): ?int {
+
         if (
+            $id <= 0 ||
             !IPS_VariableExists(
                 $id
             )
         ) {
 
-            return false;
+            return null;
         }
 
 
-        return
-            boolval(
-                GetValue(
-                    $id
-                )
+        return (int)
+            GetValue(
+                $id
             );
     }
 
 
     private function ReadFloat(
         int $id
-    ): float {
+    ): ?float {
+
         if (
+            $id <= 0 ||
             !IPS_VariableExists(
                 $id
             )
         ) {
 
-            return 0.0;
+            return null;
         }
 
 
-        return
-            floatval(
-                GetValue(
-                    $id
-                )
+        return (float)
+            GetValue(
+                $id
             );
     }
 
 
-    private function ReadString(
+    private function ReadBool(
         int $id
-    ): string {
+    ): ?bool {
+
         if (
+            $id <= 0 ||
             !IPS_VariableExists(
                 $id
             )
         ) {
 
-            return '';
+            return null;
         }
 
 
-        return
-            strval(
-                GetValue(
-                    $id
-                )
+        return (bool)
+            GetValue(
+                $id
             );
+    }
+
+
+    /* ============================================================
+       DATEN AN HTML SENDEN
+    ============================================================ */
+
+    private function SendLiveValues(): void
+    {
+        $payload = [];
+
+
+        foreach (
+            self::CONSUMERS
+            as $key => $config
+        ) {
+
+            $statusID =
+                $this->ResolveStatusID(
+                    $config
+                );
+
+
+            $payload[$key] = [
+
+                'mode' =>
+                    $this->ReadInt(
+                        (int)
+                        $config['mode']
+                    ),
+
+                'active' =>
+                    $this->ReadBool(
+                        $statusID
+                    ),
+
+                'power' =>
+                    $this->ReadFloat(
+                        (int)
+                        $config['power']
+                    )
+
+            ];
+        }
+
+
+        $json =
+            json_encode(
+                $payload,
+                JSON_UNESCAPED_UNICODE |
+                JSON_UNESCAPED_SLASHES
+            );
+
+
+        if ($json === false) {
+            return;
+        }
+
+
+        $this->UpdateVisualizationValue(
+            $json
+        );
     }
 }

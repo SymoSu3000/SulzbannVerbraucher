@@ -16,7 +16,6 @@
 
     --text: #20262b;
     --muted: #7d878d;
-
     --line: rgba(0,0,0,.14);
     --row-bg: rgba(0,0,0,.015);
 
@@ -30,7 +29,6 @@
     :root {
         --text: #f1f4f6;
         --muted: #a7afb5;
-
         --line: rgba(255,255,255,.15);
         --row-bg: rgba(255,255,255,.018);
 
@@ -73,21 +71,18 @@ body {
     height: 100%;
 
     display: grid;
-    grid-template-rows: repeat(5, minmax(0, 1fr));
+    grid-template-rows: repeat(5,minmax(0,1fr));
 
-    gap: 4px;
+    gap: .3rem;
 
-    padding:
-        44px
-        8px
-        8px;
+    padding: 2.7rem .5rem .5rem;
 
     overflow: hidden;
 }
 
 
 /* ============================================================
-   VERBRAUCHERZEILE
+   ZEILE
 ============================================================ */
 
 .consumer-row {
@@ -96,18 +91,24 @@ body {
 
     display: grid;
 
+    /*
+     * Drei Hauptbereiche:
+     *
+     * links   = Verbraucher
+     * mitte   = Modus / Zustand
+     * rechts  = Leistung / Zahnrad
+     */
+
     grid-template-columns:
-        minmax(0, 1fr)
-        max-content
+        minmax(0, 1.45fr)
+        minmax(max-content, .8fr)
         max-content;
 
     align-items: center;
 
-    gap: clamp(.45rem, 1.5vw, .9rem);
+    gap: .8rem;
 
-    padding:
-        .25rem
-        .45rem;
+    padding: .25rem .45rem;
 
     border: 1px solid var(--line);
     border-radius: .8rem;
@@ -119,8 +120,7 @@ body {
 
 
 /* ============================================================
-   ZONE 1
-   ICON + NAME
+   LINKS
 ============================================================ */
 
 .main-zone {
@@ -130,11 +130,11 @@ body {
 
     grid-template-columns:
         auto
-        minmax(0, 1fr);
+        minmax(0,1fr);
 
     align-items: center;
 
-    gap: .55rem;
+    gap: .6rem;
 }
 
 
@@ -177,17 +177,14 @@ body {
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    color: var(--text);
-
     font-size: 14px;
     font-weight: 700;
-
     line-height: 1.08;
 }
 
 
 .subtitle {
-    margin-top: 2px;
+    margin-top: .15rem;
 
     overflow: hidden;
     text-overflow: ellipsis;
@@ -201,18 +198,23 @@ body {
 
 
 /* ============================================================
-   ZONE 2
-   MODUS + STATUS
+   MITTE
 ============================================================ */
 
 .state-zone {
     min-width: max-content;
 
-    display: flex;
-    flex-direction: column;
+    display: grid;
 
-    align-items: flex-start;
-    justify-content: center;
+    grid-template-rows:
+        auto
+        auto;
+
+    justify-items: start;
+
+    align-content: center;
+
+    row-gap: .2rem;
 }
 
 
@@ -234,16 +236,14 @@ body {
 
 
 .real-state {
-    margin-top: 3px;
-
     display: flex;
+
     align-items: center;
 
-    gap: 5px;
-
-    color: var(--text);
+    gap: .35rem;
 
     font-size: 13px;
+
     line-height: 1.05;
 
     white-space: nowrap;
@@ -251,8 +251,8 @@ body {
 
 
 .state-dot {
-    width: 10px;
-    height: 10px;
+    width: .65rem;
+    height: .65rem;
 
     flex: 0 0 auto;
 
@@ -268,26 +268,26 @@ body {
 
 
 /* ============================================================
-   ZONE 3
-   LEISTUNG + ZAHNRAD
+   RECHTS
 ============================================================ */
 
 .right-zone {
     min-width: max-content;
 
-    display: flex;
+    display: grid;
+
+    grid-template-columns:
+        max-content
+        auto;
 
     align-items: center;
-    justify-content: flex-end;
 
-    gap: .65rem;
+    column-gap: .75rem;
 }
 
 
 .power {
-    min-width: 4.3rem;
-
-    color: var(--text);
+    min-width: 4.2rem;
 
     font-size: 14px;
     font-weight: 700;
@@ -305,6 +305,7 @@ body {
     aspect-ratio: 1;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -324,28 +325,23 @@ body {
    MOBILE
 ============================================================ */
 
-@media
-    (hover: none)
-    and
-    (pointer: coarse)
-{
+@media (hover:none) and (pointer:coarse) {
 
     .consumers {
-        padding:
-            43px
-            7px
-            7px;
-
-        gap: 4px;
+        padding: 2.65rem .45rem .45rem;
+        gap: .25rem;
     }
 
 
     .consumer-row {
-        gap: .45rem;
+        grid-template-columns:
+            minmax(0,1.35fr)
+            minmax(max-content,.75fr)
+            max-content;
 
-        padding:
-            .22rem
-            .4rem;
+        gap: .55rem;
+
+        padding: .2rem .4rem;
     }
 
 
@@ -355,7 +351,7 @@ body {
 
 
     .icon-box {
-        width: 2.45rem;
+        width: 2.4rem;
     }
 
 
@@ -369,11 +365,7 @@ body {
     }
 
 
-    .subtitle {
-        font-size: 12px;
-    }
-
-
+    .subtitle,
     .mode,
     .real-state {
         font-size: 12px;
@@ -387,29 +379,34 @@ body {
     }
 
 
-    .gear {
-        width: 2.2rem;
+    .right-zone {
+        column-gap: .55rem;
+    }
 
-        font-size: 1.15rem;
+
+    .gear {
+        width: 2.15rem;
+
+        font-size: 1.1rem;
     }
 
 }
 
 
 /* ============================================================
-   SEHR SCHMALES MOBILE
+   SCHMALES MOBILE
 ============================================================ */
 
 @media
-    (hover: none)
+    (hover:none)
     and
-    (pointer: coarse)
+    (pointer:coarse)
     and
-    (max-width: 430px)
+    (max-width:430px)
 {
 
     .consumer-row {
-        gap: .3rem;
+        gap: .35rem;
 
         padding-left: .3rem;
         padding-right: .3rem;
@@ -417,12 +414,12 @@ body {
 
 
     .main-zone {
-        gap: .35rem;
+        gap: .4rem;
     }
 
 
     .icon-box {
-        width: 2.2rem;
+        width: 2.15rem;
     }
 
 
@@ -443,22 +440,20 @@ body {
     }
 
 
-    .right-zone {
-        gap: .35rem;
-    }
-
-
     .power {
-        min-width: 3.4rem;
+        min-width: 3.3rem;
 
         font-size: 13px;
     }
 
 
-    .gear {
-        width: 2rem;
+    .right-zone {
+        column-gap: .35rem;
+    }
 
-        font-size: 1rem;
+
+    .gear {
+        width: 1.95rem;
     }
 
 }
@@ -468,11 +463,7 @@ body {
    DESKTOP / LAPTOP
 ============================================================ */
 
-@media
-    (hover: hover)
-    and
-    (pointer: fine)
-{
+@media (hover:hover) and (pointer:fine) {
 
     .name,
     .subtitle,
@@ -485,21 +476,16 @@ body {
 }
 
 </style>
-
 </head>
 
 <body>
 
-
 <div class="consumers">
 
-
-    <!-- UG -->
 
     <div class="consumer-row">
 
         <div class="main-zone">
-
             <div class="icon-box">
                 <div class="icon blue">♧</div>
             </div>
@@ -508,63 +494,28 @@ body {
                 <div class="name">Entfeuchter UG</div>
                 <div class="subtitle">Untergeschoss</div>
             </div>
-
         </div>
-
 
         <div class="state-zone">
-
-            <div
-                class="mode"
-                id="ug-mode"
-            >
-                —
-            </div>
+            <div class="mode" id="ug-mode">—</div>
 
             <div class="real-state">
-
-                <span
-                    class="state-dot"
-                    id="ug-dot"
-                ></span>
-
-                <span id="ug-state">
-                    —
-                </span>
-
+                <span class="state-dot" id="ug-dot"></span>
+                <span id="ug-state">—</span>
             </div>
-
         </div>
 
-
         <div class="right-zone">
-
-            <div
-                class="power"
-                id="ug-power"
-            >
-                —
-            </div>
-
-            <button
-                type="button"
-                class="gear"
-            >
-                ⚙
-            </button>
-
+            <div class="power" id="ug-power">—</div>
+            <button class="gear" type="button">⚙</button>
         </div>
 
     </div>
 
 
-
-    <!-- OG -->
-
     <div class="consumer-row">
 
         <div class="main-zone">
-
             <div class="icon-box">
                 <div class="icon blue">♧</div>
             </div>
@@ -573,128 +524,58 @@ body {
                 <div class="name">Entfeuchter OG</div>
                 <div class="subtitle">Obergeschoss</div>
             </div>
-
         </div>
-
 
         <div class="state-zone">
-
-            <div
-                class="mode"
-                id="og-mode"
-            >
-                —
-            </div>
+            <div class="mode" id="og-mode">—</div>
 
             <div class="real-state">
-
-                <span
-                    class="state-dot"
-                    id="og-dot"
-                ></span>
-
-                <span id="og-state">
-                    —
-                </span>
-
+                <span class="state-dot" id="og-dot"></span>
+                <span id="og-state">—</span>
             </div>
-
         </div>
 
-
         <div class="right-zone">
-
-            <div
-                class="power"
-                id="og-power"
-            >
-                —
-            </div>
-
-            <button
-                type="button"
-                class="gear"
-            >
-                ⚙
-            </button>
-
+            <div class="power" id="og-power">—</div>
+            <button class="gear" type="button">⚙</button>
         </div>
 
     </div>
 
 
-
-    <!-- POOL -->
-
     <div class="consumer-row">
 
         <div class="main-zone">
-
             <div class="icon-box">
                 <div class="icon blue">≋</div>
             </div>
 
             <div class="name-area">
-                <div class="name">Poolpumpe + Salzelektrolyse</div>
+                <div class="name">Poolpumpe</div>
                 <div class="subtitle">Pooltechnik</div>
             </div>
-
         </div>
-
 
         <div class="state-zone">
-
-            <div
-                class="mode"
-                id="pool-mode"
-            >
-                —
-            </div>
+            <div class="mode" id="pool-mode">—</div>
 
             <div class="real-state">
-
-                <span
-                    class="state-dot"
-                    id="pool-dot"
-                ></span>
-
-                <span id="pool-state">
-                    —
-                </span>
-
+                <span class="state-dot" id="pool-dot"></span>
+                <span id="pool-state">—</span>
             </div>
-
         </div>
 
-
         <div class="right-zone">
-
-            <div
-                class="power"
-                id="pool-power"
-            >
-                —
-            </div>
-
-            <button
-                type="button"
-                class="gear"
-            >
-                ⚙
-            </button>
-
+            <div class="power" id="pool-power">—</div>
+            <button class="gear" type="button">⚙</button>
         </div>
 
     </div>
 
 
-
-    <!-- BOILER -->
-
     <div class="consumer-row">
 
         <div class="main-zone">
-
             <div class="icon-box">
                 <div class="icon orange">◉</div>
             </div>
@@ -703,63 +584,28 @@ body {
                 <div class="name">Boiler</div>
                 <div class="subtitle">Warmwasser</div>
             </div>
-
         </div>
-
 
         <div class="state-zone">
-
-            <div
-                class="mode"
-                id="boiler-mode"
-            >
-                —
-            </div>
+            <div class="mode" id="boiler-mode">—</div>
 
             <div class="real-state">
-
-                <span
-                    class="state-dot"
-                    id="boiler-dot"
-                ></span>
-
-                <span id="boiler-state">
-                    —
-                </span>
-
+                <span class="state-dot" id="boiler-dot"></span>
+                <span id="boiler-state">—</span>
             </div>
-
         </div>
 
-
         <div class="right-zone">
-
-            <div
-                class="power"
-                id="boiler-power"
-            >
-                —
-            </div>
-
-            <button
-                type="button"
-                class="gear"
-            >
-                ⚙
-            </button>
-
+            <div class="power" id="boiler-power">—</div>
+            <button class="gear" type="button">⚙</button>
         </div>
 
     </div>
 
 
-
-    <!-- HEIZSTAB -->
-
     <div class="consumer-row">
 
         <div class="main-zone">
-
             <div class="icon-box">
                 <div class="icon orange">▥</div>
             </div>
@@ -768,55 +614,23 @@ body {
                 <div class="name">Heizstab / Puffer</div>
                 <div class="subtitle">Heizung</div>
             </div>
-
         </div>
-
 
         <div class="state-zone">
-
-            <div
-                class="mode"
-                id="heater-mode"
-            >
-                —
-            </div>
+            <div class="mode" id="heater-mode">—</div>
 
             <div class="real-state">
-
-                <span
-                    class="state-dot"
-                    id="heater-dot"
-                ></span>
-
-                <span id="heater-state">
-                    —
-                </span>
-
+                <span class="state-dot" id="heater-dot"></span>
+                <span id="heater-state">—</span>
             </div>
-
         </div>
 
-
         <div class="right-zone">
-
-            <div
-                class="power"
-                id="heater-power"
-            >
-                —
-            </div>
-
-            <button
-                type="button"
-                class="gear"
-            >
-                ⚙
-            </button>
-
+            <div class="power" id="heater-power">—</div>
+            <button class="gear" type="button">⚙</button>
         </div>
 
     </div>
-
 
 </div>
 
@@ -824,113 +638,76 @@ body {
 <script>
 
 function setText(id,value){
-
-    const element =
-        document.getElementById(id);
-
-    if(element){
-        element.textContent = value;
-    }
+    const e=document.getElementById(id);
+    if(e)e.textContent=value;
 }
 
-
 function modeText(value){
+    const mode=Number(value);
 
-    const mode = Number(value);
-
-    if(mode === 1){
-        return "Automatik";
-    }
-
-    if(mode === 2){
-        return "Erzwungen Ein";
-    }
+    if(mode===1)return "Automatik";
+    if(mode===2)return "Erzwungen Ein";
 
     return "Aus";
 }
 
-
 function powerText(value){
 
     if(
-        value === null ||
-        value === undefined ||
+        value===null ||
+        value===undefined ||
         Number.isNaN(Number(value))
     ){
         return "—";
     }
 
-    const number = Number(value);
+    const n=Number(value);
 
-    if(Math.abs(number) < 1){
-
-        return (
-            Math.round(number * 1000) +
-            " W"
-        );
-    }
-
-    return (
-        number.toFixed(1) +
-        " kW"
-    );
+    return Math.abs(n)<1
+        ? Math.round(n*1000)+" W"
+        : n.toFixed(1)+" kW";
 }
-
 
 function updateConsumer(key,data){
 
-    if(!data){
-        return;
-    }
+    if(!data)return;
 
-    const mode =
-        Number(data.mode);
-
-    const active =
-        Boolean(data.active);
-
+    const mode=Number(data.mode);
+    const active=Boolean(data.active);
 
     setText(
-        key + "-mode",
+        key+"-mode",
         modeText(mode)
     );
 
-
     setText(
-        key + "-state",
-        active
-            ? "Gerät Ein"
-            : "Gerät Aus"
+        key+"-state",
+        active ? "Gerät Ein" : "Gerät Aus"
     );
 
-
     setText(
-        key + "-power",
+        key+"-power",
         powerText(data.power)
     );
 
-
-    const modeElement =
+    const modeEl=
         document.getElementById(
-            key + "-mode"
+            key+"-mode"
         );
 
-    if(modeElement){
-
-        modeElement.classList.toggle(
+    if(modeEl){
+        modeEl.classList.toggle(
             "off",
-            mode === 0
+            mode===0
         );
     }
 
-
-    const dot =
+    const dot=
         document.getElementById(
-            key + "-dot"
+            key+"-dot"
         );
 
     if(dot){
-
         dot.classList.toggle(
             "on",
             active
@@ -938,60 +715,35 @@ function updateConsumer(key,data){
     }
 }
 
-
 function handleMessage(data){
 
-    if(!data){
-        return;
-    }
+    if(!data)return;
 
-    if(typeof data === "string"){
+    if(typeof data==="string"){
 
         try{
-            data = JSON.parse(data);
+            data=JSON.parse(data);
         }
-        catch(error){
+        catch(e){
             return;
         }
     }
 
-
-    updateConsumer(
-        "ug",
-        data.ug
-    );
-
-    updateConsumer(
-        "og",
-        data.og
-    );
-
-    updateConsumer(
-        "pool",
-        data.pool
-    );
-
-    updateConsumer(
-        "boiler",
-        data.boiler
-    );
-
-    updateConsumer(
-        "heater",
-        data.heater
-    );
+    updateConsumer("ug",data.ug);
+    updateConsumer("og",data.og);
+    updateConsumer("pool",data.pool);
+    updateConsumer("boiler",data.boiler);
+    updateConsumer("heater",data.heater);
 }
-
 
 window.addEventListener(
     "load",
     function(){
 
         if(
-            typeof requestAction ===
+            typeof requestAction===
             "function"
         ){
-
             requestAction(
                 "Refresh",
                 true

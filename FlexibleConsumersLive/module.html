@@ -7,939 +7,831 @@
 
 <meta
     name="viewport"
-    content="width=device-width, initial-scale=1, viewport-fit=cover"
+    content="width=device-width, initial-scale=1.0"
 >
 
 <style>
 
+/* ============================================================
+   BASIS / THEME
+============================================================ */
+
+* {
+    box-sizing: border-box;
+}
+
+
+:root {
+    color-scheme: light dark;
+
+    --text: #20262b;
+    --muted: #7c878d;
+
+    --border:
+        rgba(0, 0, 0, 0.13);
+
+    --card:
+        rgba(0, 0, 0, 0.025);
+
+    --card-hover:
+        rgba(0, 0, 0, 0.045);
+
+    --blue: #2196f3;
+    --orange: #f5a623;
+    --green: #16c784;
+    --grey: #98a4ad;
+
+    --button-bg:
+        rgba(0, 0, 0, 0.025);
+
+    --button-border:
+        rgba(0, 0, 0, 0.14);
+}
+
+
+@media (prefers-color-scheme: dark) {
+
     :root {
-
-        color-scheme:
-            light dark;
-
-        --accent:
-            var(
-                --accent-color,
-                #18c7c0
-            );
-
-        --text:
-            var(
-                --content-color,
-                #f2f4f6
-            );
-
-        --green:
-            #20d17a;
-
-        --blue:
-            #39a8ff;
-
-        --orange:
-            #f5a623;
-
-        --red:
-            #ff6470;
-
-        --grey:
-            #9099a3;
-
-        --muted:
-            rgba(
-                170,
-                176,
-                183,
-                .92
-            );
+        --text: #f0f3f5;
+        --muted: #a5adb3;
 
         --border:
-            rgba(
-                160,
-                168,
-                176,
-                .24
-            );
+            rgba(255, 255, 255, 0.14);
 
-        --row-background:
-            rgba(
-                127,
-                127,
-                127,
-                .035
-            );
+        --card:
+            rgba(255, 255, 255, 0.025);
+
+        --card-hover:
+            rgba(255, 255, 255, 0.05);
+
+        --blue: #38a9ff;
+        --orange: #ffad2f;
+        --green: #19d58d;
+        --grey: #98a4ad;
+
+        --button-bg:
+            rgba(255, 255, 255, 0.025);
+
+        --button-border:
+            rgba(255, 255, 255, 0.14);
     }
 
+}
 
-    * {
-        box-sizing: border-box;
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background: transparent;
+
+    color: var(--text);
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+}
+
+
+/* ============================================================
+   HAUPTBEREICH
+
+   Oben Abstand für Symcon-Kacheltitel.
+============================================================ */
+
+.consumers {
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+
+    grid-template-rows:
+        repeat(5, minmax(0, 1fr));
+
+    gap: 5px;
+
+    padding:
+        38px
+        9px
+        9px
+        9px;
+
+    overflow: hidden;
+}
+
+
+/* ============================================================
+   VERBRAUCHERZEILE
+============================================================ */
+
+.consumer {
+    min-height: 0;
+
+    display: grid;
+
+    /*
+     * Symbol | Name | Modus/Status | Leistung | Zahnrad
+     */
+    grid-template-columns:
+        52px
+        minmax(0, 1.65fr)
+        minmax(112px, 1.15fr)
+        78px
+        46px;
+
+    align-items: center;
+
+    column-gap: 8px;
+
+    padding:
+        5px
+        7px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        13px;
+
+    background:
+        var(--card);
+}
+
+
+/* ============================================================
+   SYMBOL
+============================================================ */
+
+.icon-box {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    justify-self: center;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 11px;
+
+    background:
+        transparent;
+}
+
+
+.icon {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+
+    line-height: 1;
+}
+
+
+.icon.blue {
+    color: var(--blue);
+}
+
+
+.icon.orange {
+    color: var(--orange);
+}
+
+
+/* ============================================================
+   NAME / BEREICH
+
+   Desktop kleinste Schrift = 13 px
+============================================================ */
+
+.name-column {
+    min-width: 0;
+}
+
+
+.name {
+    overflow: hidden;
+
+    color: var(--text);
+
+    font-size: 14px;
+    font-weight: 700;
+
+    line-height: 1.15;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+
+.subtitle {
+    margin-top: 3px;
+
+    overflow: hidden;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.1;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+
+/* ============================================================
+   MODUS / GERÄTESTATUS
+============================================================ */
+
+.state-column {
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: flex-start;
+}
+
+
+.mode {
+    overflow: hidden;
+
+    color: var(--blue);
+
+    font-size: 13px;
+    font-weight: 650;
+
+    line-height: 1.1;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+
+.mode.off {
+    color: var(--muted);
+}
+
+
+.real-state {
+    margin-top: 4px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    min-width: 0;
+
+    color: var(--text);
+
+    font-size: 13px;
+
+    line-height: 1.1;
+
+    white-space: nowrap;
+}
+
+
+.state-dot {
+    flex: 0 0 auto;
+
+    width: 11px;
+    height: 11px;
+
+    border-radius: 50%;
+
+    background: var(--grey);
+}
+
+
+.state-dot.on {
+    background: var(--green);
+
+    box-shadow:
+        0 0 5px
+        rgba(22, 199, 132, 0.35);
+}
+
+
+/* ============================================================
+   LEISTUNG
+============================================================ */
+
+.power {
+    color: var(--text);
+
+    font-size: 14px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    text-align: right;
+
+    white-space: nowrap;
+}
+
+
+/* ============================================================
+   EINSTELLUNGEN
+============================================================ */
+
+.settings-button {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    justify-self: center;
+
+    padding: 0;
+
+    border:
+        1px solid
+        var(--button-border);
+
+    border-radius: 11px;
+
+    background:
+        var(--button-bg);
+
+    color: var(--text);
+
+    font: inherit;
+
+    font-size: 21px;
+
+    cursor: pointer;
+}
+
+
+.settings-button:active {
+    transform:
+        scale(0.96);
+}
+
+
+/* ============================================================
+   DESKTOP / LAPTOP
+
+   Auch eine 500px breite Kachel auf einem Laptop bleibt
+   Desktop. Keine "Tablet"-Umschaltung anhand der Breite.
+============================================================ */
+
+@media
+    (hover: hover)
+    and
+    (pointer: fine)
+{
+
+    .subtitle,
+    .mode,
+    .real-state {
+        /*
+         * Schriftgrössen-Test Zeile 06
+         */
+        font-size: 13px;
     }
 
-
-    html,
-    body {
-
-        width: 100%;
-        height: 100%;
-
-        margin: 0;
-        padding: 0;
-
-        overflow: hidden;
-
-        background: transparent;
-
-        color:
-            var(--text);
-
-        font-family:
-            -apple-system,
-            BlinkMacSystemFont,
-            "Segoe UI",
-            Roboto,
-            Arial,
-            sans-serif;
-    }
+}
 
 
-    button {
-        font: inherit;
-    }
+/* ============================================================
+   KLEINERE DESKTOP-KACHELHÖHE
 
+   Noch kompakter, aber NIEMALS kleiner als 13 px.
+============================================================ */
 
-    /* ================================================================ */
-    /* Gesamtkachel                                                     */
-    /* ================================================================ */
+@media
+    (hover: hover)
+    and
+    (pointer: fine)
+    and
+    (max-height: 330px)
+{
 
-    #app {
-
-        width: 100%;
-        height: 100%;
+    .consumers {
+        gap: 4px;
 
         padding:
-            56px
-            9px
-            9px
-            9px;
-
-        overflow: hidden;
+            35px
+            7px
+            7px
+            7px;
     }
 
-
-    #consumerList {
-
-        width: 100%;
-        height: 100%;
-
-        display: grid;
-
-        grid-template-rows:
-            repeat(
-                5,
-                minmax(
-                    0,
-                    1fr
-                )
-            );
-
-        gap: 7px;
-    }
-
-
-    /* ================================================================ */
-    /* Verbraucher                                                      */
-    /* ================================================================ */
 
     .consumer {
-
-        min-width: 0;
-        min-height: 0;
-
-        overflow: hidden;
-
-        display: grid;
-
         grid-template-columns:
-            42px
-            minmax(0, 1.55fr)
-            minmax(105px, .95fr)
-            minmax(72px, .55fr)
+            46px
+            minmax(0, 1.65fr)
+            minmax(108px, 1.15fr)
+            72px
             42px;
 
-        grid-template-areas:
-            "icon info state power gear";
-
-        align-items: center;
-
-        column-gap: 9px;
+        column-gap: 6px;
 
         padding:
-            6px
-            8px;
+            3px
+            5px;
 
-        border:
-            1px solid
-            var(--border);
-
-        border-radius:
-            11px;
-
-        background:
-            var(--row-background);
+        border-radius: 11px;
     }
 
 
-    /* ================================================================ */
-    /* Icon                                                             */
-    /* ================================================================ */
+    .icon-box {
+        width: 39px;
+        height: 39px;
+
+        border-radius: 10px;
+    }
+
 
     .icon {
+        width: 29px;
+        height: 29px;
 
-        grid-area:
-            icon;
-
-        width: 36px;
-        height: 36px;
-
-        display: flex;
-
-        align-items: center;
-        justify-content: center;
-
-        border:
-            1px solid
-            var(--border);
-
-        border-radius:
-            8px;
-
-        color:
-            var(--blue);
-    }
-
-
-    .consumer[data-key="boiler"] .icon,
-    .consumer[data-key="buffer"] .icon {
-
-        color:
-            var(--orange);
-    }
-
-
-    /* ================================================================ */
-    /* Name                                                             */
-    /* ================================================================ */
-
-    .info {
-
-        grid-area:
-            info;
-
-        min-width: 0;
-
-        overflow: hidden;
+        font-size: 25px;
     }
 
 
     .name {
-
-        color:
-            var(--text);
-
-        font-size:
-            14px;
-
-        line-height:
-            1.05;
-
-        font-weight:
-            700;
-
-        overflow:
-            hidden;
-
-        text-overflow:
-            ellipsis;
-
-        white-space:
-            nowrap;
+        font-size: 13px;
     }
 
 
-    /*
-     * Untertitel jetzt etwas grösser.
-     */
-    .sub {
+    .subtitle {
+        margin-top: 2px;
 
-        margin-top:
-            3px;
-
-        color:
-            var(--muted);
-
-        font-size:
-            14px;
-
-        line-height:
-            1.05;
-
-        overflow:
-            hidden;
-
-        text-overflow:
-            ellipsis;
-
-        white-space:
-            nowrap;
-    }
-
-
-    /* ================================================================ */
-    /* Betriebsart + realer Zustand                                     */
-    /* ================================================================ */
-
-    .state {
-
-        grid-area:
-            state;
-
-        min-width: 0;
-
-        overflow: hidden;
+        font-size: 13px;
     }
 
 
     .mode {
-
-        min-width: 0;
-
-        overflow: hidden;
-
-        text-overflow:
-            ellipsis;
-
-        white-space:
-            nowrap;
-
-        font-size:
-            13px;
-
-        line-height:
-            1.05;
-
-        font-weight:
-            700;
+        font-size: 13px;
     }
 
 
-    .mode.auto {
-        color: var(--blue);
-    }
-
-
-    .mode.force {
-        color: var(--green);
-    }
-
-
-    .mode.off {
-        color: var(--grey);
-    }
-
-
-    /*
-     * Tatsächlicher Gerätezustand jetzt ebenfalls grösser.
-     */
     .real-state {
+        margin-top: 3px;
 
-        margin-top:
-            5px;
-
-        display: flex;
-
-        align-items: center;
-
-        gap:
-            5px;
-
-        min-width:
-            0;
-
-        color:
-            var(--text);
-
-        font-size:
-            14px;
-
-        line-height:
-            1;
+        font-size: 13px;
     }
 
 
     .state-dot {
-
-        width:
-            9px;
-
-        height:
-            9px;
-
-        flex:
-            0 0 9px;
-
-        border-radius:
-            50%;
-
-        background:
-            var(--grey);
+        width: 10px;
+        height: 10px;
     }
 
-
-    .state-dot.on {
-
-        background:
-            var(--green);
-
-        box-shadow:
-            0 0 7px
-            rgba(
-                32,
-                209,
-                122,
-                .40
-            );
-    }
-
-
-    .real-state-text {
-
-        min-width:
-            0;
-
-        overflow:
-            hidden;
-
-        text-overflow:
-            ellipsis;
-
-        white-space:
-            nowrap;
-    }
-
-
-    /* ================================================================ */
-    /* Grund                                                            */
-    /* ================================================================ */
-
-    .reason {
-        display: none;
-    }
-
-
-    /* ================================================================ */
-    /* Leistung                                                         */
-    /* ================================================================ */
 
     .power {
-
-        grid-area:
-            power;
-
-        min-width:
-            0;
-
-        text-align:
-            right;
-
-        color:
-            var(--text);
-
-        font-size:
-            14px;
-
-        font-weight:
-            750;
-
-        white-space:
-            nowrap;
+        font-size: 13px;
     }
 
 
-    /* ================================================================ */
-    /* Zahnrad                                                          */
-    /* ================================================================ */
+    .settings-button {
+        width: 38px;
+        height: 38px;
 
-    .gear {
+        border-radius: 10px;
 
-        grid-area:
-            gear;
+        font-size: 19px;
+    }
 
-        justify-self:
-            end;
+}
 
-        width:
-            36px;
 
-        height:
-            36px;
+/* ============================================================
+   GROSSE DESKTOP-ANSICHT
+============================================================ */
 
-        margin:
-            0;
+@media
+    (hover: hover)
+    and
+    (pointer: fine)
+    and
+    (min-height: 560px)
+{
+
+    .consumers {
+        gap: 9px;
 
         padding:
-            0;
-
-        display:
-            flex;
-
-        align-items:
-            center;
-
-        justify-content:
-            center;
-
-        border:
-            1px solid
-            var(--border);
-
-        border-radius:
-            8px;
-
-        background:
-            rgba(
-                127,
-                127,
-                127,
-                .045
-            );
-
-        color:
-            var(--text);
-
-        cursor:
-            pointer;
-
-        font-size:
+            48px
+            18px
+            18px
             18px;
     }
 
 
-    .gear:hover {
+    .consumer {
+        grid-template-columns:
+            68px
+            minmax(0, 1.75fr)
+            minmax(150px, 1.15fr)
+            115px
+            62px;
 
-        color:
-            var(--accent);
+        column-gap: 16px;
 
-        border-color:
-            var(--accent);
+        padding:
+            10px
+            14px;
+
+        border-radius: 16px;
     }
 
 
-    .gear:active {
+    .icon-box {
+        width: 58px;
+        height: 58px;
 
-        transform:
-            scale(.94);
+        border-radius: 14px;
     }
 
 
-    /* ================================================================ */
-    /* Breitere Desktopansicht                                          */
-    /* ================================================================ */
+    .icon {
+        width: 43px;
+        height: 43px;
 
-    @media (min-width: 800px) {
-
-        .consumer {
-
-            grid-template-columns:
-                46px
-                minmax(170px, 1.45fr)
-                minmax(150px, 1fr)
-                minmax(90px, .55fr)
-                minmax(180px, 1.2fr)
-                46px;
-
-            grid-template-areas:
-                "icon info state power reason gear";
-
-            column-gap:
-                12px;
-        }
+        font-size: 38px;
+    }
 
 
-        .name {
-            font-size: 15px;
-        }
+    .name {
+        font-size: 18px;
+    }
 
+
+    .subtitle {
+        margin-top: 5px;
+
+        font-size: 14px;
+    }
+
+
+    .mode {
+        font-size: 15px;
+    }
+
+
+    .real-state {
+        margin-top: 5px;
+
+        font-size: 14px;
+    }
+
+
+    .state-dot {
+        width: 13px;
+        height: 13px;
+    }
+
+
+    .power {
+        font-size: 18px;
+    }
+
+
+    .settings-button {
+        width: 52px;
+        height: 52px;
+
+        border-radius: 13px;
+
+        font-size: 25px;
+    }
+
+}
+
+
+/* ============================================================
+   MOBILE
+
+   Erkennung über Touch/Coarse Pointer.
+   Kleinste Schrift = 12 px.
+============================================================ */
+
+@media
+    (hover: none)
+    and
+    (pointer: coarse)
+{
+
+    .consumers {
+        gap: 5px;
 
         /*
-         * Vorher kleiner.
-         * Jetzt besser lesbar.
+         * Symcon Mobile benötigt oben mehr Abstand
+         * zum Kacheltitel.
          */
-        .sub {
-            font-size: 14px;
-        }
-
-
-        .mode {
-            font-size: 13px;
-        }
-
-
-        .real-state {
-            font-size: 14px;
-        }
-
-
-        .power {
-            font-size: 15px;
-        }
-
-
-        .reason {
-
-            grid-area:
-                reason;
-
-            display:
-                block;
-
-            min-width:
-                0;
-
-            overflow:
-                hidden;
-
-            text-overflow:
-                ellipsis;
-
-            white-space:
-                nowrap;
-
-            color:
-                var(--muted);
-
-            font-size:
-                12px;
-        }
+        padding:
+            44px
+            9px
+            9px
+            9px;
     }
 
 
-    /* ================================================================ */
-    /* Mobile                                                           */
+    .consumer {
+        grid-template-columns:
+            54px
+            minmax(0, 1.55fr)
+            minmax(112px, 1.05fr)
+            76px
+            48px;
+
+        column-gap: 7px;
+
+        padding:
+            5px
+            7px;
+
+        border-radius: 13px;
+    }
+
+
     /*
-     * Gleiche Anordnung wie Desktop:
-     *
-     * Icon | Name | Betriebsart/Zustand | Leistung | Zahnrad
-     * ================================================================ */
+     * Symbole auf Mobile etwas grösser.
+     */
 
-    @media (max-width: 520px) {
+    .icon-box {
+        width: 48px;
+        height: 48px;
 
-        #app {
-
-            padding:
-                51px
-                7px
-                7px
-                7px;
-        }
-
-
-        #consumerList {
-
-            gap:
-                6px;
-        }
-
-
-        .consumer {
-
-            grid-template-columns:
-                37px
-                minmax(0, 1.25fr)
-                minmax(86px, .9fr)
-                62px
-                36px;
-
-            grid-template-areas:
-                "icon info state power gear";
-
-            column-gap:
-                6px;
-
-            padding:
-                5px
-                7px;
-        }
-
-
-        .icon {
-
-            width:
-                33px;
-
-            height:
-                33px;
-        }
-
-
-        .name {
-
-            font-size:
-                13px;
-        }
-
-
-        /*
-         * Mobile Untertitel etwas grösser.
-         */
-        .sub {
-
-            font-size:
-                12px;
-
-            margin-top:
-                3px;
-        }
-
-
-        /*
-         * Automatik / Aus / Erzwungen Ein
-         * leicht grösser.
-         */
-        .mode {
-
-            font-size:
-                13px;
-        }
-
-
-        /*
-         * Gerät Ein/Aus etwas grösser.
-         */
-        .real-state {
-
-            margin-top:
-                4px;
-
-            font-size:
-                12px;
-        }
-
-
-        .state-dot {
-
-            width:
-                8px;
-
-            height:
-                8px;
-
-            flex-basis:
-                8px;
-        }
-
-
-        .power {
-
-            font-size:
-                13px;
-        }
-
-
-        .gear {
-
-            width:
-                33px;
-
-            height:
-                33px;
-
-            font-size:
-                17px;
-        }
+        border-radius: 12px;
     }
 
 
-    /* ================================================================ */
-    /* Sehr schmales Mobile                                             */
-    /* ================================================================ */
+    .icon {
+        width: 36px;
+        height: 36px;
 
-    @media (max-width: 390px) {
-
-        .consumer {
-
-            grid-template-columns:
-                34px
-                minmax(0, 1.2fr)
-                minmax(78px, .85fr)
-                58px
-                33px;
-
-            column-gap:
-                5px;
-
-            padding-left:
-                5px;
-
-            padding-right:
-                5px;
-        }
-
-
-        .icon {
-
-            width:
-                31px;
-
-            height:
-                31px;
-        }
-
-
-        .name {
-
-            font-size:
-                12px;
-        }
-
-
-        /*
-         * Bei sehr schmalem Mobile minimal kleiner,
-         * damit nichts überläuft.
-         */
-        .sub {
-
-            font-size:
-                11px;
-        }
-
-
-        .mode {
-
-            font-size:
-                12px;
-        }
-
-
-        .real-state {
-
-            font-size:
-                11px;
-        }
-
-
-        .power {
-
-            font-size:
-                12px;
-        }
-
-
-        .gear {
-
-            width:
-                31px;
-
-            height:
-                31px;
-
-            font-size:
-                16px;
-        }
+        font-size: 31px;
     }
 
 
-    /* ================================================================ */
-    /* Sehr flache Kachel                                               */
-    /* ================================================================ */
+    /*
+     * Mobile Mindestschrift = 12 px.
+     */
 
-    @media (max-height: 390px) {
-
-        #app {
-
-            padding-top:
-                46px;
-
-            padding-bottom:
-                6px;
-        }
-
-
-        #consumerList {
-
-            gap:
-                5px;
-        }
-
-
-        .consumer {
-
-            padding-top:
-                3px;
-
-            padding-bottom:
-                3px;
-        }
-
-
-        .icon {
-
-            width:
-                30px;
-
-            height:
-                30px;
-        }
-
-
-        .gear {
-
-            width:
-                30px;
-
-            height:
-                30px;
-
-            font-size:
-                16px;
-        }
-
-
-        .name {
-
-            font-size:
-                12px;
-        }
-
-
-        /*
-         * Auch bei flachen Kacheln nicht mehr ganz so klein.
-         */
-        .sub {
-
-            font-size:
-                11px;
-        }
-
-
-        .mode {
-
-            font-size:
-                11px;
-        }
-
-
-        .real-state {
-
-            font-size:
-                11px;
-        }
-
-
-        .power {
-
-            font-size:
-                12px;
-        }
+    .name {
+        font-size: 14px;
     }
+
+
+    .subtitle {
+        margin-top: 3px;
+
+        font-size: 12px;
+    }
+
+
+    .mode {
+        font-size: 12px;
+    }
+
+
+    .real-state {
+        margin-top: 4px;
+
+        font-size: 12px;
+    }
+
+
+    .state-dot {
+        width: 12px;
+        height: 12px;
+    }
+
+
+    .power {
+        font-size: 14px;
+    }
+
+
+    .settings-button {
+        width: 44px;
+        height: 44px;
+
+        font-size: 21px;
+    }
+
+}
+
+
+/* ============================================================
+   MOBILE SCHMAL
+
+   Weiterhin keine Schrift unter 12 px.
+============================================================ */
+
+@media
+    (hover: none)
+    and
+    (pointer: coarse)
+    and
+    (max-width: 430px)
+{
+
+    .consumers {
+        padding:
+            42px
+            6px
+            7px
+            6px;
+    }
+
+
+    .consumer {
+        grid-template-columns:
+            47px
+            minmax(0, 1.45fr)
+            minmax(96px, 1fr)
+            62px
+            42px;
+
+        column-gap: 5px;
+
+        padding:
+            4px
+            5px;
+    }
+
+
+    .icon-box {
+        width: 42px;
+        height: 42px;
+    }
+
+
+    .icon {
+        width: 32px;
+        height: 32px;
+
+        font-size: 28px;
+    }
+
+
+    .name {
+        font-size: 13px;
+    }
+
+
+    .subtitle,
+    .mode,
+    .real-state {
+        font-size: 12px;
+    }
+
+
+    .power {
+        font-size: 13px;
+    }
+
+
+    .settings-button {
+        width: 39px;
+        height: 39px;
+
+        font-size: 19px;
+    }
+
+}
 
 </style>
 
@@ -949,11 +841,392 @@
 <body>
 
 
-<div id="app">
+<div class="consumers">
+
+
+    <!-- ========================================================
+         ENTFEUCHTER UG
+    ========================================================= -->
 
     <div
-        id="consumerList"
-    ></div>
+        class="consumer"
+        data-key="ug"
+    >
+
+        <div class="icon-box">
+
+            <div class="icon blue">
+                ♧
+            </div>
+
+        </div>
+
+
+        <div class="name-column">
+
+            <div class="name">
+                Entfeuchter UG
+            </div>
+
+            <div class="subtitle">
+                Untergeschoss
+            </div>
+
+        </div>
+
+
+        <div class="state-column">
+
+            <div
+                class="mode"
+                id="ug-mode"
+            >
+                —
+            </div>
+
+            <div class="real-state">
+
+                <span
+                    class="state-dot"
+                    id="ug-dot"
+                ></span>
+
+                <span id="ug-state">
+                    —
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="power"
+            id="ug-power"
+        >
+            —
+        </div>
+
+
+        <button
+            class="settings-button"
+            type="button"
+            data-consumer="ug"
+            aria-label="Einstellungen Entfeuchter UG"
+        >
+            ⚙
+        </button>
+
+    </div>
+
+
+
+    <!-- ========================================================
+         ENTFEUCHTER OG
+    ========================================================= -->
+
+    <div
+        class="consumer"
+        data-key="og"
+    >
+
+        <div class="icon-box">
+
+            <div class="icon blue">
+                ♧
+            </div>
+
+        </div>
+
+
+        <div class="name-column">
+
+            <div class="name">
+                Entfeuchter OG
+            </div>
+
+            <div class="subtitle">
+                Obergeschoss
+            </div>
+
+        </div>
+
+
+        <div class="state-column">
+
+            <div
+                class="mode"
+                id="og-mode"
+            >
+                —
+            </div>
+
+            <div class="real-state">
+
+                <span
+                    class="state-dot"
+                    id="og-dot"
+                ></span>
+
+                <span id="og-state">
+                    —
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="power"
+            id="og-power"
+        >
+            —
+        </div>
+
+
+        <button
+            class="settings-button"
+            type="button"
+            data-consumer="og"
+            aria-label="Einstellungen Entfeuchter OG"
+        >
+            ⚙
+        </button>
+
+    </div>
+
+
+
+    <!-- ========================================================
+         POOL
+    ========================================================= -->
+
+    <div
+        class="consumer"
+        data-key="pool"
+    >
+
+        <div class="icon-box">
+
+            <div class="icon blue">
+                ≋
+            </div>
+
+        </div>
+
+
+        <div class="name-column">
+
+            <div class="name">
+                Poolpumpe + Salzelektrolyse
+            </div>
+
+            <div class="subtitle">
+                Pooltechnik
+            </div>
+
+        </div>
+
+
+        <div class="state-column">
+
+            <div
+                class="mode"
+                id="pool-mode"
+            >
+                —
+            </div>
+
+            <div class="real-state">
+
+                <span
+                    class="state-dot"
+                    id="pool-dot"
+                ></span>
+
+                <span id="pool-state">
+                    —
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="power"
+            id="pool-power"
+        >
+            —
+        </div>
+
+
+        <button
+            class="settings-button"
+            type="button"
+            data-consumer="pool"
+            aria-label="Einstellungen Pool"
+        >
+            ⚙
+        </button>
+
+    </div>
+
+
+
+    <!-- ========================================================
+         BOILER
+    ========================================================= -->
+
+    <div
+        class="consumer"
+        data-key="boiler"
+    >
+
+        <div class="icon-box">
+
+            <div class="icon orange">
+                ◉
+            </div>
+
+        </div>
+
+
+        <div class="name-column">
+
+            <div class="name">
+                Boiler
+            </div>
+
+            <div class="subtitle">
+                Warmwasser
+            </div>
+
+        </div>
+
+
+        <div class="state-column">
+
+            <div
+                class="mode"
+                id="boiler-mode"
+            >
+                —
+            </div>
+
+            <div class="real-state">
+
+                <span
+                    class="state-dot"
+                    id="boiler-dot"
+                ></span>
+
+                <span id="boiler-state">
+                    —
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="power"
+            id="boiler-power"
+        >
+            —
+        </div>
+
+
+        <button
+            class="settings-button"
+            type="button"
+            data-consumer="boiler"
+            aria-label="Einstellungen Boiler"
+        >
+            ⚙
+        </button>
+
+    </div>
+
+
+
+    <!-- ========================================================
+         HEIZSTAB PUFFER
+    ========================================================= -->
+
+    <div
+        class="consumer"
+        data-key="heater"
+    >
+
+        <div class="icon-box">
+
+            <div class="icon orange">
+                ▥
+            </div>
+
+        </div>
+
+
+        <div class="name-column">
+
+            <div class="name">
+                Heizstab / Puffer
+            </div>
+
+            <div class="subtitle">
+                Heizung
+            </div>
+
+        </div>
+
+
+        <div class="state-column">
+
+            <div
+                class="mode"
+                id="heater-mode"
+            >
+                —
+            </div>
+
+            <div class="real-state">
+
+                <span
+                    class="state-dot"
+                    id="heater-dot"
+                ></span>
+
+                <span id="heater-state">
+                    —
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="power"
+            id="heater-power"
+        >
+            —
+        </div>
+
+
+        <button
+            class="settings-button"
+            type="button"
+            data-consumer="heater"
+            aria-label="Einstellungen Heizstab Puffer"
+        >
+            ⚙
+        </button>
+
+    </div>
+
 
 </div>
 
@@ -961,44 +1234,377 @@
 
 <script>
 
-'use strict';
+/* ============================================================
+   HELPER
+============================================================ */
+
+function setText(
+    id,
+    value
+) {
+
+    const element =
+        document.getElementById(id);
 
 
-// ============================================================================
-// Start
-// ============================================================================
-
-function init()
-{
-    try {
-
-        requestAction(
-            'Refresh',
-            true
-        );
-
-    } catch (e) {
-
+    if (!element) {
+        return;
     }
+
+
+    element.textContent =
+        value ?? "—";
 }
 
 
-// ============================================================================
-// Symcon Nachricht
-// ============================================================================
 
-function handleMessage(
-    message
-)
-{
-    let data =
-        message;
-
+function formatPower(
+    value
+) {
 
     if (
-        typeof data
-        ===
-        'string'
+        value === null ||
+        value === undefined ||
+        value === "" ||
+        Number.isNaN(
+            Number(value)
+        )
+    ) {
+
+        return "—";
+    }
+
+
+    const number =
+        Number(value);
+
+
+    /*
+     * Bereits kW?
+     *
+     * Bei unseren Verbrauchern sind z.B.
+     * Boiler/Puffer 6 kW und Entfeuchter/Pool 0.5 kW.
+     */
+
+    if (
+        Math.abs(number) >= 1
+    ) {
+
+        return (
+            number.toFixed(1) +
+            " kW"
+        );
+    }
+
+
+    return (
+        Math.round(
+            number * 1000
+        ) +
+        " W"
+    );
+}
+
+
+
+/* ============================================================
+   MODUS
+============================================================ */
+
+function modeText(
+    value
+) {
+
+    /*
+     * EMS:
+     *
+     * 0 = Aus
+     * 1 = Automatik
+     * 2 = Erzwungen Ein
+     */
+
+    const mode =
+        Number(value);
+
+
+    if (mode === 1) {
+        return "Automatik";
+    }
+
+
+    if (mode === 2) {
+        return "Erzwungen Ein";
+    }
+
+
+    return "Aus";
+}
+
+
+
+/* ============================================================
+   EINEN VERBRAUCHER AKTUALISIEREN
+============================================================ */
+
+function updateConsumer(
+    key,
+    consumer
+) {
+
+    if (!consumer) {
+        return;
+    }
+
+
+    const mode =
+        consumer.mode;
+
+
+    const active =
+        Boolean(
+            consumer.active ??
+            consumer.status ??
+            consumer.on ??
+            false
+        );
+
+
+    /*
+     * Modus
+     */
+
+    setText(
+        key + "-mode",
+        modeText(
+            mode
+        )
+    );
+
+
+    const modeElement =
+        document.getElementById(
+            key + "-mode"
+        );
+
+
+    if (modeElement) {
+
+        modeElement.classList.toggle(
+            "off",
+            Number(mode) === 0
+        );
+
+    }
+
+
+    /*
+     * Gerätestatus
+     */
+
+    setText(
+        key + "-state",
+        active
+            ? "Gerät Ein"
+            : "Gerät Aus"
+    );
+
+
+    const dot =
+        document.getElementById(
+            key + "-dot"
+        );
+
+
+    if (dot) {
+
+        dot.classList.toggle(
+            "on",
+            active
+        );
+
+    }
+
+
+    /*
+     * Leistung
+     */
+
+    setText(
+        key + "-power",
+        formatPower(
+            consumer.power
+        )
+    );
+
+}
+
+
+
+/* ============================================================
+   PAYLOAD NORMALISIEREN
+
+   Unterstützt verschiedene Payloadformen, damit wir die
+   bestehende Modul-PHP-Logik nicht unnötig anfassen müssen.
+============================================================ */
+
+function getConsumer(
+    data,
+    key,
+    aliases = []
+) {
+
+    /*
+     * Form:
+     *
+     * {
+     *   consumers: {
+     *      ug: {...}
+     *   }
+     * }
+     */
+
+    if (
+        data.consumers &&
+        typeof data.consumers === "object" &&
+        !Array.isArray(
+            data.consumers
+        )
+    ) {
+
+        if (data.consumers[key]) {
+            return data.consumers[key];
+        }
+
+
+        for (
+            const alias of aliases
+        ) {
+
+            if (
+                data.consumers[alias]
+            ) {
+                return data.consumers[alias];
+            }
+
+        }
+
+    }
+
+
+    /*
+     * Form:
+     *
+     * {
+     *    ug: {...}
+     * }
+     */
+
+    if (
+        data[key] &&
+        typeof data[key] === "object"
+    ) {
+
+        return data[key];
+    }
+
+
+    for (
+        const alias of aliases
+    ) {
+
+        if (
+            data[alias] &&
+            typeof data[alias] === "object"
+        ) {
+
+            return data[alias];
+        }
+
+    }
+
+
+    /*
+     * Array:
+     *
+     * consumers: [
+     *   { key: "ug", ... }
+     * ]
+     */
+
+    const list =
+        Array.isArray(
+            data
+        )
+            ? data
+            : (
+                Array.isArray(
+                    data.consumers
+                )
+                    ? data.consumers
+                    : null
+            );
+
+
+    if (list) {
+
+        const names =
+            [
+                key,
+                ...aliases
+            ];
+
+
+        return list.find(
+            function (item) {
+
+                if (!item) {
+                    return false;
+                }
+
+
+                const itemKey =
+                    String(
+                        item.key ??
+                        item.id ??
+                        item.ident ??
+                        ""
+                    ).toLowerCase();
+
+
+                return names.some(
+                    function (name) {
+
+                        return (
+                            itemKey ===
+                            String(name)
+                                .toLowerCase()
+                        );
+
+                    }
+                );
+
+            }
+        ) || null;
+
+    }
+
+
+    return null;
+}
+
+
+
+/* ============================================================
+   LIVE MESSAGE
+============================================================ */
+
+function handleMessage(
+    data
+) {
+
+    if (
+        typeof data ===
+        "string"
     ) {
 
         try {
@@ -1008,504 +1614,155 @@ function handleMessage(
                     data
                 );
 
-        } catch (e) {
+        } catch (error) {
 
             return;
         }
+
     }
 
 
     if (
-        !data
-        ||
-        data.type !== 'consumers'
+        !data ||
+        typeof data !==
+        "object"
     ) {
 
         return;
     }
 
 
-    renderConsumers(
-        Array.isArray(
-            data.items
+    updateConsumer(
+        "ug",
+        getConsumer(
+            data,
+            "ug",
+            [
+                "entfeuchterUG",
+                "dehumidifierUG"
+            ]
         )
-            ?
-            data.items
-            :
-            []
     );
+
+
+    updateConsumer(
+        "og",
+        getConsumer(
+            data,
+            "og",
+            [
+                "entfeuchterOG",
+                "dehumidifierOG"
+            ]
+        )
+    );
+
+
+    updateConsumer(
+        "pool",
+        getConsumer(
+            data,
+            "pool",
+            [
+                "poolpumpe",
+                "poolPump"
+            ]
+        )
+    );
+
+
+    updateConsumer(
+        "boiler",
+        getConsumer(
+            data,
+            "boiler",
+            [
+                "warmwater",
+                "dhw"
+            ]
+        )
+    );
+
+
+    updateConsumer(
+        "heater",
+        getConsumer(
+            data,
+            "heater",
+            [
+                "puffer",
+                "buffer",
+                "heizstab"
+            ]
+        )
+    );
+
 }
 
 
-// ============================================================================
-// Rendering
-// ============================================================================
 
-function renderConsumers(
-    items
-)
-{
-    const list =
-        document.getElementById(
-            'consumerList'
-        );
+/* ============================================================
+   EINSTELLUNGSBUTTONS
 
+   Bestehende RequestAction-Schnittstelle nutzen.
+============================================================ */
 
-    if (
-        !list
-    ) {
+document
+    .querySelectorAll(
+        ".settings-button"
+    )
+    .forEach(
+        function (button) {
 
-        return;
-    }
-
-
-    const html =
-        [];
-
-
-    for (
-        const item
-        of
-        items
-    ) {
-
-        html.push(
-            createConsumerHTML(
-                item
-            )
-        );
-    }
-
-
-    list.innerHTML =
-        html.join(
-            ''
-        );
-
-
-    const buttons =
-        list.querySelectorAll(
-            '.gear'
-        );
-
-
-    buttons.forEach(
-        button =>
-        {
             button.addEventListener(
-                'click',
-                event =>
-                {
-                    event.stopPropagation();
+                "click",
+                function () {
 
-
-                    const id =
-                        Number(
-                            button.dataset.objectId
-                        );
+                    const consumer =
+                        button.dataset.consumer;
 
 
                     if (
-                        !Number.isFinite(
-                            id
-                        )
-                        ||
-                        id <= 0
+                        typeof requestAction ===
+                        "function"
                     ) {
 
-                        return;
-                    }
-
-
-                    try {
-
-                        openObject(
-                            id
+                        requestAction(
+                            "OpenConfig",
+                            consumer
                         );
 
-                    } catch (e) {
-
-                        console.log(
-                            'openObject nicht verfügbar',
-                            e
-                        );
                     }
+
                 }
             );
+
         }
     );
-}
 
 
-// ============================================================================
-// Eine Zeile
-// ============================================================================
 
-function createConsumerHTML(
-    item
-)
-{
-    const name =
-        escapeHTML(
-            item.name
-            ||
-            ''
-        );
+/* ============================================================
+   INITIAL
+============================================================ */
 
+window.addEventListener(
+    "load",
+    function () {
 
-    const sub =
-        escapeHTML(
-            item.sub
-            ||
-            ''
-        );
+        if (
+            typeof requestAction ===
+            "function"
+        ) {
 
+            requestAction(
+                "Refresh",
+                true
+            );
 
-    const modeText =
-        escapeHTML(
-            item.modeText
-            ||
-            ''
-        );
+        }
 
-
-    const statusText =
-        escapeHTML(
-            item.statusText
-            ||
-            ''
-        );
-
-
-    const powerText =
-        escapeHTML(
-            item.powerText
-            ||
-            '—'
-        );
-
-
-    const reason =
-        escapeHTML(
-            item.reason
-            ||
-            ''
-        );
-
-
-    const objectID =
-        Number(
-            item.id
-        )
-        ||
-        0;
-
-
-    const modeClass =
-        getModeClass(
-            Number(
-                item.modeRaw
-            )
-        );
-
-
-    return `
-        <div
-            class="consumer"
-            data-key="${escapeHTML(item.key || '')}"
-        >
-
-            <div class="icon">
-                ${getIcon(item.icon)}
-            </div>
-
-
-            <div class="info">
-
-                <div
-                    class="name"
-                    title="${name}"
-                >
-                    ${name}
-                </div>
-
-
-                <div
-                    class="sub"
-                    title="${sub}"
-                >
-                    ${sub}
-                </div>
-
-            </div>
-
-
-            <div class="state">
-
-                <div
-                    class="mode ${modeClass}"
-                    title="${modeText}"
-                >
-                    ${modeText}
-                </div>
-
-
-                <div class="real-state">
-
-                    <span
-                        class="state-dot ${item.isOn ? 'on' : ''}"
-                    ></span>
-
-                    <span
-                        class="real-state-text"
-                    >
-                        Gerät ${statusText}
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <div
-                class="power"
-                title="Konfigurierte EMS-Leistung: ${powerText}"
-            >
-                ${powerText}
-            </div>
-
-
-            <div
-                class="reason"
-                title="${reason}"
-            >
-                ${reason}
-            </div>
-
-
-            <button
-                class="gear"
-                type="button"
-                data-object-id="${objectID}"
-                title="Einstellungen öffnen"
-                aria-label="Einstellungen ${name}"
-            >
-                ⚙
-            </button>
-
-        </div>
-    `;
-}
-
-
-// ============================================================================
-// Betriebsart-Farbe
-// ============================================================================
-
-function getModeClass(
-    mode
-)
-{
-    switch (
-        mode
-    ) {
-
-        case 0:
-
-            return 'off';
-
-
-        case 1:
-
-            return 'auto';
-
-
-        case 2:
-
-            return 'force';
-
-
-        default:
-
-            return '';
     }
-}
-
-
-// ============================================================================
-// Icons
-// ============================================================================
-
-function getIcon(
-    icon
-)
-{
-    switch (
-        icon
-    ) {
-
-        case 'boiler':
-
-            return `
-                <svg
-                    viewBox="0 0 32 32"
-                    width="25"
-                    height="25"
-                >
-                    <rect
-                        x="9"
-                        y="4"
-                        width="14"
-                        height="24"
-                        rx="4"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2.3"
-                    />
-
-                    <path
-                        d="M16 11 C13 15 12 17 12 19 A4 4 0 0 0 20 19 C20 17 19 15 16 11Z"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    />
-                </svg>
-            `;
-
-
-        case 'drop':
-
-            return `
-                <svg
-                    viewBox="0 0 32 32"
-                    width="25"
-                    height="25"
-                >
-                    <path
-                        d="M16 3 C11 10 7 15 7 20 A9 9 0 0 0 25 20 C25 15 21 10 16 3Z"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2.5"
-                        stroke-linejoin="round"
-                    />
-                </svg>
-            `;
-
-
-        case 'pool':
-
-            return `
-                <svg
-                    viewBox="0 0 32 32"
-                    width="26"
-                    height="26"
-                >
-                    <path
-                        d="M5 11 H11 V4 M11 8 H18 V4"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2.2"
-                        stroke-linecap="round"
-                    />
-
-                    <path
-                        d="M3 17 C6 14 9 20 12 17 C15 14 18 20 21 17 C24 14 27 20 30 17"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2.2"
-                        stroke-linecap="round"
-                    />
-
-                    <path
-                        d="M3 23 C6 20 9 26 12 23 C15 20 18 26 21 23 C24 20 27 26 30 23"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2.2"
-                        stroke-linecap="round"
-                    />
-                </svg>
-            `;
-
-
-        case 'heater':
-
-            return `
-                <svg
-                    viewBox="0 0 32 32"
-                    width="25"
-                    height="25"
-                >
-                    <rect
-                        x="7"
-                        y="5"
-                        width="18"
-                        height="22"
-                        rx="2"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2.3"
-                    />
-
-                    <path
-                        d="M11 9 V23 M16 9 V23 M21 9 V23"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    />
-                </svg>
-            `;
-
-
-        default:
-
-            return '●';
-    }
-}
-
-
-// ============================================================================
-// HTML escapen
-// ============================================================================
-
-function escapeHTML(
-    value
-)
-{
-    return String(
-        value
-        ??
-        ''
-    )
-    .replaceAll(
-        '&',
-        '&amp;'
-    )
-    .replaceAll(
-        '<',
-        '&lt;'
-    )
-    .replaceAll(
-        '>',
-        '&gt;'
-    )
-    .replaceAll(
-        '"',
-        '&quot;'
-    )
-    .replaceAll(
-        "'",
-        '&#039;'
-    );
-}
-
-
-// ============================================================================
-// Start
-// ============================================================================
-
-document.addEventListener(
-    'DOMContentLoaded',
-    init
 );
 
 </script>
